@@ -1,6 +1,6 @@
 # Roteiro das Aulas
 
-[\# 01 - Apresentação da Disciplina (14/02 SEX)](#-01---apresentação-da-disciplina-14/02-sex)<br>
+[\# 01 - Apresentação da Disciplina (14/02 SEX)](#-01---apresentação-da-disciplina-1402-sex)<br>
 [\# 02 - Introdução ao git e github (15/02 SAB)](#-02---introdução-ao-git-e-github-1502-sab)<br>
 [\# 03 - Revisão de Javascript (21/02 SEX)](#-03---revisão-de-javascript-2102-sex)<br>
 [\# 04 - Revisão de Javascript (28/02 SEX)](#-04---revisão-de-javascript-2802-sex)<br>
@@ -22,7 +22,7 @@
 
 **Exercício:**
 
-- Analise o [site da discplina](https://ifpb.github.io/dw/) e se inscreva no [telegram da disciplina](https://t.me/joinchat/COqVmhY66VAhJKPbzoGH_A).
+- Analise o [site da discplina](https://ifpb.github.io/lp2/) e se inscreva no [telegram da disciplina](https://t.me/joinchat/ifpblp22020).
 - Configure seu computador com essas [ferramentas](TOOLS.md).
 
 ## \# 02 - Introdução ao git e github (15/02 SAB)
@@ -40,7 +40,7 @@
 
 **Exercício:**
 
-- No repositório (ifpb/ls-solutions)[https://github.com/ifpb/ls-solutions/] crie o arquivo students/numero_matricula.txt contento o seu nome completo.
+- No repositório [ifpb/ls-solutions](https://github.com/ifpb/ls-solutions/) crie o arquivo `students/numero_matricula.txt` contento o seu nome completo.
 
 ## \# 03 - Revisão de Javascript (21/02 SEX)
 
@@ -67,6 +67,7 @@
 **Exercício:**
 
 - Compare a sintaxe de declaração de variáveis, expressões e operadores do Javascript com alguma outra linguagem. Detalhe, utilize o prompt do node para testar a sintaxe do Javascript.
+- Crie um exemplo de [Hello World em JS (ecma/basic-hello/)](https://ifpb.github.io/exercises/problems/algorithms/basic-hello/) para rodar no node usando o vscode.
 - Através de `x = 10` crie um script para as seguintes expressões:
 
 | Expressão   | Resultado |
@@ -116,7 +117,8 @@
   - [Escopo](https://ifpb.github.io/javascript-guide/ecma/function/#scope)
   - [Case sensitive](https://ifpb.github.io/javascript-guide/ecma/function/#case-sensitive)
   - [Parâmetro Default](https://ifpb.github.io/javascript-guide/ecma/function/#default-parameters)
-- [ECMAScript Modules (Named uniq exports)](https://ifpb.github.io/javascript-guide/ecma/modules/#named-uniq-export)
+- [CommonJS (CJS) Modules](https://ifpb.github.io/javascript-guide/ecma/modules/#node-modules---cjs)
+- [ECMAScript Modules (ESM): Named uniq exports](https://ifpb.github.io/javascript-guide/ecma/modules/#named-uniq-export)
 
 **Reflexão:**
 
@@ -132,6 +134,9 @@
   - [Somar (ecma/function-sum)](https://ifpb.github.io/exercises/problems/algorithms/function-sum/)
   - [Calcular a área do círculo (ecma/function-area-of-circle)](https://ifpb.github.io/exercises/problems/algorithms/function-area-of-circle/)
   - [Calcular operações aritméticas básicas (ecma/function-calc)](https://ifpb.github.io/exercises/problems/algorithms/function-calc/)
+  - [Calcular o fatorial (ecma/function-factorial)](https://ifpb.github.io/exercises/problems/algorithms/function-factorial/)
+  - [Verificar o tipo de triângulo (ecma/function-triangle-checker)](https://ifpb.github.io/exercises/problems/algorithms/function-triangle-checker/)
+- Crie estes outros [scritps envolvendo função (ecma/function-\*)](https://ifpb.github.io/exercises/problems/algorithms/).
 
 <!--
 
