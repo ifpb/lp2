@@ -1,12 +1,6 @@
 # Roteiro das Aulas
 
-[\# 01 - Apresentação da Disciplina (14/02 SEX)](#-01---apresentação-da-disciplina-1402-sex)<br>
-[\# 02 - Introdução ao git e github (15/02 SAB)](#-02---introdução-ao-git-e-github-1502-sab)<br>
-[\# 03 - Revisão de Javascript (21/02 SEX)](#-03---revisão-de-javascript-2102-sex)<br>
-[\# 04 - Revisão de Javascript (28/02 SEX)](#-04---revisão-de-javascript-2802-sex)<br>
-[\# 05 - Revisão de Javascript (06/03 SEX)](#-05---revisão-de-javascript-0603-sex)<br>
-
-## \# 01 - Apresentação da Disciplina (14/02 SEX)
+## \# 01 - Apresentação da Disciplina
 
 ---
 
@@ -25,7 +19,7 @@
 - Analise o [site da discplina](https://ifpb.github.io/lp2/) e se inscreva no [telegram da disciplina](https://t.me/joinchat/ifpblp22020).
 - Configure seu computador com essas [ferramentas](TOOLS.md).
 
-## \# 02 - Introdução ao git e github (15/02 SAB)
+## \# 02 - Introdução ao git e github
 
 ---
 
@@ -42,7 +36,7 @@
 
 - No repositório [ifpb/ls-solutions](https://github.com/ifpb/ls-solutions/) crie o arquivo `students/numero_matricula.txt` contento o seu nome completo.
 
-## \# 03 - Revisão de Javascript (21/02 SEX)
+## \# 03 - Revisão de Javascript
 
 ---
 
@@ -82,7 +76,7 @@
 - Qual é o resultado data expressão `10 > x < 20` para `const x = 15`? Explique.
 - Considerando que cor no formato ARGB (8 bits para Alfa, Vermelho, Verde e Azul, nessa ordem) seja guardado em `const color = 0x74C365`, então qual seria a intensidade da cor vermelha?
 
-## \# 04 - Revisão de Javascript (28/02 SEX)
+## \# 04 - Revisão de Javascript
 
 ---
 
@@ -106,7 +100,7 @@
   - [Numbers series (ecma/basic-numbers-series/)](https://ifpb.github.io/exercises/problems/algorithms/basic-numbers-series/)
   - [Harmonic series (ecma/basic-harmonic-series/)](https://ifpb.github.io/exercises/problems/algorithms/basic-harmonic-series/)
 
-## \# 05 - Revisão de Javascript (06/03 SEX)
+## \# 05 - Revisão de Javascript
 
 ---
 
@@ -138,145 +132,235 @@
   - [Verificar o tipo de triângulo (ecma/function-triangle-checker)](https://ifpb.github.io/exercises/problems/algorithms/function-triangle-checker/)
 - Crie estes outros [scritps envolvendo função (ecma/function-\*)](https://ifpb.github.io/exercises/problems/algorithms/).
 
+## \# 06 - Node.js
+
+---
+
+**Conteúdo:**
+
+- [Node.js](https://nodejs.org/)
+  - [About](https://nodejs.org/en/about/)
+  - [Releases](https://nodejs.org/en/about/releases/)
+  - [Getting Started Guide](https://nodejs.org/en/docs/guides/getting-started-guide/)
+  - [API](https://nodejs.org/api/)
+
+**Reflexão:**
+
+- O que é e qual a utilidade do Node.js?
+- Como o Node.js é utilizado para criar um servidor Web?
+- Como se gera conteúdo específico por rotas no servidor Web Node.js?
+
+**Exercício:**
+
+- Execute este exemplo de aplicação Node.js (web/node-hello-lang):
+
+  ```js
+  const http = require("http");
+
+  const hostname = "127.0.0.1";
+  const port = 3000;
+
+  const server = http.createServer((req, res) => {
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "text/plain");
+    res.end("Hello World");
+  });
+
+  server.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+  });
+  ```
+
+  para isto é necessário:
+
+  ```
+  $ mkdir node-hello-lang
+  $ cd node-hello-lang
+  $ node app.js
+  ```
+
+  - Execute este exemplo (web/node-hello-lang).
+
+## \# 07 - Express.js
+
+---
+
+**Conteúdo:**
+
+- [Express.js](https://expressjs.com)
+  - [Installing](https://expressjs.com/en/starter/installing.html)
+  - [Hello World example](https://expressjs.com/en/starter/hello-world.html)
+  - [Express generator](https://expressjs.com/en/starter/generator.html)
+
+**Reflexão:**
+
+- O que são e quais as utilidades do Node.js e Express.js?
+- Para que devemos usar o npm para desenvolver em Express.js?
+- Por que devemos ignorar do git os arquivos `node_modules` e `package-lock.json`?
+
+**Exercício:**
+
+- Execute este exemplo de Express.js (web/express-hello-simple):
+
+  ```js
+  const express = require("express");
+  const app = express();
+  const port = 3000;
+
+  app.get("/", (req, res) => res.send("Hello World!"));
+
+  app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+  ```
+
+  para isto é necessário:
+
+  ```
+  $ mkdir myapp
+  $ cd myapp
+  $ npm init -y
+  $ npm install express --save
+  $ node app.js
+  ```
+
+- Execute estes exemplos:
+  - web/express-hello-lang
+  - web/express-hello-name
+  - web/express-bmi
+
 <!--
-
-## \# 06 - Node (13/03 SEX)
-
----
-
-## \# 07 - (20/03 SEX)
+## \# 08 - Express generator
 
 ---
 
-## \# 08 - (27/03 SEX)
+## \# 09 -
 
 ---
 
-## \# 09 - (03/04 SEX)
+## \# 10 -
 
 ---
 
-## \# 10 - (17/04 SEX)
+## \# 11 -
 
 ---
 
-## \# 11 - (18/04 SAB)
+## \# 12 -
 
 ---
 
-## \# 12 - (24/04 SEX)
+## \# 13 -
 
 ---
 
-## \# 13 - (08/05 SEX)
+## \# 14 -
 
 ---
 
-## \# 14 - (15/05 SEX)
+## \# 15 -
 
 ---
 
-## \# 15 - (22/05 SEX)
+## \# 16 -
 
 ---
 
-## \# 16 - (29/05 SEX)
+## \# 17 -
 
 ---
 
-## \# 17 - (05/06 SEX)
+## \# 18 -
 
 ---
 
-## \# 18 - (12/06 SEX)
+## \# 19 -
 
 ---
 
-## \# 19 - (19/06 SEX)
+## \# 20 -
 
 ---
 
-## \# 20 - (20/06 SAB)
+## \# 21 -
 
 ---
 
-## \# 21 - (26/06 SEX)
+## \# 22 -
 
 ---
 
-## \# 22 - (31/07 SEX)
+## \# 23 -
 
 ---
 
-## \# 23 - (07/08 SEX)
+## \# 24 -
 
 ---
 
-## \# 24 - (14/08 SEX)
+## \# 25 -
 
 ---
 
-## \# 25 - (21/08 SEX)
+## \# 26 -
 
 ---
 
-## \# 26 - (28/08 SEX)
+## \# 27 -
 
 ---
 
-## \# 27 - (04/09 SEX)
+## \# 28 -
 
 ---
 
-## \# 28 - (11/09 SEX)
+## \# 29 -
 
 ---
 
-## \# 29 - (18/09 SEX)
+## \# 30 -
 
 ---
 
-## \# 30 - (25/09 SEX)
+## \# 31 -
 
 ---
 
-## \# 31 - (02/10 SEX)
+## \# 32 -
 
 ---
 
-## \# 32 - (09/10 SEX)
+## \# 33 -
 
 ---
 
-## \# 33 - (16/10 SEX)
+## \# 34 -
 
 ---
 
-## \# 34 - (23/10 SEX)
+## \# 35 -
 
 ---
 
-## \# 35 - (30/10 SEX)
+## \# 36 -
 
 ---
 
-## \# 36 - (06/11 SEX)
+## \# 37 -
 
 ---
 
-## \# 37 - (13/11 SEX)
+## \# 38 -
 
 ---
 
-## \# 38 - (20/11 SEX)
+## \# 39 -
 
 ---
 
-## \# 39 - (27/11 SEX)
-
----
-
-## \# 40 - (04/12 SEX) Projeto Final
+## \# 40 - Projeto Final
 
 ---
 -->
+
+<script src="js/dates.js"></script>
+<script src="js/load-summary.js"></script>
+<script src="js/load-target-blank.js"></script>
