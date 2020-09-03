@@ -182,19 +182,13 @@ src
 src/lib.js:
 
 ```js
-function sum(a, b) {
-  return a + b;
-}
-
-module.exports = sum;
+{% include_relative code/module-cjs-default/lib.js %}
 ```
 
 src/main.js:
 
 ```js
-const sum = require('./lib.js');
-
-console.log(sum(1, 2)); //=> 3
+{% include_relative code/module-cjs-default/main.js %}
 ```
 
 [ECMAScript Modules - ESM](https://nodejs.org/api/esm.html)
@@ -202,19 +196,13 @@ console.log(sum(1, 2)); //=> 3
 src/lib.js:
 
 ```js
-function sum(a, b) {
-  return a + b;
-}
-
-export default sum;
+{% include_relative code/module-esm-default/lib.js %}
 ```
 
 src/main.js:
 
 ```js
-import sum from './lib.js';
-
-console.log(sum(1, 2)); //=> 3
+{% include_relative code/module-esm-default/main.js %}
 ```
 
 **CENÁRIO 2**
@@ -228,27 +216,14 @@ src
 [Common Javascript - CJS](https://nodejs.org/api/modules.html)
 
 
-src/lib.js:
-
 ```js
-function sum(a, b) {
-  return a + b;
-}
-
-function minus(a, b) {
-  return a - b;
-}
-
-module.exports = { sum, minus };
+{% include_relative code/module-cjs-named/lib.js %}
 ```
 
 src/main.js:
 
 ```js
-const { sum, minus } = require('./lib.js');
-
-console.log(sum(1, 2)); //=> 3
-console.log(minus(2, 1)); //=> 1
+{% include_relative code/module-cjs-named/main.js %}
 ```
 
 [ECMAScript Modules - ESM](https://nodejs.org/api/esm.html)
@@ -256,26 +231,14 @@ console.log(minus(2, 1)); //=> 1
 src/lib.js:
 
 ```js
-function sum(a, b) {
-  return a + b;
-}
-
-function minus(a, b) {
-  return a - b;
-}
-
-export { sum, minus };
+{% include_relative code/module-esm-named/lib.js %}
 ```
 
 src/main.js:
 
 ```js
-import { sum, minus } from './lib.js';
-
-console.log(sum(1, 2)); //=> 3
-console.log(minus(2, 1)); //=> 1
+{% include_relative code/module-esm-named/main.js %}
 ```
-
 **RESUMO**
 
 | CJS                                          | ESM                                     |
@@ -291,34 +254,21 @@ console.log(minus(2, 1)); //=> 1
 
 ### Arquitetura
 
-![](client-server.png)
+![](assets/client-server.png)
 
 ### Node.JS (http)
 
 app.js:
 
 ```js
-const http = require('http');
-
-const hostname = '127.0.0.1';
-const port = 3000;
-
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World');
-});
-
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+{% include_relative code/node-hello-simple/app.js %}
 ```
 
 ```
 $ node app.js
 ```
 
-![](hello-http.png)
+![](assets/hello-http.png)
 
 ## Exercícios
 
