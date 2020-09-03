@@ -2,6 +2,8 @@
 
 ## Sintase do Javascript
 
+---
+
 ### [Tipos de dados](https://ifpb.github.io/javascript-guide/ecma/values-and-types/)
 
 ![JavaScript’s type hierarchy](http://exploringjs.com/impatient-js/img-book/b8c834a3420a3b2d2df0d90dfa0c1dfd1f2ffbc9.svg)<br>
@@ -14,7 +16,6 @@
 | Primitive | [Boolean](../boolean/syntax.md)     | `true`, `false`                                                                                   |
 | Primitive | [Number](../number/syntax.md)       | `-15`<br>`15`, `0b1111`, `0o17`, `0xf`<br>`-1234.5`<br>`1234.5`, `1.2345e3`<br>`0.0012`, `1.2E-3` |
 | Primitive | [String](../string/syntax.md)       | `'Hello'`, `"Hello"`, `` `Hello` ``                                                               |
-| Primitive | [Symbol](../symbol/syntax.md)       | `Symbol("number")`                                                                                |
 | Object    | [Array](../array/syntax.md)         | `[]`<br>`[1, 2, 3]`<br>`[1, '2', true]`                                                           |
 | Object    | [Object](../object/syntax.md)       | `{name: Alice, email: alice@ifpb.edu}`                                                            |
 
@@ -40,17 +41,15 @@ console.log(number); //=> 10
 | Operator type            | Operators                                     |
 | ------------------------ | --------------------------------------------- |
 | Increment and decrement  | `A++`, `A--`, `++A`, `--A`                    |
-| Unary operators          | `+`, `-`, `!`                                 |
 | Arithmetic operators     | `+`, `-`, `*`, `/`, `%`, `**`                 |
 | Relational operators     | `<`, `<=`, `>`, `>=`                          |
 | Equality operators       | `==`, `!=`, `===`, `!==`                      |
-| Binary bitwise operators | `&`, `|`, `^`                                 |
 | Binary logical operators | `&&`, `|| `                                   |
 | Assignment operators     | `=`, `*=`, `/=`, `%=`, `+=`, `-=`, `&=`, `^=` |
-| Conditional operator     | `(condition ? ifTrue : ifFalse)`              |
-| Comma operator           | `,`                                           |
 
 ### [Estruturas de decisão e repetição](https://ifpb.github.io/javascript-guide/ecma/statements-and-declarations/)
+
+**if**
 
 ```js
 const number = 10;
@@ -66,6 +65,8 @@ if (number < 0) {
 
 console.log(result); //=> greater than zero
 ```
+
+**switch**
 
 ```js
 const number1 = 10;
@@ -95,6 +96,8 @@ switch (operator) {
 console.log(result); //=> 20
 ```
 
+**while**
+
 ```js
 let result = '';
 
@@ -108,6 +111,8 @@ while (result.length < 4) {
 // xxx
 // xxxx
 ```
+
+**for**
 
 ```js
 for (let flag = 0; flag < 100; flag += 1) {
@@ -152,13 +157,15 @@ console.log(addition(1, 2)); //=> 3
 
 ### [Módulos](https://ifpb.github.io/javascript-guide/ecma/modules/)
 
-[Common Javascript - CJS](https://nodejs.org/api/modules.html)
+**CENÁRIO 1**
 
 ```
 src
 ├── lib.js
 └── main.js
 ```
+
+[Common Javascript - CJS](https://nodejs.org/api/modules.html)
 
 src/lib.js:
 
@@ -177,6 +184,37 @@ const sum = require('./lib.js');
 
 console.log(sum(1, 2)); //=> 3
 ```
+
+[ECMAScript Modules - ESM](https://nodejs.org/api/esm.html)
+
+src/lib.js:
+
+```js
+function sum(a, b) {
+  return a + b;
+}
+
+export default sum;
+```
+
+src/main.js:
+
+```js
+import sum from './lib.js';
+
+console.log(sum(1, 2)); //=> 3
+```
+
+**CENÁRIO 2**
+
+```
+src
+├── lib.js
+└── main.js
+```
+
+[Common Javascript - CJS](https://nodejs.org/api/modules.html)
+
 
 src/lib.js:
 
@@ -203,30 +241,6 @@ console.log(minus(2, 1)); //=> 1
 
 [ECMAScript Modules - ESM](https://nodejs.org/api/esm.html)
 
-```
-src
-├── lib.js
-└── main.js
-```
-
-src/lib.js:
-
-```js
-function sum(a, b) {
-  return a + b;
-}
-
-export default sum;
-```
-
-src/main.js:
-
-```js
-import sum from './lib.js';
-
-console.log(sum(1, 2)); //=> 3
-```
-
 src/lib.js:
 
 ```js
@@ -250,6 +264,8 @@ console.log(sum(1, 2)); //=> 3
 console.log(minus(2, 1)); //=> 1
 ```
 
+**RESUMO**
+
 | CJS                                          | ESM                                     |
 | -------------------------------------------- | --------------------------------------- |
 | `module.exports = sum`                       | `export default sum;`                   |
@@ -259,11 +275,15 @@ console.log(minus(2, 1)); //=> 1
 
 ## Aplicação Web (Back-end)
 
+---
+
 ### Arquitetura
 
 ![](client-server.png)
 
-### Node.JS
+### Node.JS (http)
+
+app.js:
 
 ```js
 const http = require('http');
@@ -280,4 +300,8 @@ const server = http.createServer((req, res) => {
 server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
+```
+
+```
+$ node app.js
 ```
