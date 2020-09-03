@@ -1,5 +1,17 @@
 # Revisão
 
+- [Revisão](#revisão)
+  - [Sintase do Javascript](#sintase-do-javascript)
+    - [Tipos de dados](#tipos-de-dados)
+    - [Declaração de variáveis](#declaração-de-variáveis)
+    - [Expressões e operadores](#expressões-e-operadores)
+    - [Estruturas de decisão e repetição](#estruturas-de-decisão-e-repetição)
+    - [Declaração de funções](#declaração-de-funções)
+    - [Definição de Módulos](#definição-de-módulos)
+  - [Aplicação Web (Back-end)](#aplicação-web-back-end)
+    - [Arquitetura](#arquitetura)
+    - [Node.JS (http)](#nodejs-http)
+
 ## Sintase do Javascript
 
 ---
@@ -32,7 +44,7 @@ console.log(number); //=> 10
 ```
 
 ```js
-let number = 10;
+const number = 10;
 console.log(number); //=> 10
 ```
 
@@ -45,7 +57,7 @@ console.log(number); //=> 10
 | Relational operators     | `<`, `<=`, `>`, `>=`                          |
 | Equality operators       | `==`, `!=`, `===`, `!==`                      |
 | Binary logical operators | `&&`, `|| `                                   |
-| Assignment operators     | `=`, `*=`, `/=`, `%=`, `+=`, `-=`, `&=`, `^=` |
+| Assignment operators     | `=`, `*=`, `/=`, `%=`, `+=`, `-=` |
 
 ### [Estruturas de decisão e repetição](https://ifpb.github.io/javascript-guide/ecma/statements-and-declarations/)
 
@@ -155,7 +167,7 @@ const addition = (param1, param2) => param1 + param2;
 console.log(addition(1, 2)); //=> 3
 ```
 
-### [Módulos](https://ifpb.github.io/javascript-guide/ecma/modules/)
+### [Definição de Módulos](https://ifpb.github.io/javascript-guide/ecma/modules/)
 
 **CENÁRIO 1**
 
