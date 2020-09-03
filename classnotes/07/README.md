@@ -281,8 +281,16 @@ $ node app.js
 
 Visual Studio Code: [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
 
+requests.http:
+
 ```
-{% include_relative code/node-hello-simple/requests.http %}
+@hostname = 127.0.0.1
+@port = 3000
+@host = {{hostname}}:{{port}}
+
+### Hello World
+
+GET http://{{host}}/ HTTP/1.1
 ```
 
 ```
