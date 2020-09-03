@@ -205,6 +205,12 @@ src/main.js:
 {% include_relative code/module-esm-default/main.js %}
 ```
 
+> **Warning:** To load an ES module, set "type": "module" in the package.json or use the .mjs extension.
+
+```json
+{% include_relative code/module-esm-default/package.json %}
+```
+
 **CENÁRIO 2**
 
 ```
