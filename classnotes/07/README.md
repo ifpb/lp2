@@ -10,6 +10,7 @@
 - [Aplicação Web (Back-end)](#aplicação-web-back-end)
   - [Arquitetura](#arquitetura)
   - [Node.JS (http)](#nodejs-http)
+  - [Request HTTP](#request-http)
 - [Exercícios](#exercícios)
 
 ## Sintase do Javascript
@@ -275,6 +276,24 @@ $ node app.js
 ```
 
 ![](assets/hello-http.png)
+
+### Request HTTP
+
+Visual Studio Code: [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
+
+```
+{% include_relative code/node-hello-simple/requests.http %}
+```
+
+```
+HTTP/1.1 200 OK
+Content-Type: text/plain
+Date: Thu, 03 Sep 2020 22:19:08 GMT
+Connection: close
+Content-Length: 11
+
+Hello World
+```
 
 ## Exercícios
 
