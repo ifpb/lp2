@@ -318,6 +318,8 @@ server.listen(port, hostname, () => {
 $ node app.js
 ```
 
+![](hello-http.png)
+
 ## Exercícios
 
 ---
