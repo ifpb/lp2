@@ -10,6 +10,7 @@
 - [Aplicação Web (Back-end)](#aplicação-web-back-end)
   - [Arquitetura](#arquitetura)
   - [Node.JS (http)](#nodejs-http)
+- [Exercícios](#exercícios)
 
 ## Sintase do Javascript
 
@@ -316,3 +317,13 @@ server.listen(port, hostname, () => {
 ```
 $ node app.js
 ```
+
+## Exercícios
+
+---
+
+- [ecma/basic-hello](https://ifpb.github.io/exercises/problems/algorithms/basic-hello/)
+- [ecma/basic-bmi](https://ifpb.github.io/exercises/problems/algorithms/basic-bmi/)
+- [ecma/basic-harmonic-series](https://ifpb.github.io/exercises/problems/algorithms/basic-harmonic-series/)
+- [ecma/function-area-of-circle](https://ifpb.github.io/exercises/problems/algorithms/function-area-of-circle/)
+- [web/node-hello-simple](https://ifpb.github.io/exercises/problems/web/back-end/api-basic-hello/)
