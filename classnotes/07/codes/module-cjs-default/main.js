@@ -1,3 +1,3 @@
 const sum = require('./lib.js');
 
-console.log(sum(1, 2)); //=> 3
+console.log(sum(2, 1)); //=> 3
