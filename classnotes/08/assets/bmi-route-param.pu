@@ -1,0 +1,10 @@
+@startuml
+title BMI
+hide footbox
+skinparam monochrome true
+
+Client -> Server: GET /bmi/weight/100/height/1.5
+note right: GET /bmi/weight/100/height/1.5 HTTP/1.1\nHost: 127.0.0.1:3000
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\n\n{\n  "weight": 100,\n  "height": 1.5,\n  "bmi": "Obesity"\n}
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+title Hello HTTP
+hide footbox
+skinparam monochrome true
+
+Client -> Server: GET /
+note right: GET / HTTP/1.1\nHost: 127.0.0.1:3000
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\nX-Powered-By: Express\nContent-Type: text/html; charset=utf-8\nContent-Length: 12\nETag: W/"c-Lve95gjOVATpfV8EL5X4nxwjKHE"\nDate: Fri, 11 Sep 2020 12:16:16 GMT\nConnection: close\n\nHello World!
+@enduml

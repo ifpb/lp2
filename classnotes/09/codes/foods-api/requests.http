@@ -1,0 +1,40 @@
+@hostname = 127.0.0.1
+@port = 3000
+@host = {{hostname}}:{{port}}
+
+### Get Foods
+
+GET http://{{host}}/foods HTTP/1.1
+
+
+### Get Food by name
+
+GET http://{{host}}/foods?name=hambúrguer HTTP/1.1
+
+### Get Food by id
+
+GET http://{{host}}/foods/2 HTTP/1.1
+
+### Create Food
+
+POST http://{{host}}/foods HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Salada",
+  "price": 15.5
+}
+
+### Update Food
+
+PUT http://{{host}}/foods/3 HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Salada",
+  "price": 16.5
+}
+
+### Remove Food
+
+DELETE http://{{host}}/foods/3 HTTP/1.1

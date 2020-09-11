@@ -1,0 +1,8 @@
+@startuml
+title HTTP Params
+hide footbox
+skinparam monochrome true
+
+Client -> Server: HTTP Request (data)
+Server -> Client: HTTP Response
+@enduml
