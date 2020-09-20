@@ -1,30 +1,31 @@
 const express = require('express');
+const cors = require('cors');
+
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
-const foods = [
-  {
-    id: 1,
-    name: 'hambúrguer 1',
-    price: 10.0,
-  },
-  {
-    id: 2,
-    name: 'sanduíche 1',
-    price: 9.0,
-  },
-];
+let key = 1;
+const foods = [];
+
+app.post('/foods', (req, res) => {
+  const { name, price } = req.body;
+
+  const id = key++;
+
+  const food = { id, name, price };
+
+  foods.push(food);
+
+  res.status(201).json(food);
+});
 
 app.get('/foods', (req, res) => {
   const { name } = req.query;
 
   if (name) {
-    const filteredFoods = [];
-
-    for (const food of foods) {
-      if (food.name.includes(name)) filteredFoods.push(food);
-    }
+    const filteredFoods = foods.filter((food) => food.name.includes(name));
 
     return res.json(filteredFoods);
   }
@@ -33,50 +34,48 @@ app.get('/foods', (req, res) => {
 });
 
 app.get('/foods/:id', (req, res) => {
-  const { id } = req.params;
+  const id = Number(req.params.id);
 
-  const index = id - 1;
+  const food = foods.find((food) => food.id === id);
 
-  const food = foods[index];
-
-  res.json(food);
-});
-
-app.post('/foods/', (req, res) => {
-  const { name, price } = req.body;
-
-  const id = foods.length;
-
-  const food = { id, name, price };
-
-  foods.push(food);
-
-  res.json(foods);
+  if (food) {
+    return res.json(food);
+  } else {
+    return res.status(400).json({ error: 'Food not found.' });
+  }
 });
 
 app.put('/foods/:id', (req, res) => {
-  const { id } = req.params;
+  const id = Number(req.params.id);
   const { name, price } = req.body;
 
-  const index = id - 1;
+  const index = foods.findIndex((food) => food.id === id);
 
-  const food = { id, name, price };
+  if (index >= 0) {
+    const food = { id, name, price };
 
-  foods[index] = food;
+    foods[index] = food;
 
-  res.json(food);
+    res.json(food);
+  } else {
+    return res.status(400).json({ error: 'Food not found.' });
+  }
 });
 
 app.delete('/foods/:id', (req, res) => {
-  const { id } = req.params;
+  const id = Number(req.params.id);
 
-  const index = id - 1;
+  const index = foods.findIndex((food) => food.id === id);
 
-  foods.splice(index, 1);
+  if (index >= 0) {
+    foods.splice(index, 1);
 
-  res.status(204).send();
+    res.status(204).send();
+  } else {
+    return res.status(400).json({ error: 'Food not found.' });
+  }
 });
 
 app.listen(3000, () => {
-  console.log(`App running at http://localhost:3000`);
+  console.log('Food API is running!');
 });

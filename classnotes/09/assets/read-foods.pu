@@ -1,0 +1,14 @@
+@startuml
+title Read
+hide footbox
+skinparam monochrome true
+
+Client -> Server: GET /foods
+note right: GET /foods HTTP/1.1\nHost: 127.0.0.1:3000
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\n\n[\n  {\n    "id": 1,\n    "name": "Salada 1",\n    "price": 15.5\n  }\n]
+Client -> Server: GET /foods?name=Salada
+note right: GET /foods?name=Salada HTTP/1.1\nHost: 127.0.0.1:3000
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\n\n[\n  {\n    "id": 1,\n    "name": "Salada 1",\n    "price": 15.5\n  }\n]
+@enduml

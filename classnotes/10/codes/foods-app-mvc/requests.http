@@ -5,7 +5,8 @@ POST http://localhost:3000/foods
 Content-Type: application/json
 
 {
-  "name": "Salada 1",
+  "name": "Salada",
+  "image": "/imgs/salada.jpg",
   "price": 15.5
 }
 
@@ -15,7 +16,8 @@ POST http://localhost:3000/foods
 Content-Type: application/json
 
 {
-  "name": "Hambúrguer 1",
+  "name": "Hambúrguer",
+  "image": "/imgs/hamburguer.jpg",
   "price": 10
 }
 
@@ -25,7 +27,8 @@ POST http://localhost:3000/foods
 Content-Type: application/json
 
 {
-  "name": "Sanduíche 1",
+  "name": "Sanduíche",
+  "image": "/imgs/sanduiche.jpg",
   "price": 9
 }
 
@@ -50,7 +53,8 @@ PUT http://localhost:3000/foods/{{id}}
 Content-Type: application/json
 
 {
-  "name": "Salada 1",
+  "name": "Salada",
+  "image": "/imgs/salada .jpg",
   "price": 16.5
 }
 

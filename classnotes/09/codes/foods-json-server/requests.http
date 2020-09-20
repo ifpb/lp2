@@ -36,7 +36,7 @@ GET http://localhost:3000/foods
 
 ### Read Food by name
 
-GET http://localhost:3000/foods?name=Salada
+GET http://localhost:3000/foods?name=Salada%201
 
 ### Read Food by id
 

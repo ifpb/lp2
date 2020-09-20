@@ -1,0 +1,52 @@
+@startuml
+title MVC
+hide footbox
+skinparam monochrome true
+skinparam defaultTextAlignment center
+
+rectangle Browser [
+  <b>Browser
+]
+rectangle Loader [
+  <b>Loader
+  index.js
+]
+rectangle Router [
+  <b>Router
+  routes/index.js
+]
+rectangle Controller [
+  <b>Controller
+  controllers/foodsController.js
+]
+rectangle Model [
+  <b>Model
+  models/Food.js
+]
+rectangle Seed [
+  <b>Seed
+  seeders/index.js
+]
+rectangle View [
+  <b>View
+  views/layout.njk
+  views/foods/index.njk
+]
+database Database [
+  <b>Database
+  Array & Key
+]
+
+Browser -> Router: 1. /foods/index
+Router -right-> Controller: 2. index
+Controller <-down-> Model: 3. Food.readAll
+Model <-down-> Database: 4. JSONs
+View -down-> Controller: 6. HTML
+View -[hidden]- Controller
+Controller -up-> View: 5. foods
+Controller -left-> Browser : 7. HTML
+Loader .up.> Router
+Loader .down.> Seed: Seed.up
+Seed .right.> Model: Food.create
+
+@enduml
