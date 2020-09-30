@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <title>Menu</title>
+</head>
+<body>
+  <div class="container">
+    <h1 class="my-5 text-center">Menu</h1>
+
+    <section class="card-deck"></section>
+  <div>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/popper.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script>
+    function formatCurrency(price) {
+      return Intl.NumberFormat('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        }).format(price)
+    }
+
+    async function loadFoods() {
+      const res = await fetch('/foods');
+      const foods = await res.json();
+      let foodsView = '';
+
+      for (const food of foods) {
+        foodsView += `<div class="card">
+          <div class="card-header text-center font-weight-bold">
+            ${food.name}
+          </div>
+          <div class="card-body p-0">
+            <img src="${food.image}" alt="${food.name}" class="w-100">
+          </div>
+          <div class="card-footer text-right">
+            ${formatCurrency(food.price)}
+          </div>
+        </div>`;
+      }
+
+      document.querySelector('section').innerHTML = foodsView;
+    }
+
+    loadFoods();
+  </script>
+</body>
+</html>
