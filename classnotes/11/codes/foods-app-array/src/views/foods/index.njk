@@ -9,7 +9,7 @@
   {% for food in foods %}
   <div class="card">
     <div class="card-header text-center font-weight-bold">
-      <span>{{ food.name }}</span>
+      {{ food.name }}
     </div>
     <div class="card-body p-0">
       <img src="{{ food.image }}" alt="{{ food.name }}" class="w-100">
