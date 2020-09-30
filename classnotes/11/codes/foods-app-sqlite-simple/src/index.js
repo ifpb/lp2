@@ -4,6 +4,7 @@ const nunjucks = require('nunjucks');
 const routes = require('./routes');
 const Seed = require('./seeders');
 const Migration = require('./migrations');
+const { dbFile } = require('./db');
 
 const app = express();
 
@@ -19,7 +20,7 @@ nunjucks.configure('src/views', {
 });
 
 (async () => {
-  if (!fs.existsSync('foods.db')) {
+  if (!fs.existsSync(dbFile)) {
     await Migration.up();
     await Seed.up();
   }

@@ -83,6 +83,10 @@ src/index.js:
 {% include_relative codes/foods-app-simple/src/index.js %}
 ```
 
+```bash
+$ npm install express nunjucks
+```
+
 ### Seed
 
 src/seeders/index.js:
