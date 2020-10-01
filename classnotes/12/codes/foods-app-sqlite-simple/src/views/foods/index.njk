@@ -16,7 +16,8 @@
         <img src="{{ food.image }}" alt="{{ food.name }}" class="w-100">
       </div>
       <div class="card-footer text-right">
-        {{ food.price }}
+        <span class="food-category float-left badge badge-secondary">{{ food.category }}</span>
+        <span class="food-price">{{ food.price }}</span>
       </div>
     </div>
   </div>
@@ -26,7 +27,7 @@
 
 {% block script %}
 <script>
-  const prices = document.querySelectorAll('.card-footer');
+  const prices = document.querySelectorAll('.card-footer .food-price');
   prices.forEach((price) => {
     price.innerHTML = Intl.NumberFormat('pt-BR', {
       style: 'currency',

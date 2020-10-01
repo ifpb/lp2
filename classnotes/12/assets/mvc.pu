@@ -22,10 +22,12 @@ rectangle Controller [
 rectangle Model [
   <b>Model
   models/Food.js
+  models/Category.js
 ]
 rectangle Seed [
   <b>Seed
   seeders/index.js
+  seeders/data.json
 ]
 rectangle Migration [
   <b>Migrations

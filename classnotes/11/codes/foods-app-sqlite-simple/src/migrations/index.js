@@ -1,12 +1,14 @@
 const { conn } = require('../db');
 
 async function up() {
-  const sql = `CREATE TABLE IF NOT EXISTS foods (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    image TEXT,
-    price DOUBLE
-  )`;
+  const sql = `
+    CREATE TABLE IF NOT EXISTS foods (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT,
+      image TEXT,
+      price DOUBLE
+    )
+  `;
 
   const db = await conn();
 

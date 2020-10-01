@@ -125,7 +125,7 @@ src/controllers/foodsController.js:
 
 ![](assets/nunjucks.png)
 
-src/views/foods/index.njk:
+src/views/foods/index.njk ([VScode Nunjucks](https://marketplace.visualstudio.com/items?itemName=ronnidc.nunjucks)):
 
 ```html
 {% raw %}
@@ -192,3 +192,5 @@ src/views/layout.njk:
 </html>
 {% endraw %}
 ```
+
+<img src="assets/preview.png" alt="Preview" width="100%">

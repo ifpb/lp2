@@ -3,10 +3,9 @@
   - [MVC com Banco de Dados](#mvc-com-banco-de-dados)
   - [Aplicação com SQLite](#aplicação-com-sqlite)
     - [Estrutura de Código](#estrutura-de-código)
-    - [Database](#database)
     - [Loader](#loader)
     - [Migration](#migration)
-    - [Seed](#seed)
+    - [Database](#database)
     - [Model](#model)
     - [Controller](#controller)
 
@@ -78,7 +77,7 @@ $ npm install express nunjucks
 
 [vscode-sqlite](https://marketplace.visualstudio.com/items?itemName=alexcvzz.vscode-sqlite):
 
-![](assets/db-foods.png)
+![](assets/database.png)
 
 src/migrations/index.js:
 

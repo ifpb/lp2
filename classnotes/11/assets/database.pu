@@ -4,7 +4,7 @@ skinparam linetype ortho
 skinparam monochrome true
 
 entity "Food" as food {
-  *id : number
+  *id : integer
   name : text
   image : text
   price: double

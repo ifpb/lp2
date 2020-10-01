@@ -38,7 +38,8 @@
               <img src="${food.image}" alt="${food.name}" class="w-100">
             </div>
             <div class="card-footer text-right">
-              ${formatCurrency(food.price)}
+              <span class="food-category float-left badge badge-secondary">${food.category}</span>
+              <span class="food-price">${formatCurrency(food.price)}</span>
             </div>
           </div>
         </div>`;
