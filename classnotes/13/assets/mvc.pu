@@ -22,10 +22,16 @@ rectangle Controller [
 rectangle Model [
   <b>Model
   models/Food.js
+  models/Category.js
 ]
 rectangle Seed [
   <b>Seed
   seeders/index.js
+  seeders/data.json
+]
+rectangle Migration [
+  <b>Migrations
+  migrations/index.js
 ]
 rectangle View [
   <b>View
@@ -34,21 +40,24 @@ rectangle View [
 ]
 database Database [
   <b>Database
-  Array & Key
+  db/database.sqlite
 ]
 
-Browser -> Router: 1. /foods/index
+Browser -right-> Router: 1. /foods/index
 Router -right-> Controller: 2. index
-Controller <-down-> Model: 3. Food.readAll
-Controller <-down-> Model: 5. JSON
-Model <-down-> Database: 4. JSON
+Model -up-> Controller: 5. JSON
+Controller -down-> Model: 3. readAll
+Model <-down-> Database: 4. SQL
 View -down-> Controller: 7. HTML
 Controller -up-> View: 6. foods
 Controller -left-> Browser : 8. HTML
 Loader .up.> Router
-Loader .down.> Seed: Seed.up
-Seed .right.> Model: Food.create
+Loader .down.> Seed: up
+Seed .right.> Model: create
+Migration ..> Database: SQL
+Loader .down.> Migration: up
 View -[hidden]- Controller
+Migration -right[hidden]- Seed
 Controller -left[hidden]- Browser
 Seed -right[hidden]- Model
 Seed -down[hidden]- Database

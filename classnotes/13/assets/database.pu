@@ -4,7 +4,7 @@ skinparam linetype ortho
 skinparam monochrome true
 left to right direction
 
-entity "foods" as food {
+entity "Food" as food {
   *id : integer
   name : text
   image : text
@@ -12,7 +12,7 @@ entity "foods" as food {
   *category_id : integer <<FK>>
 }
 
-entity "categories" as category {
+entity "Category" as category {
   *id : integer
   name : text
 }
