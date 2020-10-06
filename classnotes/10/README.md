@@ -55,7 +55,7 @@ foods-app
 │   │   └── sanduiche.jpg
 │   └── js
 │       ├── bootstrap.min.js
-│       ├── jquery.slim.min.js
+│       ├── jquery.min.js
 │       └── popper.min.js
 └── src
     ├── controllers

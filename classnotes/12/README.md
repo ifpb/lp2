@@ -1,23 +1,28 @@
-# Banco de Dados
+# Relacionamento no Banco de Dados
 
-  - [Relacionamento de Entidades](#relacionamento-de-entidades)
-  - [Aplicação com SQLite](#aplicação-com-sqlite)
-    - [Estrutura de Código](#estrutura-de-código)
-    - [Migration](#migration)
-    - [Model](#model)
-    - [View](#view)
+  - [Arquitetura da Aplicação](#arquitetura-da-aplicação)
+  - [Entidades do Banco](#entidades-do-banco)
+  - [Estrutura de Código](#estrutura-de-código)
+  - [Migration](#migration)
+  - [Seeders](#seeders)
+  - [Model](#model)
+  - [View](#view)
 
-## Relacionamento de Entidades
+## Arquitetura da Aplicação
 
 ---
 
 ![](assets/mvc.png)
 
-## Aplicação com SQLite
+## Entidades do Banco
 
 ---
 
-### Estrutura de Código
+![](assets/database.png)
+
+## Estrutura de Código
+
+---
 
 ```
 foods-app
@@ -35,7 +40,7 @@ foods-app
 │   │   └── suco.jpg
 │   └── js
 │       ├── bootstrap.min.js
-│       ├── jquery.slim.min.js
+│       ├── jquery.min.js
 │       └── popper.min.js
 └── src
     ├── controllers
@@ -62,7 +67,9 @@ foods-app
 
 [![Edit express-foods-app-sqlite-has-many](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/express-foods-app-sqlite-has-many-2c981?fontsize=14&hidenavigation=1&theme=dark)
 
-### Migration
+## Migration
+
+---
 
 ![](assets/database.png)
 
@@ -72,7 +79,25 @@ src/migrations/index.js:
 {% include_relative codes/foods-app-sqlite-simple/src/migrations/index.js %}
 ```
 
-### Model
+## Seeders
+
+---
+
+src/seeders/data.json:
+
+```json
+{% include_relative codes/foods-app-sqlite-simple/src/seeders/data.json %}
+```
+
+src/seeders/index.js:
+
+```js
+{% include_relative codes/foods-app-sqlite-simple/src/seeders/index.js %}
+```
+
+## Model
+
+---
 
 src/models/Food.js:
 
@@ -86,7 +111,9 @@ src/models/Category.js:
 {% include_relative codes/foods-app-sqlite-simple/src/models/Category.js %}
 ```
 
-### View
+## View
+
+---
 
 src/views/foods/index.njk:
 

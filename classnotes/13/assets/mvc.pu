@@ -37,6 +37,7 @@ rectangle View [
   <b>View
   views/layout.njk
   views/foods/index.njk
+  views/foods/_delete.njk
 ]
 database Database [
   <b>Database

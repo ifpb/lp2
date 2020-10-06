@@ -1,5 +1,6 @@
 @startuml
 hide circle
+scale 1.5
 skinparam linetype ortho
 skinparam monochrome true
 left to right direction
