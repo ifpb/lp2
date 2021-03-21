@@ -1,0 +1,26 @@
+{
+  "name": "foods-app-sqlite-simple",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "db:reload": "npm run db:drop && npm run db:load",
+    "db:load": "npm run db:migration && npm run db:seed",
+    "db:migration": "node src/db/migration.js",
+    "db:seed": "node src/db/seed.js",
+    "db:drop": "[ -f src/db/database.sqlite ] && rm src/db/database.sqlite"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nunjucks": "^3.2.2",
+    "sqlite-async": "^1.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
