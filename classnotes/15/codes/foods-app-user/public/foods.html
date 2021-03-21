@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <title>Menu</title>
+  <style>
+    .food-actions {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="mt-5 text-center">Menu</h1>
+
+    <div class="text-right">
+      <button
+        type="button"
+        class="btn btn-secondary rounded-circle mr-4 font-weight-bold"
+        id="newBtnFood"
+        data-toggle="modal"
+        data-target="#formFoodModal"
+        onclick="loadStoreFood()">
+        +
+      </button>
+    </div>
+
+    <section class="card-deck my-3"></section>
+
+    <form id="formFood">
+      <div class="modal fade" id="formFoodModal" tabindex="-1" aria-labelledby="formFoodLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="formFoodLabel"></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="food-name">Nome</label>
+                <input type="text" class="form-control" id="food-name" name="name">
+              </div>
+              <div class="form-group">
+                <label for="food-image">Image</label>
+                <input type="text" class="form-control" id="food-image" name="image">
+              </div>
+              <div class="form-group">
+                <label for="food-price">Preço</label>
+                <input type="text" class="form-control" id="food-price" name="price">
+              </div>
+              <div class="form-group">
+                <label for="food-category">Categoria</label>
+                <select class="form-control" id="food-category" name="category_id"></select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+              <button type="submit" class="btn btn-primary">Confirmar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <form id="formDeleteFood">
+      <div class="modal fade" id="deleteFoodModal" tabindex="-1" aria-labelledby="deleteFoodLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteFoodLabel">Excluir comida</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Deseja realmente excluir <span id="modal-name-food"></span>?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+              <button type="button" class="btn btn-primary" id="deleteFoodBtn">Excluir</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  <div>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/popper.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script type="module">
+    import api from './js/services/api.js';
+
+    function formatCurrency(price) {
+      return Intl.NumberFormat('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        }).format(price)
+    }
+
+    function createFoodActions(food) {
+      return `
+        <i
+          class="far fa-trash-alt"
+          onclick="deleteFoodView(${food.id}, '${food.name}')"
+          data-toggle="modal"
+          data-target="#deleteFoodModal">
+        </i>
+        <i
+          class="fas fa-pencil-alt"
+          onclick="loadFormUpdateFood(${food.id}, '${food.name}', '${food.image}', '${food.price}', '${food.category}')"
+          data-toggle="modal"
+          data-target="#formFoodModal">
+        </i>
+      `;
+    }
+
+    function createFoodView(food) {
+      const foodsView = `
+        <div class="card-food col-sm-6 col-lg-4 col-xl-3 mb-3" id="food-${ food.id }">
+          <div class="card">
+            <div class="card-header text-center font-weight-bold">
+              <span class="food-name">
+                ${food.name}
+              </span>
+              <span class="food-actions float-right">
+                ${createFoodActions(food)}
+              </span>
+            </div>
+            <div class="card-body p-0">
+              <img src="${food.image}" alt="${food.name}" class="food-image w-100">
+            </div>
+            <div class="card-footer text-right">
+              <span class="food-category float-left badge badge-secondary">${food.category}</span>
+              <span class="food-price">${formatCurrency(food.price)}</span>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const foodsDeck = document.querySelector('.card-deck');
+
+      foodsDeck.insertAdjacentHTML('beforeend', foodsView);
+    }
+
+    async function loadFoods() {
+      const foods = await api.read('/foods');
+
+      for (const food of foods) {
+        createFoodView(food);
+      }
+    }
+
+    async function loadFormCategories() {
+      const categories = await api.read('categories');
+
+      for (const category of categories) {
+        const categoriesView = `<option value="${category.id}">${category.name}</option>`;
+        document.querySelector('select').insertAdjacentHTML('beforeend', categoriesView);
+      }
+    }
+
+    function loadFormValues(title, foodName, foodImage, foodPrice, foodCategory) {
+      const formLabel = document.querySelector('#formFoodLabel');
+      const foodNameInput = document.querySelector('#food-name');
+      const foodImageInput = document.querySelector('#food-image');
+      const foodPriceInput = document.querySelector('#food-price');
+      const foodCategorySelect = document.querySelector('#food-category');
+
+      formLabel.innerHTML = title;
+      foodNameInput.value = foodName;
+      foodImageInput.value = foodImage;
+      foodPriceInput.value = foodPrice;
+      Array.from(foodCategorySelect.options).forEach((option, index) => {
+        if (option.innerHTML === foodCategory)
+          foodCategorySelect.value = index + 1;
+      })
+    }
+
+    function loadStoreFood() {
+      const formFood = document.querySelector('#formFood');
+
+      loadFormValues('Nova Comida', '', '', '', 1);
+
+      formFood.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        let food = Object.fromEntries(new FormData(formFood));
+
+        const newFood = await api.create('/foods', food);
+
+        createFoodView(newFood);
+
+        $('#formFoodModal').modal('toggle');
+
+        document.querySelector('#newBtnFood').blur();
+      });
+    }
+
+    function updateFoodRow(food) {
+      const foodName = document.querySelector(`#food-${food.id} .food-name`);
+      const foodImage = document.querySelector(`#food-${food.id} .food-image`);
+      const foodPrice = document.querySelector(`#food-${food.id} .food-price`);
+      const foodCategory = document.querySelector(`#food-${food.id} .food-category`);
+      const foodActions = document.querySelector(`#food-${food.id} .food-actions`);
+      const foodCategorySelect = document.querySelector('#food-category');
+
+      foodName.innerHTML = food.name;
+      foodImage.src = food.image;
+      foodPrice.innerHTML = food.price;
+      foodActions.innerHTML = createFoodActions(food);
+      foodCategory.innerHTML = foodCategorySelect.options[food.category_id - 1].innerHTML;
+    }
+
+    function loadFormUpdateFood(...food) {
+      const [id, name, image, price, category] = food;
+
+      const formFood = document.querySelector('#formFood');
+
+      loadFormValues('Atualizar Comida', name, image, price, category);
+
+      formFood.onsubmit = (e) => {
+        e.preventDefault();
+
+        const food = Object.fromEntries(new FormData(formFood));
+
+        api.update(`/foods/${id}`, food);
+
+        updateFoodRow({id, ...food});
+
+        $('#formFoodModal').modal('toggle');
+      };
+    }
+
+    function deleteFoodView(foodId, foodName) {
+      document.querySelector('#modal-name-food').innerHTML = foodName;
+
+      document.querySelector('#deleteFoodBtn').onclick = (e) => {
+        e.preventDefault();
+
+        api.destroy(`/foods/${foodId}`);
+
+        document.querySelector(`#food-${ foodId }`).remove();
+
+        $('#deleteFoodModal').modal('toggle');
+      };
+    }
+
+    window.loadStoreFood = loadStoreFood;
+    window.loadFormUpdateFood = loadFormUpdateFood;
+    window.deleteFoodView = deleteFoodView;
+
+    loadFoods();
+    loadFormCategories();
+  </script>
+</body>
+</html>
