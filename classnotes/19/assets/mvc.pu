@@ -1,0 +1,94 @@
+@startuml
+title Foods App
+hide footbox
+skinparam monochrome true
+skinparam defaultTextAlignment center
+
+rectangle Browser [
+  <b>Browser
+]
+rectangle Loader [
+  <b>Loader
+  index.js
+]
+rectangle Env [
+  <b>Env
+  .env
+]
+rectangle Config [
+  <b>Config
+  config/mail.js
+  config/multer.js
+]
+rectangle Middleware [
+  <b>Middleware
+  middleware/auth.js
+]
+rectangle Router [
+  <b>Router
+  routes/index.js
+]
+rectangle Controller [
+  <b>Controller
+  controllers/authController.js
+  controllers/categoriesController.js
+  controllers/foodsController.js
+  controllers/mailController.js
+  controllers/usersController.js
+]
+rectangle Model [
+  <b>Model
+  models/Food.js
+  models/Category.js
+  models/User.js
+]
+rectangle Seed [
+  <b>Seed
+  seeders/index.js
+  seeders/data.json
+]
+rectangle Migration [
+  <b>Migrations
+  migrations/index.js
+]
+rectangle View [
+  <b>View
+  views/layout.njk
+  views/_menu.njk
+  views/auth/create.njk
+  views/foods/index.njk
+  views/foods/_delete.njk
+  views/foods/_form.njk
+  views/users/create.njk
+]
+database Database [
+  <b>Database
+  db/database.sqlite
+  sessions
+]
+
+Browser -right-> Router: 1. /foods/index
+Router -right-> Controller: 2. index
+Router <.down.> Middleware: isAuthenticated
+Middleware .up.> Controller: signin
+Model -up-> Controller: 5. JSON
+Controller -down-> Model: 3. readAll
+Controller .right.> Config
+Model <-down-> Database: 4. SQL
+View -down-> Controller: 7. HTML
+Controller -up-> View: 6. foods
+Controller -left-> Browser : 8. HTML
+Loader .up.> Router
+Loader .down.> Seed: up
+Loader .right.> Middleware: activeLocalSession
+Loader .left.> Env
+Seed .right.> Model: create
+Migration ..> Database: SQL
+Loader .down.> Migration: up
+View -[hidden]- Controller
+Migration -right[hidden]- Seed
+Controller -left[hidden]- Browser
+Seed -right[hidden]- Model
+Seed -down[hidden]- Database
+
+@enduml
