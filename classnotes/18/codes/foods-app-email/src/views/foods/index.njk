@@ -1,0 +1,153 @@
+{% extends "layout.njk" %}
+
+{% set title = "Menu" %}
+
+{% block style %}
+<style>
+  .food-actions {
+    cursor: pointer;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1 class="mt-5 text-center">
+  {{ title }}
+</h1>
+
+<div class="text-right">
+  <button
+    type="button"
+    class="btn btn-secondary rounded-circle mr-4 font-weight-bold"
+    id="newBtnFood"
+    data-toggle="modal"
+    data-target="#formFoodModal"
+    onclick="loadCreateFoodForm()">
+    +
+  </button>
+</div>
+
+<section class="card-deck my-3">
+  {% for food in foods %}
+  <div class="card-food col-sm-6 col-lg-4 col-xl-3 mb-3" id="food-{{ food.id }}">
+    <div class="card">
+      <div class="card-header text-center font-weight-bold">
+        <span class="food-name">
+          {{ food.name }}
+        </span>
+        <span class="food-actions float-right">
+          <i
+            class="far fa-trash-alt"
+            onclick="loadDeleteFoodForm({{ food.id }}, '{{ food.name }}')"
+            data-toggle="modal"
+            data-target="#deleteFoodModal">
+          </i>
+          <i
+            class="fas fa-pencil-alt"
+            onclick="loadUpdateFoodForm({{ food.id }}, '{{ food.name }}', '{{ food.image }}', '{{ food.price }}', '{{ food.category }}')"
+            data-toggle="modal"
+            data-target="#formFoodModal">
+          </i>
+        </span>
+      </div>
+      <div class="card-body p-0">
+        <img src="{{ food.image }}" alt="{{ food.name }}" class="w-100">
+      </div>
+      <div class="card-footer text-right">
+        <span class="food-category float-left badge badge-secondary">{{ food.category }}</span>
+        <span class="food-price">{{ food.price }}</span>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</section>
+{% include "foods/_form.njk" %}
+{% include "foods/_delete.njk" %}
+{% endblock %}
+
+{% block script %}
+<script type="module">
+  import api from '/js/services/api.js';
+
+  function formatCurrency() {
+    const prices = document.querySelectorAll('.card-footer .food-price');
+    prices.forEach((price) => {
+      price.innerHTML = Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+      }).format(price.innerHTML)
+    });
+  }
+
+  function loadFormValues(title, foodName, foodImage, foodPrice, foodCategory) {
+    const formLabel = document.querySelector('#formFoodLabel');
+    const foodNameInput = document.querySelector('#food-name');
+    const foodImageInput = document.querySelector('#food-image');
+    const foodPriceInput = document.querySelector('#food-price');
+    const foodCategorySelect = document.querySelector('#food-category');
+
+    formLabel.innerHTML = title;
+    foodNameInput.value = foodName;
+    foodImageInput.value = foodImage;
+    foodPriceInput.value = foodPrice;
+    Array.from(foodCategorySelect.options).forEach((option, index) => {
+      if (option.innerHTML === foodCategory)
+        foodCategorySelect.value = index + 1;
+    })
+  }
+
+  function loadCreateFoodForm() {
+    document.querySelector('#newBtnFood').blur();
+
+    const form = document.querySelector('#formFood');
+
+    loadFormValues('Nova Comida', '', '', '', 1);
+
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+
+      const food = Object.fromEntries(new FormData(form));
+
+      await api.create('/foods', food);
+
+      window.location.href = '/foods/index';
+    };
+  }
+
+  function loadUpdateFoodForm(...food) {
+      const [id, name, image, price, category] = food;
+
+      const formFood = document.querySelector('#formFood');
+
+      loadFormValues('Atualizar Comida', name, image, price, category);
+
+      formFood.onsubmit = async (e) => {
+        e.preventDefault();
+
+        const food = Object.fromEntries(new FormData(formFood));
+
+        await api.update(`/foods/${id}`, food);
+
+        window.location.href = '/foods/index';
+      };
+    }
+
+  function loadDeleteFoodForm(foodId, foodName) {
+    document.querySelector('#modal-name-food').innerHTML = foodName;
+
+    document.querySelector('#deleteFoodBtn').onclick = async (e) => {
+      e.preventDefault();
+
+      await api.destroy(`/foods/${foodId}`);
+
+      window.location.href = '/foods/index';
+    };
+  }
+
+  window.loadCreateFoodForm = loadCreateFoodForm;
+  window.loadUpdateFoodForm = loadUpdateFoodForm;
+  window.loadDeleteFoodForm = loadDeleteFoodForm;
+
+  formatCurrency();
+</script>
+{% endblock %}
