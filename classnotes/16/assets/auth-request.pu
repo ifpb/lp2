@@ -1,0 +1,38 @@
+@startuml
+hide footbox
+skinparam monochrome true
+
+Client -> Server: GET /home
+note right: GET /home HTTP/1.1\nHost: localhost:3000
+Server -> Client: HTTP/1.1 302 Found
+note left: HTTP/1.1 302 Found\nLocation: /signin\nSet-Cookie: connect.sid=s%3AT4G...
+Client -> Server: GET /signin
+note right: GET /signin HTTP/1.1\nHost: localhost:3000\nCookie: connect.sid=s%3AT4G...
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\n\n<html>\n  ...\n  <h1>Login</h1>\n  <form action"/signin" method="post">\n  ...
+Client -> Server: POST /signin
+note right: POST /signin HTTP/1.1\nHost: localhost:3000\nContent-Type: application/x-www-form-urlencoded\nCookie: connect.sid=s%3AT4G...\n\nusername=admin&password=ad
+Server -> Client: HTTP/1.1 302
+note left: HTTP/1.1 302 Found\nLocation: /signin
+Client -> Server: GET /signin
+note right: GET /signin HTTP/1.1\nHost: localhost:3000\nCookie: connect.sid=s%3AT4G...
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\n\n<html>\n  ...\n  <h1>Login</h1>\n  <form action"/signin" method="post">\n  ...
+Client -> Server: POST /signin
+note right: POST /signin HTTP/1.1\nHost: localhost:3000\nContent-Type: application/x-www-form-urlencoded\nCookie: connect.sid=s%3AT4G...\n\nusername=admin&password=admin
+Server -> Client: HTTP/1.1 302
+note left: HTTP/1.1 302 Found\nLocation: /home
+Client -> Server: GET /home
+note right: GET /signin HTTP/1.1\nHost: localhost:3000\nCookie: connect.sid=s%3AT4G...
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\n\n<html>\n  ...\n  <h1>Home</h1>\n  <a href="/signout">Sign out</a>\n  ...
+Client -> Server: GET /singout
+note right: GET /signout HTTP/1.1\nHost: localhost:3000\nCookie: connect.sid=s%3AT4G...
+Server -> Client: HTTP/1.1 302 Found
+note left: HTTP/1.1 302 Found\nLocation: /signin
+Client -> Server: GET /signin
+note right: GET /signin HTTP/1.1\nHost: localhost:3000\nCookie: connect.sid=s%3AT4G...
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\nSet-Cookie: connect.sid=s%3A99i...\n\n<html>\n  ...\n  <h1>Login</h1>\n  <form action"/signin" method="post">\n  ...
+
+@enduml
