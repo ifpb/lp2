@@ -1,0 +1,45 @@
+<form id="formFood" enctype="multipart/form-data">
+  <div class="modal fade" id="formFoodModal" tabindex="-1" aria-labelledby="formFoodLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="formFoodLabel"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="food-name">Nome</label>
+            <input type="text" class="form-control" id="food-name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="food-price">Preço (R$)</label>
+            <input type="number" class="form-control" id="food-price" name="price" step="0.01" placeholder="0,00" required>
+          </div>
+          <div class="form-group">
+            <label for="food-category">Categoria</label>
+            <select class="form-control" id="food-category" name="category_id">
+              {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="food-image-file">Image</label><br>
+            <input type="hidden" id="food-image-path" name="image_path">
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="customFile" name="image">
+              <label class="custom-file-label" for="customFile" data-browse="Selecionar">Escolha uma imagem</label>
+            </div>
+            <img id="food-image-preview" class="border rounded w-100 mt-3">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
