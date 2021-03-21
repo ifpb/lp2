@@ -1,6 +1,5 @@
 # Manipulação de Sessão
 
-- [Manipulação de Sessão](#manipulação-de-sessão)
   - [Cookie](#cookie)
     - [Front-end (window.document.cookie)](#front-end-windowdocumentcookie)
     - [Back-end (express, cookie-parser)](#back-end-express-cookie-parser)

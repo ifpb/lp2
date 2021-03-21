@@ -1,6 +1,5 @@
 # Validação de Dados
 
-- [Validação de Dados](#validação-de-dados)
   - [Foods App](#foods-app)
   - [Nome Obrigatório](#nome-obrigatório)
   - [Confirmação da Senha](#confirmação-da-senha)

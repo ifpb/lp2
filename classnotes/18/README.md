@@ -1,6 +1,5 @@
-# Email
+# Manipulação de Email
 
-- [Email](#email)
   - [Foods App](#foods-app)
   - [Arquitetura do Código](#arquitetura-do-código)
   - [Load](#load)
@@ -97,7 +96,15 @@ foods-app-email
 .env:
 
 ```js
-{% include_relative codes/foods-app-auth/.env %}
+NODE_ENV=development
+
+STORAGE_TYPE=local
+
+EMAIL_HOST=smtp.ethereal.email
+EMAIL_PORT=587
+EMAIL_SECURE=false
+EMAIL_USER=
+EMAIL_PASS=
 ```
 
 src/ìndex.js:
@@ -116,7 +123,7 @@ $ npm i nodemailer dotenv
 src/config/mail.js:
 
 ```js
-{% include_relative codes/foods-app-auth/src/config/mail.js %}
+{% include_relative codes/foods-app-email/src/config/mail.js %}
 ```
 
 ## Controller
@@ -126,13 +133,13 @@ src/config/mail.js:
 src/controllers/mailController.js:
 
 ```js
-{% include_relative codes/foods-app-auth/src/controllers/mailController.js %}
+{% include_relative codes/foods-app-email/src/controllers/mailController.js %}
 ```
 
 src/controllers/usersController.js:
 
 ```js
-{% include_relative codes/foods-app-auth/src/controllers/usersController.js %}
+{% include_relative codes/foods-app-email/src/controllers/usersController.js %}
 ```
 
 ```

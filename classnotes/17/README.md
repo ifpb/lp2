@@ -1,6 +1,5 @@
 # Autenticação
 
-- [Autenticação](#autenticação)
   - [Foods App](#foods-app)
   - [Arquitetura do Código](#arquitetura-do-código)
   - [Load](#load)
