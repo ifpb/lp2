@@ -1,0 +1,16 @@
+# Classnotes
+
+- [Classnote 07](07/)
+- [Classnote 08](08/)
+- [Classnote 09](09/)
+- [Classnote 10](10/)
+- [Classnote 11](11/)
+- [Classnote 12](12/)
+- [Classnote 13](13/)
+- [Classnote 14](14/)
+- [Classnote 15](15/)
+- [Classnote 16](16/)
+- [Classnote 17](17/)
+- [Classnote 18](18/)
+- [Classnote 19](19/)
+- [Classnote 20](20/)

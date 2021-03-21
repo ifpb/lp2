@@ -1,6 +1,5 @@
 # Revisão
 
-- [Revisão](#revisão)
   - [Foods App](#foods-app)
   - [Arquitetura do Código](#arquitetura-do-código)
   - [Menu](#menu)
