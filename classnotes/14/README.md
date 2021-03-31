@@ -18,6 +18,8 @@
 
 ![](assets/mvc.png)
 
+![](assets/database.png)
+
 
 ```
 foods-app-crud
