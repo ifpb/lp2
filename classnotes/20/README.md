@@ -93,55 +93,37 @@ foods-app-validation
 
 ![](assets/name-required.png)
 
-src/views/foods/_form.njk:
+src/views/users/create.njk:
 
 ```html
 {% raw %}
-<form id="formFood" enctype="multipart/form-data">
-  <div class="modal fade" id="formFoodModal" tabindex="-1" aria-labelledby="formFoodLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="formFoodLabel"></h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="food-name">Nome</label>
-            <input type="text" class="form-control" id="food-name" name="name" required>
-          </div>
-          <div class="form-group">
-            <label for="food-price">Preço (R$)</label>
-            <input type="number" class="form-control" id="food-price" name="price" step="0.01" placeholder="0,00" required>
-          </div>
-          <div class="form-group">
-            <label for="food-category">Categoria</label>
-            <select class="form-control" id="food-category" name="category_id">
-              {% for category in categories %}
-                <option value="{{ category.id }}">{{ category.name }}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="food-image-file">Image</label><br>
-            <input type="hidden" id="food-image-path" name="image_path">
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="food-image-file" name="image">
-              <label class="custom-file-label" for="food-image-file" data-browse="Selecionar">Escolha uma imagem</label>
-            </div>
-            <img id="food-image-preview" class="border rounded w-100 mt-3">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-          <button type="submit" class="btn btn-primary">Confirmar</button>
-        </div>
+...
+<div class="row">
+  <div class="col-md-6 mx-auto mb-5">
+    <form id="formUser" action="/signup" method="post">
+      <div class="form-group">
+        <label for="user-name">Nome</label>
+        <input type="text" class="form-control" id="user-name" name="name" value="{{ newUser.name }}" required>
       </div>
-    </div>
+      <div class="form-group">
+        <label for="user-email">E-mail</label>
+        <input type="email" class="form-control" id="user-email" name="email" value="{{ newUser.email }}" required>
+      </div>
+      <div class="form-group">
+        <label for="user-password">Senha</label>
+        <input type="password" class="form-control" id="user-password" name="password" value="{{ newUser.password }}" minlength="8" required>
+      </div>
+      <div class="form-group">
+        <label for="user-confirm_password">Confirmar Senha</label>
+        <input type="password" class="form-control" id="user-confirm_password" name="confirm_password" value="{{ newUser.password }}" required>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary float-right">Confirmar</button>
+      </div>
+    </form>
   </div>
-</form>
+</div>
+...
 {% endraw %}
 ```
 
@@ -179,7 +161,6 @@ src/views/users/create.njk:
         <button type="submit" class="btn btn-primary float-right">Confirmar</button>
       </div>
     </form>
-
   </div>
 </div>
 {% endblock %}
