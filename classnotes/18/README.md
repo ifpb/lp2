@@ -98,8 +98,6 @@ foods-app-email
 ```js
 NODE_ENV=development
 
-STORAGE_TYPE=local
-
 EMAIL_HOST=smtp.ethereal.email
 EMAIL_PORT=587
 EMAIL_SECURE=false
@@ -120,12 +118,6 @@ const express = require('express');
 $ npm i nodemailer dotenv
 ```
 
-src/config/mail.js:
-
-```js
-{% include_relative codes/foods-app-email/src/config/mail.js %}
-```
-
 ## Controller
 
 ---
@@ -135,6 +127,14 @@ src/controllers/mailController.js:
 ```js
 {% include_relative codes/foods-app-email/src/controllers/mailController.js %}
 ```
+
+src/config/mail.js:
+
+```js
+{% include_relative codes/foods-app-email/src/config/mail.js %}
+```
+
+> Transport: [Etherial](https://ethereal.email/), [AWS SES](https://nodemailer.com/transports/ses/), [Mailgum](https://www.mailgun.com/), [Sendgrid](https://sendgrid.com/), [Gmail](https://gmail.com/)
 
 src/controllers/usersController.js:
 

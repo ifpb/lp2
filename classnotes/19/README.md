@@ -90,7 +90,7 @@ foods-app-email
 
 [![Edit foods-app-upload](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/keen-sun-zo1lt?fontsize=14&hidenavigation=1&theme=dark)
 
-## Load
+## Controller
 
 ---
 
@@ -103,10 +103,6 @@ src/config/multer.js:
 ```
 $ npm i multer
 ```
-
-## Controller
-
----
 
 src/routes/index.js:
 

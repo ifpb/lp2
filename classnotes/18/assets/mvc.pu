@@ -11,6 +11,14 @@ rectangle Loader [
   <b>Loader
   index.js
 ]
+rectangle Env [
+  <b>Env
+  .env
+]
+rectangle Config [
+  <b>Config
+  config/mail.js
+]
 rectangle Middleware [
   <b>Middleware
   middleware/auth.js
@@ -22,8 +30,9 @@ rectangle Router [
 rectangle Controller [
   <b>Controller
   controllers/authController.js
-  controllers/foodsController.js
   controllers/categoriesController.js
+  controllers/foodsController.js
+  controllers/mailController.js
   controllers/usersController.js
 ]
 rectangle Model [
@@ -63,6 +72,7 @@ Router <.down.> Middleware: isAuthenticated
 Middleware .up.> Controller: signin
 Model -up-> Controller: 5. JSON
 Controller -down-> Model: 3. readAll
+Controller .right.> Config
 Model <-down-> Database: 4. SQL
 View -down-> Controller: 7. HTML
 Controller -up-> View: 6. foods
@@ -70,6 +80,7 @@ Controller -left-> Browser : 8. HTML
 Loader .up.> Router
 Loader .down.> Seed: up
 Loader .right.> Middleware: activeLocalSession
+Loader .left.> Env
 Seed .right.> Model: create
 Migration ..> Database: SQL
 Loader .down.> Migration: up
