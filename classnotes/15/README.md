@@ -182,8 +182,8 @@ src/models/User.js:
 ```
 
 ```
-$ npm i bcrypt
-$ npm run reload
+$ npm install bcrypt
+$ npm run db:reload
 ```
 
 ## Controller
@@ -251,6 +251,7 @@ src/views/users/create.njk:
 src/views/_menu.njk:
 
 ```html
+{% raw %}
 <ul class="navbar-nav ml-auto">
   <li class="nav-item {% if title == "Menu" %}active{% endif %}">
     <a class="nav-link" href="/">Menu </a>
@@ -259,4 +260,5 @@ src/views/_menu.njk:
     <a class="nav-link" href="/signup">Cadastrar</a>
   </li>
 </ul>
+{% endraw %}
 ```
