@@ -107,8 +107,6 @@
   function loadCreateFoodForm() {
     loadFormValues('Nova Comida', '', '', '', 1);
 
-    form['image'].required = true;
-
     form.onsubmit = async (e) => {
       e.preventDefault();
 
@@ -120,14 +118,18 @@
 
       document.querySelector('#newBtnFood').blur();
     };
+
+    form['image'].required = true;
+
+    form['image'].onchange = () => {
+      document.querySelector('.custom-file-label').innerText = form['image'].files[0].name;
+    }
   }
 
   function loadUpdateFoodForm(...food) {
     const [id, name, image, price, category] = food;
 
     loadFormValues('Atualizar Comida', name, image, price, category);
-
-    form['image'].required = false;
 
     form.onsubmit = async (e) => {
       e.preventDefault();
@@ -139,9 +141,12 @@
       window.location.href = '/foods/index';
     };
 
-    document.querySelector('#food-image-preview').onchange = () => {
+    form['image'].required = false;
+
+    form['image'].onchange = () => {
+      document.querySelector('.custom-file-label').innerText = form['image'].files[0].name;
       document.querySelector('#food-image-preview').src = '';
-    };
+    }
   }
 
   function loadDeleteFoodForm(foodId, foodName) {

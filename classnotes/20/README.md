@@ -128,8 +128,8 @@ src/views/foods/_form.njk:
             <label for="food-image-file">Image</label><br>
             <input type="hidden" id="food-image-path" name="image_path">
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="customFile" name="image">
-              <label class="custom-file-label" for="customFile" data-browse="Selecionar">Escolha uma imagem</label>
+              <input type="file" class="custom-file-input" id="food-image-file" name="image">
+              <label class="custom-file-label" for="food-image-file" data-browse="Selecionar">Escolha uma imagem</label>
             </div>
             <img id="food-image-preview" class="border rounded w-100 mt-3">
           </div>

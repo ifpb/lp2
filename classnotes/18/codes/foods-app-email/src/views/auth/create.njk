@@ -9,14 +9,6 @@
 
 <div class="row">
   <div class="col-md-6 mx-auto">
-    {% if error %}
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        {{ error }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    {% endif %}
     <form id="formUser" action="/signin" method="post">
       <div class="form-group">
         <label for="user-email">E-mail</label>

@@ -208,12 +208,16 @@ src/views/foods/_form.njk:
 
 ```html
 <div class="form-group">
-  <label for="food-image-file">Image</label><br>
+  <!--
+    <label for="food-image-file">Image</label><br>
+    <input type="file" id="food-image-file" name="image">
+    <input type="hidden" id="food-image-path" name="image_path">
+  -->
+  <label>Image</label>
   <input type="hidden" id="food-image-path" name="image_path">
-  <!-- <input type="file" id="food-image-file" name="image"> -->
   <div class="custom-file">
-    <input type="file" class="custom-file-input" id="customFile" name="image">
-    <label class="custom-file-label" for="customFile" data-browse="Selecionar">Escolha uma imagem</label>
+    <input type="file" class="custom-file-input" id="food-image-file" name="image">
+    <label class="custom-file-label" for="food-image-file" data-browse="Selecionar">Escolha uma imagem</label>
   </div>
   <img id="food-image-preview" class="border rounded w-100 mt-3">
 </div>
@@ -281,10 +285,6 @@ src/views/foods/index.njk:
 
   const form = document.querySelector('#formFood');
 
-  form['image'].onchange = () => {
-    document.querySelector('.custom-file-label').innerText = form['image'].value;
-  }
-
   ...
 
   function loadFormValues(title, foodName, foodImage, foodPrice, foodCategory) {
@@ -309,8 +309,6 @@ src/views/foods/index.njk:
   function loadCreateFoodForm() {
     loadFormValues('Nova Comida', '', '', '', 1);
 
-    form['image'].required = true;
-
     form.onsubmit = async (e) => {
       e.preventDefault();
 
@@ -322,14 +320,18 @@ src/views/foods/index.njk:
 
       document.querySelector('#newBtnFood').blur();
     };
+
+    form['image'].required = true;
+
+    form['image'].onchange = () => {
+      document.querySelector('.custom-file-label').innerText = form['image'].files[0].name;
+    }
   }
 
   function loadUpdateFoodForm(...food) {
     const [id, name, image, price, category] = food;
 
     loadFormValues('Atualizar Comida', name, image, price, category);
-
-    form['image'].required = false;
 
     form.onsubmit = async (e) => {
       e.preventDefault();
@@ -341,9 +343,12 @@ src/views/foods/index.njk:
       window.location.href = '/foods/index';
     };
 
-    document.querySelector('#food-image-preview').onchange = () => {
+    form['image'].required = false;
+
+    form['image'].onchange = () => {
+      document.querySelector('.custom-file-label').innerText = form['image'].files[0].name;
       document.querySelector('#food-image-preview').src = '';
-    };
+    }
   }
 
   ...
