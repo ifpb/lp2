@@ -108,7 +108,7 @@ src/views/layout.njk:
 
 ---
 
-src/index.njk:
+src/index.js:
 ```js
 ...
 
