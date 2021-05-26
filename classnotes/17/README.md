@@ -134,19 +134,19 @@ $ npm i cookie-parser express-session connect-sqlite3
 src/routes/index.js:
 
 ```js
-{% include_relative codes/foods-app-auth/src/routes/index.js %}
+{% include_relative codes/foods-app-auth-session/src/routes/index.js %}
 ```
 
 src/controllers/authController.js:
 
 ```js
-{% include_relative codes/foods-app-auth/src/controllers/authController.js %}
+{% include_relative codes/foods-app-auth-session/src/controllers/authController.js %}
 ```
 
 src/middleware/auth.js:
 
 ```js
-{% include_relative codes/foods-app-auth/src/middleware/auth.js %}
+{% include_relative codes/foods-app-auth-session/src/middleware/auth.js %}
 ```
 
 ## View
