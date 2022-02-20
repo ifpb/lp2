@@ -1,0 +1,12 @@
+{
+  "01": {
+    "title": "Aula 01",
+    "type": "nav",
+    "hidden": true
+  },
+  "02": {
+    "title": "Aula 02",
+    "type": "nav",
+    "hidden": true
+  }
+}

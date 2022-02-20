@@ -1,7 +1,0 @@
-### Read Foods
-
-GET http://localhost:3000/foods
-
-### Delete Food
-
-DELETE http://localhost:3000/foods/4

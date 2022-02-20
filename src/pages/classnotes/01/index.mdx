@@ -1,0 +1,209 @@
+import Code from '../../../components/Code.jsx';
+
+# Revisão - Sintase do Javascript
+
+## [Tipos de dados](https://ifpb.github.io/javascript-guide/ecma/values-and-types/)
+
+![JavaScript's type hierarchy](http://exploringjs.com/impatient-js/img-book/b8c834a3420a3b2d2df0d90dfa0c1dfd1f2ffbc9.svg)
+
+[JavaScript for impatient programmers (Book)](http://exploringjs.com/impatient-js/ch_values.html)
+
+| Category  | Types                               | Values                                                                                        |
+| --------- | ----------------------------------- | --------------------------------------------------------------------------------------------- |
+| Primitive | [Undefined](../undefined/syntax.md)   | `undefined`                                                                                    |
+| Primitive | [Null](../null/syntax.md)           | `null`                                                                                        |
+| Primitive | [Boolean](../boolean/syntax.md)     | `true`, `false`                                                                               |
+| Primitive | [Number](../number/syntax.md)       | `-15`<br />`15`, `0b1111`, `0o17`, `0xf`<br />`-123.45`<br />`123.45`, `1.2345e2`, `12345E-2` |
+| Primitive | [String](../string/syntax.md)       | `'Hello'`, `"Hello"`, `` `Hello` ``                                                           |
+| Object    | [Array](../array/syntax.md)         | `[]`<br />`[1, 2, 3]`<br />`[1, '2', true, [3, false]]`<br />`["Alice", "alice@email"]`       |
+| Object    | [Object](../object/syntax.md)       | `{name: "Alice", email: "alice@email"}`                                                       |
+
+## [Declaração de variáveis](https://ifpb.github.io/javascript-guide/ecma/variable/)
+
+```js
+var number = 10;
+console.log(number); //=> 10
+```
+
+```js
+let number = 10;
+console.log(number); //=> 10
+```
+
+```js
+const number = 10;
+console.log(number); //=> 10
+```
+
+## [Expressões e operadores](https://ifpb.github.io/javascript-guide/ecma/expression-and-operator/)
+
+| Operator type              | Operators                                                                                                             |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Increment and decrement    | `A++`, `A--`, `++A`, `--A`                                                                                            |
+| Arithmetic operators       | `+`, `-`, `*`, `/`, `%`, `**`                                                                                         |
+| Relational operators       | `in`, `instanceof`, `<`, `<=`, `>`, `>=`                                                                              |
+| Equality operators         | `==`, `!=`, `===`, `!==`                                                                                              |
+| Bitwise shift operators    | `<<`, `>>`, `>>>`                                                                                                     |
+| Binary bitwise operators   | `&`, `\|`, `^`                                                                                                        |
+| Binary logical operators   | `&&`, `\|\| `                                                                                                         |
+| Assignment operators       | `=`, `*=`, `/=`, `%=`, `+=`, `-=`, `<<=`, `>>=`, `>>>=`, `&=`, `^=`, `\|=`, `[a, b] = [1, 2]`, `{a, b} = {a:1, b:2}`  |
+| Conditional operator       | `(condition ? ifTrue : ifFalse)`                                                                                      |
+| Comma operator             | `,`                                                                                                                   |
+
+Referências:
+
+- [Expressions and operators \| MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence)
+
+## [Estruturas de decisão e repetição](https://ifpb.github.io/javascript-guide/ecma/statements-and-declarations/)
+
+### if
+
+```js
+const number = 10;
+let result;
+
+if (number % 2 == 0) {
+  result = 'par';
+} else {
+  result = 'ímpar';
+}
+
+console.log(result); //=> par
+```
+
+### while
+
+```js
+let flag = 1;
+
+while (flag <= 10) {
+  console.log(flag);
+  flag += 1;
+}
+//=>
+// 1
+// 2
+// ...
+// 9
+// 10
+```
+
+### Declaração de função
+
+```js
+function sum(param1, param2) {
+  return param1 + param2;
+}
+
+// Calling functions
+console.log(sum(2, 1)); //=> 3
+```
+
+```js
+const sum = function (param1, param2) {
+  return param1 + param2;
+};
+
+// Calling functions
+console.log(sum(2, 1)); //=> 3
+```
+
+```js
+const sum = (param1, param2) => param1 + param2;
+
+// Calling functions
+console.log(sum(2, 1)); //=> 3
+```
+
+## Definição de Módulos
+
+<Code src="/codes/modules/function-sum/index.js" lang="js" />
+
+- [Common Javascript - CJS](https://nodejs.org/api/modules.html)
+- [ECMAScript Modules - ESM](https://nodejs.org/api/esm.html)
+  - [ECMS Modules](https://ifpb.github.io/javascript-guide/ecma/modules/)
+
+CENÁRIOS
+
+```txt
+src
+├── lib.js
+└── main.js
+```
+
+|     | Uma Função | Várias Funções |
+| --- | ---------- | -------------- |
+| CJS | 1.1        | 2.1            |
+| ESM | 1.2        | 2.2            |
+
+### CENÁRIO 1.1 - Uma função no CJS
+
+src/lib.js:
+
+<Code src="/codes/modules/module-cjs-default/lib.js" lang="js" />
+
+src/main.js:
+
+<Code src="/codes/modules/module-cjs-default/main.js" lang="js" />
+
+### CENÁRIO 1.2 - Uma função no ESM
+
+src/lib.js:
+
+<Code src="/codes/modules/module-esm-default/lib.js" lang="js" />
+
+src/main.js:
+
+<Code src="/codes/modules/module-esm-default/main.js" lang="js" />
+
+### CENÁRIO 2.1 - Várias funções no CJS
+
+src/lib.js:
+
+<Code src="/codes/modules/module-cjs-named/lib.js" lang="js" />
+
+src/main.js:
+
+<Code src="/codes/modules/module-cjs-named/main.js" lang="js" />
+
+### CENÁRIO 2.2 - Várias funções no ESM
+
+src/lib.js:
+
+<Code src="/codes/modules/module-esm-named/lib.js" lang="js" />
+
+src/main.js:
+
+<Code src="/codes/modules/module-esm-named/main.js" lang="js" />
+
+**RESUMO**
+
+export const singleCJS = `
+module.exports = sum
+const sum = require('./lib')
+`;
+
+export const multiCJS = `
+module.exports = { sum, minus }
+const { sum, minus } = require('./lib')
+`;
+
+export const singleESM = `
+export default sum
+import sum from './lib'
+`;
+
+export const multiESM = `
+export { sum, minus }
+import { sum, minus } from './lib'
+`;
+
+|     | Uma Função                          | Várias Funções                     |
+| --- | ----------------------------------- | ---------------------------------- |
+| CJS | <Code code={singleCJS} lang="js" /> | <Code code={multiCJS} lang="js" /> |
+| ESM | <Code code={singleESM} lang="js" /> | <Code code={multiESM} lang="js" /> |
+
+
+> **Warning:** To load an ES module, set "type": "module" in the package.json or use the .mjs extension.
+
+<Code src="/codes/modules/module-esm-default/package.json" lang="json" />
