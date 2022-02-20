@@ -1,0 +1,10 @@
+@startuml
+title BMI
+hide footbox
+skinparam monochrome true
+
+Client -> Server: POST /bmi
+note right: POST /bmi HTTP/1.1\nHost: 127.0.0.1:3000\nContent-Type: application/json\n\n{\n  "weight": 100,\n  "height": 1.5\n}
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\n\n{\n  "weight": 100,\n  "height": 1.5,\n  "bmi": "Obesity"\n}
+@enduml

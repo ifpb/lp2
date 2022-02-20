@@ -8,5 +8,10 @@
     "title": "Aula 02",
     "type": "nav",
     "hidden": true
+  },
+  "03": {
+    "title": "Aula 03",
+    "type": "nav",
+    "hidden": true
   }
 }

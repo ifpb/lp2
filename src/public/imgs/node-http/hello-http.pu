@@ -1,0 +1,10 @@
+@startuml
+title Hello HTTP
+hide footbox
+skinparam monochrome true
+
+Client -> Server: HTTP Request (req)
+note right: GET / HTTP/1.1\nHost: 127.0.0.1:3000
+Server -> Client: HTTP Response (res)
+note left: HTTP/1.1 200 OK\nContent-Type: text/plain\nDate: Fri, 04 Sep 2020 12:16:16 GMT\nConnection: close\nContent-Length: 11\n\nHello World
+@enduml

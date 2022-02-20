@@ -1,0 +1,14 @@
+@startuml
+title Hello HTTP
+hide footbox
+skinparam monochrome true
+
+Client -> Server: GET /hello/en
+note right: GET /hello/en HTTP/1.1\nHost: 127.0.0.1:3000
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\n\nHello World!
+Client -> Server: GET /hello/pt
+note right: GET /hello/pt HTTP/1.1\nHost: 127.0.0.1:3000
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\n\nOlá Mundo!
+@enduml
