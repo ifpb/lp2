@@ -1,0 +1,14 @@
+@startuml
+title Delete
+hide footbox
+skinparam monochrome true
+
+Client -> Server: DELETE /foods/1
+note right: DELETE /foods/1 HTTP/1.1\nHost: 127.0.0.1:3000
+Server -> Client: HTTP/1.1 204 No Content
+note left: HTTP/1.1 204 No Content
+Client -> Server: DELETE /foods/a
+note right: DELETE /foods/a HTTP/1.1\nHost: 127.0.0.1:3000
+Server -> Client: HTTP/1.1 400 Bad Request
+note left: HTTP/1.1 400 Bad Request\n\n{\n  "error": "Food not found."\n}
+@enduml

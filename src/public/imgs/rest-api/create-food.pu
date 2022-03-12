@@ -1,0 +1,10 @@
+@startuml
+title Create
+hide footbox
+skinparam monochrome true
+
+Client -> Server: POST /foods
+note right: POST /foods HTTP/1.1\nHost: 127.0.0.1:3000\nContent-Type: application/json\n\n{\n  "name": "Salada 1",\n  "price": 15.5\n}
+Server -> Client: HTTP/1.1 201 Created
+note left: HTTP/1.1 201 Created\n\n{\n  "id": 1,\n  "name": "Salada 1",\n  "price": 15.5\n}
+@enduml
