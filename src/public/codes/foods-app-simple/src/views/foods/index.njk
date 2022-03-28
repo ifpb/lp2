@@ -1,0 +1,35 @@
+{% extends "layout.njk" %}
+
+{% set title = "Menu" %}
+
+{% block content %}
+<h1 class="my-5 text-center">{{ title }}</h1>
+
+<section class="card-deck">
+  {% for food in foods %}
+  <div class="card">
+    <div class="card-header text-center font-weight-bold">
+      {{ food.name }}
+    </div>
+    <div class="card-body p-0">
+      <img src="{{ food.image }}" alt="{{ food.name }}" class="w-100">
+    </div>
+    <div class="card-footer text-right">
+      {{ food.price }}
+    </div>
+  </div>
+  {% endfor %}
+</section>
+{% endblock %}
+
+{% block script %}
+<script>
+  const prices = document.querySelectorAll('.card-footer');
+  prices.forEach((price) => {
+    price.innerHTML = Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    }).format(price.innerHTML)
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,11 @@
+@startuml
+hide footbox
+skinparam monochrome true
+
+Client -> Server: GET /foods.html
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\n\nHTML...
+Client -> Server: GET /foods
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\n\nJSON
+@enduml
