@@ -1,0 +1,64 @@
+### Create Food (Salada)
+
+# @name createFood
+POST http://localhost:3000/foods
+Content-Type: application/json
+
+{
+  "name": "Salada",
+  "image": "/imgs/salada.jpg",
+  "price": 15.5
+}
+
+### Create Food (Hambúrguer)
+
+POST http://localhost:3000/foods
+Content-Type: application/json
+
+{
+  "name": "Hambúrguer",
+  "image": "/imgs/hamburguer.jpg",
+  "price": 10
+}
+
+### Create Food (Sanduíche)
+
+POST http://localhost:3000/foods
+Content-Type: application/json
+
+{
+  "name": "Sanduíche",
+  "image": "/imgs/sanduiche.jpg",
+  "price": 9
+}
+
+### Read Foods
+
+GET http://localhost:3000/foods
+
+
+### Read Food by name
+
+GET http://localhost:3000/foods?name=Salada
+
+### Read Food by id
+
+@id = {{createFood.response.body.$.id}}
+GET http://localhost:3000/foods/{{id}}
+
+### Update Food
+
+@id = {{createFood.response.body.$.id}}
+PUT http://localhost:3000/foods/{{id}}
+Content-Type: application/json
+
+{
+  "name": "Salada",
+  "image": "/imgs/salada .jpg",
+  "price": 16.5
+}
+
+### Delete Food
+
+@id = {{createFood.response.body.$.id}}
+DELETE http://localhost:3000/foods/{{id}}

@@ -1,0 +1,92 @@
+import Code from '../../../components/Code.jsx';
+
+## MVC com Banco de Dados
+
+![](/imgs/database/mvc.png)
+
+## Aplicação com SQLite
+
+### Estrutura de Código
+
+```txt
+foods-app
+├── .gitignore
+├── package-lock.json
+├── package.json
+├── public
+│   ├── css
+│   │   └── bootstrap.min.css
+│   ├── foods.html
+│   ├── imgs
+│   │   ├── hamburguer.jpg
+│   │   ├── salada.jpg
+│   │   └── sanduiche.jpg
+│   └── js
+│       ├── bootstrap.min.js
+│       ├── jquery.min.js
+│       └── popper.min.js
+└── src
+    ├── controllers
+    │   └── foodsController.js
+    ├── db
+    │   ├── database.sqlite
+    │   └── index.js
+    ├── index.js
+    ├── migrations
+    │   └── index.js
+    ├── models
+    │   └── Food.js
+    ├── routes
+    │   └── index.js
+    ├── seeders
+    │   └── index.js
+    └── views
+        ├── foods
+        │   └── index.njk
+        └── layout.njk
+```
+
+[![Edit express-foods-app-sqlite-simple](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/express-foods-app-sqlite-simple-y472j?fontsize=14&hidenavigation=1&theme=dark)
+
+### Loader
+
+src/index.js:
+
+<Code src="/codes/database/foods-app-sqlite-simple/src/index.js" />
+
+```bash
+$ npm install express nunjucks
+```
+
+### Migration
+
+[vscode-sqlite](https://marketplace.visualstudio.com/items?itemName=alexcvzz.vscode-sqlite):
+
+![](/imgs/database/database.png)
+
+src/migrations/index.js:
+
+<Code src="/codes/database/foods-app-sqlite-simple/src/migrations/index.js" />
+
+### Database
+
+
+src/db/index.js:
+
+<Code src="/codes/database/foods-app-sqlite-simple/src/db/index.js" />
+
+```bash
+$ npm install sqlite-async
+```
+
+### Model
+
+src/models/Food.js:
+
+<Code src="/codes/database/foods-app-sqlite-simple/src/models/Food.js" />
+
+### Controller
+
+src/controllers/foodsController.js:
+
+<Code src="/codes/database/foods-app-sqlite-simple/src/controllers/foodsController.js" />
