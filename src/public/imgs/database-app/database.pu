@@ -19,5 +19,5 @@ entity "categories" as category {
   name : text
 }
 
-food ||--|{ category
+food }|--|| category
 @enduml
