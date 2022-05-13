@@ -1,0 +1,42 @@
+{
+  "foods": [
+    {
+      "id": 1,
+      "name": "Hambúrguer",
+      "image": "/imgs/hamburguer.jpg",
+      "price": 10,
+      "category_id": 1
+    },
+    {
+      "id": 2,
+      "name": "Sanduíche",
+      "image": "/imgs/sanduiche.jpg",
+      "price": 9,
+      "category_id": 1
+    },
+    {
+      "id": 3,
+      "name": "Milk Shake",
+      "image": "/imgs/milkshake.jpg",
+      "price": 6.5,
+      "category_id": 2
+    },
+    {
+      "id": 4,
+      "name": "Suco",
+      "image": "/imgs/suco.jpg",
+      "price": 5,
+      "category_id": 2
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Lanche"
+    },
+    {
+      "id": 2,
+      "name": "Bebida"
+    }
+  ]
+}

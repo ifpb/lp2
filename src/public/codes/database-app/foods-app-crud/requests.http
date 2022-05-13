@@ -1,0 +1,31 @@
+### Create Food
+
+POST http://localhost:3000/foods
+Content-Type: application/json
+
+{
+  "name": "Batata Frita",
+  "image": "/imgs/batatafrita.jpg",
+  "price": 5,
+  "category_id": 1
+}
+
+### Read Foods
+
+GET http://localhost:3000/foods
+
+### Update Food
+
+PUT http://localhost:3000/foods/5
+Content-Type: application/json
+
+{
+  "name": "Batata Frita",
+  "image": "/imgs/batatafrita.jpg",
+  "price": 5.5,
+  "category_id": 1
+}
+
+### Delete Food
+
+DELETE http://localhost:3000/foods/5

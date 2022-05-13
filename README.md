@@ -8,4 +8,5 @@ Para executar localmente este projeto:
 $ yarn
 $ yarn build
 $ yarn start
+$ yarn export
 ```

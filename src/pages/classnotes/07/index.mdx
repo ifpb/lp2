@@ -1,0 +1,495 @@
+import Code from '../../../components/Code.jsx';
+
+# Banco de Dados
+
+## Relacionamento no Banco de Dados
+
+![](/imgs/database-relation/mvc.png)
+
+### Entidades do Banco
+
+![](/imgs/database-relation/database.png)
+
+### Estrutura de Código
+
+```txt
+foods-app
+├── .gitignore
+├── package-lock.json
+├── package.json
+├── public
+│   ├── css
+│   │   └── bootstrap.min.css
+│   ├── foods.html
+│   ├── imgs
+│   │   ├── hamburguer.jpg
+│   │   ├── milkshake.jpg
+│   │   ├── sanduiche.jpg
+│   │   └── suco.jpg
+│   └── js
+│       ├── bootstrap.min.js
+│       ├── jquery.min.js
+│       └── popper.min.js
+└── src
+    ├── controllers
+    │   └── foodsController.js
+    ├── db
+    │   ├── database.sqlite
+    │   └── index.js
+    ├── index.js
+    ├── migrations
+    │   └── index.js
+    ├── models
+    │   ├── Category.js
+    │   └── Food.js
+    ├── routes
+    │   └── index.js
+    ├── seeders
+    │   ├── data.json
+    │   └── index.js
+    └── views
+        ├── foods
+        │   └── index.njk
+        └── layout.njk
+```
+
+[![Edit express-foods-app-sqlite-has-many](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/express-foods-app-sqlite-has-many-2c981?fontsize=14&hidenavigation=1&theme=dark)
+
+### Migration
+
+![](/imgs/database-relation/database.png)
+
+src/migrations/index.js:
+
+<Code src="/codes/database-relation/foods-app-sqlite-simple/src/migrations/index.js" />
+
+### Seeders
+
+src/seeders/data.json:
+
+<Code src="/codes/database-relation/foods-app-sqlite-simple/src/seeders/data.json" />>
+
+src/seeders/index.js:
+
+<Code src="/codes/database-relation/foods-app-sqlite-simple/src/seeders/index.js" />
+
+### Model
+
+src/models/Food.js:
+
+<Code src="/codes/database-relation/foods-app-sqlite-simple/src/models/Food.js" />
+
+src/models/Category.js:
+
+<Code src="/codes/database-relation/foods-app-sqlite-simple/src/models/Category.js" />
+
+### View
+
+src/views/foods/index.njk:
+
+```html
+{% raw %}
+{% extends "layout.njk" %}
+
+{% set title = "Menu" %}
+
+{% block content %}
+<h1 class="my-5 text-center">{{ title }}</h1>
+
+<section class="card-deck">
+  {% for food in foods %}
+  <div class="col-sm-6 col-lg-4 col-xl-3 mb-3">
+    <div class="card">
+      <div class="card-header text-center font-weight-bold">
+        {{ food.name }}
+      </div>
+      <div class="card-body p-0">
+        <img src="{{ food.image }}" alt="{{ food.name }}" class="w-100">
+      </div>
+      <div class="card-footer text-right">
+        <span class="food-category float-left badge badge-secondary">{{ food.category }}</span>
+        <span class="food-price">{{ food.price }}</span>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</section>
+{% endblock %}
+
+{% block script %}
+<script>
+  const prices = document.querySelectorAll('.card-footer .food-price');
+  prices.forEach((price) => {
+    price.innerHTML = Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    }).format(price.innerHTML)
+  });
+</script>
+{% endblock %}
+{% endraw %}
+```
+
+<img src="/imgs/database-relation/preview.png" alt="Preview" width="100%" />
+
+## Exclusão de Comida
+
+### Arquitetura do Código
+
+![](/imgs/database-delete/mvc.png)
+
+### Estrutura de Código
+
+```txt
+├── .gitignore
+├── package-lock.json
+├── package.json
+├── public
+│   ├── css
+│   │   └── bootstrap.min.css
+│   ├── foods.html
+│   ├── imgs
+│   │   ├── hamburguer.jpg
+│   │   ├── milkshake.jpg
+│   │   ├── sanduiche.jpg
+│   │   └── suco.jpg
+│   └── js
+│       ├── bootstrap.min.js
+│       ├── jquery.min.js
+│       ├── popper.min.js
+│       └── services
+│           └── api.js
+├── requests.http
+└── src
+    ├── controllers
+    │   └── foodsController.js
+    ├── db
+    │   ├── database.sqlite
+    │   └── index.js
+    ├── index.js
+    ├── migrations
+    │   └── index.js
+    ├── models
+    │   ├── Category.js
+    │   └── Food.js
+    ├── routes
+    │   └── index.js
+    ├── seeders
+    │   ├── data.json
+    │   └── index.js
+    └── views
+        ├── foods
+        │   ├── _delete.njk
+        │   └── index.njk
+        └── layout.njk
+```
+
+[![Edit foods-app-sqlite-delete](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/foods-app-sqlite-delete-z65bm?fontsize=14&hidenavigation=1&theme=dark)
+
+### Router
+
+![](/imgs/database-delete/delete-food.png)
+
+src/routes/index.js:
+
+<Code src="/codes/database-delete/foods-app-sqlite-delete/src/routes/index.js" />
+
+### Controller
+
+src/controllers/foodsController.js:
+
+```js
+const Food = require('../models/Food');
+
+...
+
+const destroy = async (req, res) => {
+  const { id } = req.params;
+
+  const result = await Food.destroy(id);
+
+  if (result) {
+    res.status(204).send();
+  } else {
+    return res.status(400).json({ error: 'Food not found.' });
+  }
+};
+
+...
+```
+
+### Model
+
+src/models/Food.js:
+
+```js
+const { conn } = require('../db');
+
+...
+
+async function destroy(id) {
+  const sql = `
+    DELETE FROM
+      foods
+    WHERE
+      id = ?
+  `;
+
+  const db = await conn();
+
+  const { changes } = await db.run(sql, [id]);
+
+  return changes;
+}
+
+...
+```
+
+### View
+
+src/views/foods/_delete.njk:
+
+```html
+{% raw %}
+<div class="modal fade" id="deleteFoodModal" tabindex="-1" aria-labelledby="deleteFoodLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteFoodLabel">Excluir comida</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Deseja realmente excluir <span id="modal-name-food"></span>?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary" id="deleteFoodBtn">Excluir</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endraw %}
+```
+
+![](/imgs/database-delete/delete-food-modal.png)
+
+src/views/foods/index.njk:
+
+```html
+{% raw %}
+{% extends "layout.njk" %}
+...
+{% block content %}
+...
+<section class="card-deck">
+  {% for food in foods %}
+  <div class="card-food col-sm-6 col-lg-4 col-xl-3 mb-3" id="food-{{ food.id }}">
+    <div class="card">
+      <div class="card-header text-center font-weight-bold">
+        <span class="food-name">
+          {{ food.name }}
+        </span>
+        <span class="food-delete float-right text-danger">
+          <i
+            class="far fa-trash-alt"
+            onclick="deleteFoodView({{ food.id }}, '{{ food.name }}')">
+          </i>
+        </span>
+      </div>
+      ...
+    </div>
+  </div>
+  {% endfor %}
+</section>
+{% include "foods/_delete.njk" %}
+{% endblock %}
+
+{% block script %}
+<script type="module">
+  import api from '/js/services/api.js';
+
+  ...
+
+  function deleteFoodView(foodId, foodName) {
+    $('#deleteFoodModal').modal('toggle');
+
+    document.querySelector('#modal-name-food').innerHTML = foodName;
+
+    document.querySelector('#deleteFoodBtn').onclick = async (e) => {
+      e.preventDefault();
+
+      await api.destroy(`/foods/${foodId}`);
+
+      document.querySelector(`#food-${ foodId }`).remove();
+
+      $('#deleteFoodModal').modal('toggle');
+    };
+  }
+
+  window.deleteFoodView = deleteFoodView;
+
+  ...
+</script>
+{% endblock %}
+{% endraw %}
+```
+
+public/js/services/api.js:
+
+```js
+const domain = '';
+
+...
+
+async function destroy(resource) {
+  await fetch(`${domain}${resource}`, {
+    method: 'delete',
+  });
+}
+
+...
+```
+
+<img src="/imgs/database-delete/preview.gif" alt="Preview" width="100%" />
+
+## Foods App
+
+### Arquitetura do Código
+
+![](/imgs/database-app/mvc.png)
+
+### Databse
+
+![](/imgs/database-app/database.png)
+
+### Estrutura de Código
+
+```txt
+foods-app-crud
+├── .gitignore
+├── package-lock.json
+├── package.json
+├── public
+│   ├── css
+│   │   ├── bootstrap.min.css.map
+│   │   └── bootstrap.min.css
+│   ├── foods.html
+│   ├── imgs
+│   │   ├── batatafrita.jpg
+│   │   ├── hamburguer.jpg
+│   │   ├── milkshake.jpg
+│   │   ├── sanduiche.jpg
+│   │   └── suco.jpg
+│   └── js
+│       ├── bootstrap.min.js
+│       ├── bootstrap.min.js.map
+│       ├── jquery.min.js
+│       ├── popper.min.js
+│       ├── popper.min.js.map
+│       └── services
+│           └── api.js
+├── requests.http
+└── src
+    ├── controllers
+    │   ├── categoriesController.js
+    │   └── foodsController.js
+    ├── db
+    │   ├── database.sqlite
+    │   ├── index.js
+    │   ├── migration.js
+    │   └── seed.js
+    ├── index.js
+    ├── migrations
+    │   └── index.js
+    ├── models
+    │   ├── Category.js
+    │   └── Food.js
+    ├── routes
+    │   └── index.js
+    ├── seeders
+    │   ├── data.json
+    │   └── index.js
+    └── views
+        ├── foods
+        │   ├── _delete.njk
+        │   ├── _form.njk
+        │   └── index.njk
+        ├── _menu.njk
+        └── layout.njk
+```
+
+[![Edit foods-app-crud](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/sharp-mcnulty-766nc?fontsize=14&hidenavigation=1&theme=dark)
+
+### Menu
+
+<img src="/imgs/database-app/menu.png" alt="Preview" width="100%" />
+
+src/views/_menu.njk ([Navbar Bootstrap](https://getbootstrap.com/docs/5.0/components/navbar/)):
+
+<Code src="/codes/database-app/foods-app-crud/src/views/_menu.njk" lang="html" />
+
+src/views/layout.njk:
+
+```html
+{% raw %}
+<body>
+  {% include "_menu.njk" %}
+  <div class="container">
+    {% block content %}
+    {% endblock %}
+  <div>
+  ...
+</body>
+{% endraw %}
+```
+
+### HTTP 404 e 500
+
+src/index.js:
+
+```js
+...
+
+app.use((req, res, next) => {
+  res.status(404).send('Content not found');
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Internal server error');
+});
+
+app.listen(3000, () => {
+  console.log('Food App is running!');
+});
+```
+
+### NPM Scripts
+
+```js
+{
+  ...
+  scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "db:reload": "npm run db:drop && npm run db:load",
+    "db:load": "npm run db:migration && npm run db:seed",
+    "db:migration": "node src/db/migration.js",
+    "db:seed": "node src/db/seed.js",
+    "db:drop": "[ -f src/db/database.sqlite ] && rm src/db/database.sqlite"
+  },
+  ...
+}
+```
+
+```txt
+$ npm start
+$ npm run dev
+$ npm run db:reload
+$ npm run db:load
+$ npm run db:migration
+$ npm run db:seed
+$ npm run db:drop
+```

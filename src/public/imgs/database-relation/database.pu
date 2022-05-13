@@ -1,0 +1,22 @@
+@startuml
+hide circle
+scale 1.5
+skinparam linetype ortho
+skinparam monochrome true
+left to right direction
+
+entity "foods" as food {
+  *id : integer
+  name : text
+  image : text
+  price: double
+  *category_id : integer <<FK>>
+}
+
+entity "categories" as category {
+  *id : integer
+  name : text
+}
+
+food ||--|{ category
+@enduml
