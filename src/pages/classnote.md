@@ -7,3 +7,4 @@
 - [Aula 05](classnotes/05)
 - [Aula 06](classnotes/06)
 - [Aula 07](classnotes/07)
+- [Aula 08](classnotes/08)
