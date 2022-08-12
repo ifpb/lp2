@@ -1,0 +1,203 @@
+import Code from '../../../components/Code.jsx';
+
+# Autenticação JWT
+
+## JSON Web Token
+
+[Token](https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTYzMzkxNDc3MiwiZXhwIjoxNjMzOTE1MDcyfQ.wGs4R42bIwKhTiFWVZrs-QGs_0bEWSc69rjylXj7nPE):
+
+![](/imgs/jwt/jwt-token.png)
+
+Fluxo de Requisição:
+
+![](/imgs/jwt/jwt-request.png)
+
+## Backend
+
+[Código](https://github.com/lucachaves/lp2-classroom-2022/tree/auth-token):
+
+```txt
+foods-app
+├── package-lock.json
+├── package.json
+├── public
+│   └── ...
+├── request.http
+└── src
+    ├── database
+    │   ├── database.js
+    │   ├── db.sqlite
+    │   ├── load.js
+    │   ├── migration.js
+    │   ├── seeders.js
+    │   └── seeders.json
+    ├── index.js
+    ├── middleware
+    │   └── auth.js
+    ├── models
+    │   ├── Category.js
+    │   ├── Food.js
+    │   └── User.js
+    └── routes.js
+```
+
+src/index.js:
+
+<Code src="https://raw.githubusercontent.com/lucachaves/lp2-classroom-2022/auth-token/src/index.js" lang="js" />
+
+.env.example:
+
+<Code src="https://raw.githubusercontent.com/lucachaves/lp2-classroom-2022/auth-token/.env.example" lang="js" />
+
+src/middleware/auth.js:
+
+<Code src="https://raw.githubusercontent.com/lucachaves/lp2-classroom-2022/auth-token/src/middleware/auth.js" lang="js" />
+
+src/models/User.js:
+```js
+import bcrypt from 'bcryptjs';
+
+import Database from '../database/database.js';
+
+const salt = Number(process.env.SALT);
+
+async function create(user) {
+  //...
+}
+
+async function read(id) {
+  // ...
+}
+
+async function readByEmail(email) {
+  const db = await Database.connect();
+
+  const sql = `
+    SELECT
+      *
+    FROM
+      users
+    WHERE
+      email = ?
+  `;
+
+  return await db.get(sql, [email]);
+}
+
+export default { create, read, readByEmail };
+```
+
+src/routes.js:
+
+```js
+import { Router } from 'express';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+
+import Category from './models/Category.js';
+import Food from './models/Food.js';
+import User from './models/User.js';
+
+import { isAuthenticated } from './middleware/auth.js';
+
+const router = Router();
+
+router.get('/', (req, res) => res.redirect('/signin.html'));
+
+router.get('/foods', isAuthenticated, async (req, res) => {
+  // ...
+});
+
+router.post('/foods', isAuthenticated, async (req, res) => {
+  // ...
+});
+
+router.put('/foods/:id', isAuthenticated, async (req, res) => {
+  // ...
+});
+
+router.delete('/foods/:id', isAuthenticated, async (req, res) => {
+  // ...
+});
+
+router.get('/categories', isAuthenticated, async (req, res) => {
+  // ...
+});
+
+router.post('/users', async (req, res) => {
+  // ...
+});
+
+router.post('/signin', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const { id: userId, password: hash } = await User.readByEmail(email);
+
+    const match = await bcrypt.compareSync(password, hash);
+
+    if (match) {
+      const token = jwt.sign(
+        { userId },
+        process.env.SECRET,
+        { expiresIn: 3600 } // 1h
+      );
+
+      res.json({ auth: true, token });
+    } else {
+      throw new Error('User not found');
+    }
+  } catch (error) {
+    res.status(401).json({ error: 'User not found' });
+  }
+});
+
+router.get('/signout', (req, res) => {
+  return res.json({ auth: false, token: null });
+});
+
+router.use(function (req, res, next) {
+  // ...
+});
+
+router.use(function (err, req, res, next) {
+  // ...
+});
+
+export default router;
+```
+
+request.http:
+
+<Code src="https://raw.githubusercontent.com/lucachaves/lp2-classroom-2022/auth-token/request.http" lang="js" />
+
+## Frontend
+
+[Código](https://github.com/lucachaves/lp2-classroom-2022/tree/auth-token):
+
+```txt
+foods-app
+├── package-lock.json
+├── package.json
+├── public
+│   ├── foods.html
+│   ├── js
+│   │   └── auth.js
+│   ├── signin.html
+│   └── signup.html
+├── request.http
+└── src
+    └── ...
+```
+
+public/js/auth.js:
+
+<Code src="https://raw.githubusercontent.com/lucachaves/lp2-classroom-2022/auth-token/public/js/auth.js" lang="js" />
+
+public/signin.html:
+
+<Code src="https://raw.githubusercontent.com/lucachaves/lp2-classroom-2022/auth-token/public/signin.html" lang="html" />
+
+public/foods.html:
+
+<Code src="https://raw.githubusercontent.com/lucachaves/lp2-classroom-2022/auth-token/public/foods.html" lang="html" />
