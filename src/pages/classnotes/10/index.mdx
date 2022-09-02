@@ -1,0 +1,67 @@
+import Code from '../../../components/Code.jsx';
+
+# Manipulação de Email
+
+[nodemailer](https://nodemailer.com/about/):
+
+```txt
+$ npm install nodemailer
+```
+
+.env.example:
+
+<Code src="https://raw.githubusercontent.com/lucachaves/lp2-classroom-2022/send-email/.env.example" lang="js" />
+
+SMTP Etherial
+
+```js
+# EMAIL
+EMAIL_HOST=smtp.ethereal.email
+EMAIL_PORT=587
+EMAIL_SECURE=false
+EMAIL_USER=
+EMAIL_PASS=
+```
+
+> Transport: [Etherial](https://ethereal.email/), [AWS SES](https://nodemailer.com/transports/ses/), [Mailtrap](https://mailtrap.io/), [Mailgum](https://www.mailgun.com/), [Sendgrid](https://sendgrid.com/), [Gmail](https://gmail.com/)
+
+src/config/mail.js:
+
+<Code src="https://raw.githubusercontent.com/lucachaves/lp2-classroom-2022/send-email/src/config/mail.js" lang="js" />
+
+src/services/SendMail.js:
+
+<Code src="https://raw.githubusercontent.com/lucachaves/lp2-classroom-2022/send-email/src/services/SendMail.js" lang="js" />
+
+src/routes.js:
+
+```js
+// ...
+import SendMail from './services/sendMail.js';
+// ...
+
+router.post('/users', async (req, res) => {
+  try {
+    const user = req.body;
+
+    const newUser = await User.create(user);
+
+    await SendMail.createNewUser(user.email);
+
+    res.json(newUser);
+  } catch (error) {
+    throw new Error('Error in create user');
+  }
+});
+
+// ...
+
+```
+
+Email Enviado: [https://ethereal.email/](https://ethereal.email/message/YFeYRLypNQPVnimlYFeYSPKgtgZN.SfxAAAAAciukP6BiWVxTD0koWBy59A)
+
+![](/imgs/email/ethereal.png)
+
+```txt
+Send email: https://ethereal.email/message/YFeYRLypNQPVnimlYFeYSPKgtgZN.SfxAAAAAciukP6BiWVxTD0koWBy59A
+```

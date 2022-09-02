@@ -9,3 +9,4 @@
 - [Aula 07](classnotes/07)
 - [Aula 08](classnotes/08)
 - [Aula 09](classnotes/09)
+- [Aula 10](classnotes/10)
