@@ -11,3 +11,4 @@
 - [Aula 09](classnotes/09)
 - [Aula 10](classnotes/10)
 - [Aula 11](classnotes/11)
+- [Aula 12](classnotes/12)

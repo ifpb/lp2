@@ -53,5 +53,10 @@
     "title": "Aula 11",
     "type": "nav",
     "hidden": true
+  },
+  "12": {
+    "title": "Aula 12",
+    "type": "nav",
+    "hidden": true
   }
 }
