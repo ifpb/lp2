@@ -22,34 +22,30 @@ async function create({ name, value, categoryId, userId }) {
   }
 }
 
-async function read(field, value) {
-  if (field && value) {
-    const investments = await prisma.investment.findMany({
-      where: {
-        [field]: {
-          contains: value,
-        },
-      },
-      include: {
-        category: true,
-        user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
-      },
-    });
-
-    return investments;
+async function read(where) {
+  if (where?.name) {
+    where.name = {
+      contains: where.name,
+    };
   }
 
   const investments = await prisma.investment.findMany({
+    where,
     include: {
       category: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
     },
   });
+
+  if (investments.length === 1 && where) {
+    return investments[0];
+  }
 
   return investments;
 }
@@ -72,11 +68,7 @@ async function readById(id) {
       },
     });
 
-    if (investment) {
-      return investment;
-    } else {
-      throw new Error('Investment not found');
-    }
+    return investment;
   } else {
     throw new Error('Unable to find investment');
   }
@@ -101,11 +93,7 @@ async function update({ id, name, value, categoryId, userId }) {
       },
     });
 
-    if (updatedInvestment) {
-      return updatedInvestment;
-    } else {
-      throw new Error('Investment not found');
-    }
+    return updatedInvestment;
   } else {
     throw new Error('Unable to update investment');
   }
@@ -113,17 +101,13 @@ async function update({ id, name, value, categoryId, userId }) {
 
 async function remove(id) {
   if (id) {
-    const removedInvestment = await prisma.investment.delete({
+    await prisma.investment.delete({
       where: {
         id,
       },
     });
 
-    if (removedInvestment) {
-      return true;
-    } else {
-      throw new Error('Investment not found');
-    }
+    return true;
   } else {
     throw new Error('Unable to remove investment');
   }

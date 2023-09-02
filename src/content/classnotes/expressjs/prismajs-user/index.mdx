@@ -24,12 +24,50 @@ Tabelas:
 
 ## Model
 
+```bash
+$ npm install bcrypt
+```
+
+Encrypt:
+
+```text
+12345678 + 10
+=> $2a$10$13Aak6RFaLSM2BWra67RA.KElfrt41YQsTjy9nul0bxBhXI2vjiPe
+```
+
+```text
+12345678 + 10
+=> $2a$10$CZHQV57ViPynbUbeffLU7.cTV8Rr9PjlJXkoe/Xu1FIUXA/I0we5C
+```
+
+Decrypt:
+
+```text
+12345678 + $2a$10$13Aak6RFaLSM2BWra67RA.KElfrt41YQsTjy9nul0bxBhXI2vjiPe
+=> true
+```
+
+
 <CodePreview src="/codes/expressjs/invest-app-prismajs-user/src/models/User.js" />
 
 <CodePreview src="/codes/expressjs/invest-app-prismajs-user/src/models/Investment.js" />
 
 ## Router
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/src/routes.js" />
+```bash
+$ npm install dotenv
+```
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/requests.http" />
+<CodePreview src="/codes/expressjs/invest-app-prismajs-user/src/index.js" highlightLines="2" />
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-user/src/routes.js"  highlightLines="108-122" />
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-user/requests.http" highlightLines="5-15" />
+
+## View
+
+![](/imgs/expressjs/prismajs-user/signup.png)
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-user/public/signup.html" />
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-user/public/js/signup.js" />

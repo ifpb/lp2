@@ -25,10 +25,22 @@ router.post('/investments', isAuthenticated, async (req, res) => {
   try {
     const investment = req.body;
 
-    const createdInvestment = await Investment.create(investment);
+    if (investment.createdAt) {
+      investment.createdAt = new Date(
+        investment.createdAt + 'T00:00:00-03:00'
+      ).toISOString();
+    }
+
+    const userId = req.userId;
+
+    const createdInvestment = await Investment.create({
+      ...investment,
+      userId,
+    });
 
     return res.json(createdInvestment);
   } catch (error) {
+    console.error(error.stack);
     throw new HTTPError('Unable to create investment', 400);
   }
 });
@@ -37,12 +49,14 @@ router.get('/investments', isAuthenticated, async (req, res) => {
   try {
     const { name } = req.query;
 
+    const userId = req.userId;
+
     let investments;
 
     if (name) {
-      investments = await Investment.read('name', name);
+      investments = await Investment.read({ name, userId });
     } else {
-      investments = await Investment.read();
+      investments = await Investment.read({ userId });
     }
 
     return res.json(investments);
@@ -55,7 +69,9 @@ router.get('/investments/:id', isAuthenticated, async (req, res) => {
   try {
     const id = req.params.id;
 
-    const investment = await Investment.readById(id);
+    const userId = req.userId;
+
+    const investment = await Investment.readById(id, { userId });
 
     return res.json(investment);
   } catch (error) {
@@ -67,12 +83,25 @@ router.put('/investments/:id', isAuthenticated, async (req, res) => {
   try {
     const investment = req.body;
 
+    if (investment.createdAt) {
+      investment.createdAt = new Date(
+        investment.createdAt + 'T00:00:00-03:00'
+      ).toISOString();
+    }
+
     const id = req.params.id;
 
-    const updatedInvestment = await Investment.update({ ...investment, id });
+    const userId = req.userId;
+
+    const updatedInvestment = await Investment.update({
+      ...investment,
+      id,
+      userId,
+    });
 
     return res.json(updatedInvestment);
   } catch (error) {
+    console.error(error.stack);
     throw new HTTPError('Unable to update investment', 400);
   }
 });
@@ -98,7 +127,7 @@ router.get('/categories', isAuthenticated, async (req, res) => {
     let categories;
 
     if (name) {
-      categories = await Category.read('name', name);
+      categories = await Category.read({ name });
     } else {
       categories = await Category.read();
     }
@@ -125,22 +154,36 @@ router.post('/users', async (req, res) => {
   }
 });
 
+router.get('/users/me', isAuthenticated, async (req, res) => {
+  try {
+    const userId = req.userId;
+
+    const user = await User.readById(userId);
+
+    delete user.password;
+
+    return res.json(user);
+  } catch (error) {
+    throw new HTTPError('Unable to find user', 400);
+  }
+});
+
 router.post('/signin', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const [{ id: userId, password: hash }] = await User.read('email', email);
+    const { id: userId, password: hash } = await User.read({ email });
 
     const match = await bcrypt.compare(password, hash);
 
     if (match) {
       const token = jwt.sign(
         { userId },
-        process.env.SECRET,
+        process.env.JWT_SECRET,
         { expiresIn: 3600 } // 1h
       );
 
-      res.json({ auth: true, token });
+      return res.json({ auth: true, token });
     } else {
       throw new Error('User not found');
     }
@@ -155,10 +198,10 @@ router.use((req, res, next) => {
 });
 
 // Error handler
-router.use((err, req, res, next) => {
-  // console.error(err.stack);
-  if (err instanceof HTTPError) {
-    return res.status(err.code).json({ message: err.message });
+router.use((error, req, res, next) => {
+  // console.error(error.stack);
+  if (error instanceof HTTPError) {
+    return res.status(error.code).json({ message: error.message });
   } else {
     return res.status(500).json({ message: 'Something broke!' });
   }

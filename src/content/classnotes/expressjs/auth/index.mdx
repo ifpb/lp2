@@ -1,0 +1,71 @@
+---
+title: Autenticação
+---
+
+import CodePreview from '../../../../components/CodePreview.astro';
+import CodeTree from '../../../../components/CodeTree.astro';
+
+# {frontmatter.title}
+
+<CodeTree src="/codes/expressjs/invest-app-auth" />
+
+## Migration
+
+<CodePreview src="/codes/expressjs/invest-app-auth/prisma/schema.prisma" />
+
+```bash
+$ npx prisma migrate reset
+$ npx prisma migrate dev --name create_user
+```
+
+Tabelas:
+
+![](/imgs/expressjs/auth/database.png)
+
+## Model
+
+<CodePreview src="/codes/expressjs/invest-app-auth/src/models/Investment.js" />
+
+## Router
+
+Fluxo de Requisição:
+
+![](/imgs/expressjs/auth/jwt-request.png)
+
+[JSON Web Token (JWT)](https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTYzMzkxNDc3MiwiZXhwIjoxNjMzOTE1MDcyfQ.wGs4R42bIwKhTiFWVZrs-QGs_0bEWSc69rjylXj7nPE):
+
+![](/imgs/expressjs/auth/jwt-token.png)
+
+```bash
+$ npm install jsonwebtoken
+```
+
+<CodePreview src="/codes/expressjs/invest-app-auth/src/routes.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-auth/requests.http" />
+
+<CodePreview src="/codes/expressjs/invest-app-auth/.env" />
+
+## Middleware
+
+<CodePreview src="/codes/expressjs/invest-app-auth/src/middleware/auth.js" />
+
+## View
+
+![](/imgs/expressjs/auth/signin.png)
+
+<CodePreview src="/codes/expressjs/invest-app-auth/public/signup.html" />
+
+<CodePreview src="/codes/expressjs/invest-app-auth/public/js/signup.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-auth/public/js/services/api.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-auth/public/js/lib/auth.js" />
+
+![](/imgs/expressjs/auth/home-profile.png)
+
+![](/imgs/expressjs/auth/home-form.png)
+
+<CodePreview src="/codes/expressjs/invest-app-auth/public/home.html" />
+
+<CodePreview src="/codes/expressjs/invest-app-auth/public/js/home.js" />

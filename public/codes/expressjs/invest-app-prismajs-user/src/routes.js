@@ -35,13 +35,14 @@ router.get('/investments', async (req, res) => {
     let investments;
 
     if (name) {
-      investments = await Investment.read('name', name);
+      investments = await Investment.read({ name });
     } else {
       investments = await Investment.read();
     }
 
     return res.json(investments);
   } catch (error) {
+    console.error(error);
     throw new HTTPError('Unable to read investments', 400);
   }
 });
@@ -93,7 +94,7 @@ router.get('/categories', async (req, res) => {
     let categories;
 
     if (name) {
-      categories = await Category.read('name', name);
+      categories = await Category.read({ name });
     } else {
       categories = await Category.read();
     }

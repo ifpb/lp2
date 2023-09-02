@@ -1,16 +1,14 @@
 import bcrypt from 'bcrypt';
 import prisma from '../database/database.js';
 
-const saltRounds = Number(process.env.SALT);
+const saltRounds = Number(process.env.BCRYPT_SALT);
 
 async function create({ name, email, password }) {
   if (name && email && password) {
     const hash = await bcrypt.hash(password, saltRounds);
 
-    password = hash;
-
     const createdUser = await prisma.user.create({
-      data: { name, email, password },
+      data: { name, email, password: hash },
     });
 
     return createdUser;
@@ -19,24 +17,14 @@ async function create({ name, email, password }) {
   }
 }
 
-async function read(field, value) {
-  if (field && value) {
-    const users = await prisma.user.findMany({
-      where: {
-        [field]: {
-          contains: value,
-        },
-      },
-    });
-
-    return users;
-  }
-
+async function read(where) {
   const users = await prisma.user.findMany({
-    include: {
-      category: true,
-    },
+    where,
   });
+
+  if (users.length === 1 && where) {
+    return users[0];
+  }
 
   return users;
 }
@@ -49,11 +37,7 @@ async function readById(id) {
       },
     });
 
-    if (user) {
-      return user;
-    } else {
-      throw new Error('User not found');
-    }
+    return user;
   } else {
     throw new Error('Unable to find user');
   }
@@ -63,20 +47,14 @@ async function update({ id, name, email, password }) {
   if (name && email && password && id) {
     const hash = await bcrypt.hash(password, saltRounds);
 
-    password = hash;
-
     const updatedUser = await prisma.user.update({
       where: {
         id,
       },
-      data: { name, email, password },
+      data: { name, email, password: hash },
     });
 
-    if (updatedUser) {
-      return updatedUser;
-    } else {
-      throw new Error('User not found');
-    }
+    return updatedUser;
   } else {
     throw new Error('Unable to update user');
   }
@@ -84,17 +62,13 @@ async function update({ id, name, email, password }) {
 
 async function remove(id) {
   if (id) {
-    const removedUser = await prisma.user.delete({
+    await prisma.user.delete({
       where: {
         id,
       },
     });
 
-    if (removedUser) {
-      return true;
-    } else {
-      throw new Error('User not found');
-    }
+    return true;
   } else {
     throw new Error('Unable to remove user');
   }

@@ -1,9 +1,42 @@
 import prisma from '../database/database.js';
 
-async function create({ name, value, categoryId, userId }) {
-  if (name && value && categoryId && userId) {
+async function create({
+  name,
+  value,
+  interest,
+  createdAt,
+  categoryId,
+  userId,
+  broker,
+}) {
+  if (name && value && interest && categoryId && userId && broker) {
     const createdInvestment = await prisma.investment.create({
-      data: { name, value, categoryId, userId },
+      data: {
+        name,
+        value,
+        interest,
+        createdAt,
+        category: {
+          connect: {
+            id: categoryId,
+          },
+        },
+        user: {
+          connect: {
+            id: userId,
+          },
+        },
+        broker: {
+          connectOrCreate: {
+            where: {
+              name: broker,
+            },
+            create: {
+              name: broker,
+            },
+          },
+        },
+      },
       include: {
         category: true,
         user: {
@@ -13,6 +46,7 @@ async function create({ name, value, categoryId, userId }) {
             email: true,
           },
         },
+        broker: true,
       },
     });
 
@@ -22,46 +56,48 @@ async function create({ name, value, categoryId, userId }) {
   }
 }
 
-async function read(field, value) {
-  if (field && value) {
-    const investments = await prisma.investment.findMany({
-      where: {
-        [field]: {
-          contains: value,
-        },
-      },
-      include: {
-        category: true,
-        user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
-      },
-    });
-
-    return investments;
+async function read(where) {
+  if (where?.name) {
+    where.name = {
+      contains: where.name,
+    };
   }
 
   const investments = await prisma.investment.findMany({
+    where,
     include: {
       category: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
+      broker: true,
     },
   });
+
+  if (
+    investments.length === 1 &&
+    Object.keys(where).some((key) => key !== 'userId')
+  ) {
+    return investments[0];
+  }
 
   return investments;
 }
 
-async function readById(id) {
+async function readById(id, where) {
   if (id) {
     const investment = await prisma.investment.findUnique({
       where: {
         id,
+        ...where,
       },
       include: {
         category: true,
+        broker: true,
         user: {
           select: {
             id: true,
@@ -72,23 +108,53 @@ async function readById(id) {
       },
     });
 
-    if (investment) {
-      return investment;
-    } else {
-      throw new Error('Investment not found');
-    }
+    return investment;
   } else {
     throw new Error('Unable to find investment');
   }
 }
 
-async function update({ id, name, value, categoryId, userId }) {
-  if (name && value && id) {
+async function update({
+  id,
+  name,
+  value,
+  interest,
+  createdAt,
+  categoryId,
+  userId,
+  broker,
+}) {
+  if (name && value && interest && categoryId && userId && broker && id) {
     const updatedInvestment = await prisma.investment.update({
       where: {
         id,
       },
-      data: { name, value, categoryId, userId },
+      data: {
+        name,
+        value,
+        interest,
+        createdAt,
+        category: {
+          connect: {
+            id: categoryId,
+          },
+        },
+        user: {
+          connect: {
+            id: userId,
+          },
+        },
+        broker: {
+          connectOrCreate: {
+            where: {
+              name: broker,
+            },
+            create: {
+              name: broker,
+            },
+          },
+        },
+      },
       include: {
         category: true,
         user: {
@@ -98,14 +164,11 @@ async function update({ id, name, value, categoryId, userId }) {
             email: true,
           },
         },
+        broker: true,
       },
     });
 
-    if (updatedInvestment) {
-      return updatedInvestment;
-    } else {
-      throw new Error('Investment not found');
-    }
+    return updatedInvestment;
   } else {
     throw new Error('Unable to update investment');
   }
@@ -113,17 +176,13 @@ async function update({ id, name, value, categoryId, userId }) {
 
 async function remove(id) {
   if (id) {
-    const removedInvestment = await prisma.investment.delete({
+    await prisma.investment.delete({
       where: {
         id,
       },
     });
 
-    if (removedInvestment) {
-      return true;
-    } else {
-      throw new Error('Investment not found');
-    }
+    return true;
   } else {
     throw new Error('Unable to remove investment');
   }

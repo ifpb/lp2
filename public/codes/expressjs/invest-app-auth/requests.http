@@ -1,8 +1,5 @@
 @host = http://localhost:3000
 @createdInvestmentId = {{createdInvestment.response.body.$.id}}
-@createdUserId = {{createdUser.response.body.$.id}}
-@categoryPosId = {{categoryPos.response.body.$[0].id}}
-@categoryIpcaId = {{categoryIpca.response.body.$[0].id}}
 @token = {{signin.response.body.$.token}}
 
 ### Create User
@@ -14,18 +11,7 @@ Content-Type: application/json
 {
   "name": "Luiz",
   "email": "luiz@email.com",
-  "password": "123"
-}
-
-### Signin Ok
-
-# @name signin
-POST {{host}}/signin
-Content-Type: application/json
-
-{
-  "email": "luiz@email.com",
-  "password": "123"
+  "password": "12345678"
 }
 
 ### Signin 401
@@ -39,28 +25,46 @@ Content-Type: application/json
   "password": "321"
 }
 
-### Read Categories (whitout token)
+### Signin Ok
 
-GET {{host}}/categories
+# @name signin
+POST {{host}}/signin
+Content-Type: application/json
 
-### Read Categories (with token)
+{
+  "email": "luiz@email.com",
+  "password": "12345678"
+}
+
+### Read User (whitout token)
+
+GET {{host}}/users/me
+
+### Read User (with token)
+
+GET {{host}}/users/me
+Authorization: bearer {{token}}
+
+### Read Categories
 
 GET {{host}}/categories
 Authorization: bearer {{token}}
 
-### Read Categories by Name
+### Read Category Pós
 
 # @name categoryPos
 GET {{host}}/categories?name=Pós
 Authorization: bearer {{token}}
 
-### Read Categories by Name
+### Read Category IPCA
 
 # @name categoryIpca
 GET {{host}}/categories?name=IPCA
 Authorization: bearer {{token}}
 
 ### Create Investment
+
+@categoryIpcaId = {{categoryIpca.response.body.$.id}}
 
 # @name createdInvestment
 POST {{host}}/investments
@@ -70,8 +74,10 @@ Content-Type: application/json
 {
   "name": "Tesouro Selic 2029",
   "value": 10000,
-  "categoryId": "{{categoryIpcaId}}",
-  "userId": "{{createdUserId}}"
+  "interest": "100% Selic",
+  "createdAt": "2023-09-01",
+  "broker": "Banco Inter",
+  "categoryId": "{{categoryIpcaId}}"
 }
 
 ### Read Investments
@@ -84,7 +90,14 @@ Authorization: bearer {{token}}
 GET {{host}}/investments?name=Tesouro
 Authorization: bearer {{token}}
 
+### Read Investments by Id
+
+GET {{host}}/investments/{{createdInvestmentId}}
+Authorization: bearer {{token}}
+
 ### Update Investment
+
+@categoryPosId = {{categoryPos.response.body.$.id}}
 
 PUT {{host}}/investments/{{createdInvestmentId}}
 Authorization: bearer {{token}}
@@ -93,8 +106,10 @@ Content-Type: application/json
 {
   "name": "Tesouro Selic 2029",
   "value": 20000,
-  "categoryId": "{{categoryPosId}}",
-  "userId": "{{createdUserId}}"
+  "interest": "100% Selic",
+  "createdAt": "2023-09-01",
+  "broker": "Banco Inter",
+  "categoryId": "{{categoryPosId}}"
 }
 
 ### Delete Investment

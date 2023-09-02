@@ -6,7 +6,7 @@ function isAuthenticated(req, res, next) {
 
     const [, token] = authorization.split(' ');
 
-    const { userId } = jwt.verify(token, process.env.SECRET);
+    const { userId } = jwt.verify(token, process.env.JWT_SECRET);
 
     req.userId = userId;
 

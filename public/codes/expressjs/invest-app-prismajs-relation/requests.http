@@ -1,7 +1,5 @@
 @host = http://localhost:3000
 @createdInvestmentId = {{createdInvestment.response.body.$.id}}
-@categoryPosId = {{categoryPos.response.body.$[0].id}}
-@categoryIpcaId = {{categoryIpca.response.body.$[0].id}}
 
 ### Read Categories
 
@@ -18,6 +16,8 @@ GET {{host}}/categories?name=Pós
 GET {{host}}/categories?name=IPCA
 
 ### Create Investment
+
+@categoryIpcaId = {{categoryIpca.response.body.$.id}}
 
 # @name createdInvestment
 POST {{host}}/investments
@@ -38,6 +38,8 @@ GET {{host}}/investments
 GET {{host}}/investments?name=Tesouro
 
 ### Update Investment
+
+@categoryPosId = {{categoryPos.response.body.$.id}}
 
 PUT {{host}}/investments/{{createdInvestmentId}}
 Content-Type: application/json

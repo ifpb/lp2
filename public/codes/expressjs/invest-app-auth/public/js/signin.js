@@ -1,25 +1,20 @@
-window.handleSubmit = handleSubmit;
+import API from './services/api.js';
+import Auth from './lib/auth.js';
 
 const form = document.querySelector('form');
+
+window.handleSubmit = handleSubmit;
 
 async function handleSubmit(event) {
   event.preventDefault();
 
   const user = Object.fromEntries(new FormData(form));
 
-  const config = {
-    method: 'post',
-    body: JSON.stringify(user),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
+  const { auth, token } = await API.create('/signin', user, false);
 
-  const response = await fetch('/users', config);
-
-  if (response.ok) {
-    location.href = '/signin.html';
+  if (auth) {
+    Auth.signin(token);
   } else {
-    console.log('Error no cadastro');
+    console.log('Error no login');
   }
 }

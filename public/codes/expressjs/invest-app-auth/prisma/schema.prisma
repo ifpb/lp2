@@ -14,10 +14,14 @@ model Investment {
   id         String   @id @default(uuid())
   name       String
   value      Int
+  interest   String
+  createdAt  DateTime @default(now())
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId String
-  user       User     @relation(fields: [userId], references: [id])
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String
+  broker     Broker   @relation(fields: [brokerId], references: [id])
+  brokerId   String
 }
 
 model Category {
@@ -32,5 +36,11 @@ model User {
   name        String
   email       String       @unique
   password    String
+  investments Investment[]
+}
+
+model Broker {
+  id          String       @id @default(uuid())
+  name        String       @unique
   investments Investment[]
 }

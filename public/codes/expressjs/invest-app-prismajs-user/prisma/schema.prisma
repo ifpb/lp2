@@ -16,7 +16,7 @@ model Investment {
   value      Int
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId String
-  user       User     @relation(fields: [userId], references: [id])
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String
 }
 

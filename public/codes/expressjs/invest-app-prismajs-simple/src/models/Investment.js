@@ -12,18 +12,18 @@ async function create({ name, value }) {
   }
 }
 
-async function read(field, value) {
-  if (field && value) {
-    const investments = await prisma.investment.findMany({
-      where: {
-        [field]: value,
-      },
-    });
-
-    return investments;
+async function read(where) {
+  if (where?.name) {
+    where.name = {
+      contains: where.name,
+    };
   }
 
-  const investments = await prisma.investment.findMany();
+  const investments = await prisma.investment.findMany({ where });
+
+  if (investments.length === 1 && where) {
+    return investments[0];
+  }
 
   return investments;
 }
@@ -36,11 +36,7 @@ async function readById(id) {
       },
     });
 
-    if (investment) {
-      return investment;
-    } else {
-      throw new Error('Investment not found');
-    }
+    return investment;
   } else {
     throw new Error('Unable to find investment');
   }
@@ -55,11 +51,7 @@ async function update({ id, name, value }) {
       data: { name, value },
     });
 
-    if (updatedInvestment) {
-      return updatedInvestment;
-    } else {
-      throw new Error('Investment not found');
-    }
+    return updatedInvestment;
   } else {
     throw new Error('Unable to update investment');
   }
@@ -67,17 +59,13 @@ async function update({ id, name, value }) {
 
 async function remove(id) {
   if (id) {
-    const removedInvestment = await prisma.investment.delete({
+    await prisma.investment.delete({
       where: {
         id,
       },
     });
 
-    if (removedInvestment) {
-      return true;
-    } else {
-      throw new Error('Investment not found');
-    }
+    return true;
   } else {
     throw new Error('Unable to remove investment');
   }

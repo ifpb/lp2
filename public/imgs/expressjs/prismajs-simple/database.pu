@@ -1,0 +1,11 @@
+@startuml
+hide circle
+skinparam linetype ortho
+skinparam monochrome true
+
+entity "Investment" as investiment {
+  *id : text
+  name : text
+  price: integer
+}
+@enduml

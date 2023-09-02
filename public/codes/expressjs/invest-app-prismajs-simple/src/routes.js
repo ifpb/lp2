@@ -29,7 +29,7 @@ router.get('/investments', async (req, res) => {
     let investments;
 
     if (name) {
-      investments = await Investment.read('name', name);
+      investments = await Investment.read({ name });
     } else {
       investments = await Investment.read();
     }

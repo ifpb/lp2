@@ -1,6 +1,8 @@
+import Auth from '../lib/auth.js';
+
 const domain = '';
 
-async function create(resource, data) {
+async function create(resource, data, auth = true) {
   const url = `${domain}${resource}`;
 
   const config = {
@@ -12,7 +14,15 @@ async function create(resource, data) {
     },
   };
 
+  if (auth) {
+    config.headers.Authorization = `Bearer ${Auth.getToken()}`;
+  }
+
   const res = await fetch(url, config);
+
+  if (res.status === 401) {
+    Auth.signout();
+  }
 
   return await res.json();
 }
@@ -20,7 +30,18 @@ async function create(resource, data) {
 async function read(resource) {
   const url = `${domain}${resource}`;
 
-  const res = await fetch(url);
+  const config = {
+    method: 'get',
+    headers: {
+      Authorization: `Bearer ${Auth.getToken()}`,
+    },
+  };
+
+  const res = await fetch(url, config);
+
+  if (res.status === 401) {
+    Auth.signout();
+  }
 
   return await res.json();
 }
@@ -34,10 +55,15 @@ async function update(resource, data) {
     body: JSON.stringify(data),
     headers: {
       'Content-Type': 'application/json; charset=UTF-8',
+      Authorization: `Bearer ${Auth.getToken()}`,
     },
   };
 
   const res = await fetch(url, config);
+
+  if (res.status === 401) {
+    Auth.signout();
+  }
 
   return await res.json();
 }
@@ -48,9 +74,18 @@ async function remove(resource) {
   const config = {
     method: 'DELETE',
     mode: 'cors',
+    headers: {
+      Authorization: `Bearer ${Auth.getToken()}`,
+    },
   };
 
-  await fetch(url, config);
+  const res = await fetch(url, config);
+
+  if (res.status === 401) {
+    Auth.signout();
+  }
+
+  return true;
 }
 
 export default { create, read, update, remove };

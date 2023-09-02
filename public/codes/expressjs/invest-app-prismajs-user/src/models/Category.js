@@ -8,20 +8,14 @@ async function create(category) {
   return newCategory;
 }
 
-async function read(field, value) {
-  if (field && value) {
-    const categories = await prisma.category.findMany({
-      where: {
-        [field]: {
-          contains: value,
-        },
-      },
-    });
+async function read(where) {
+  const categories = await prisma.category.findMany({
+    where,
+  });
 
-    return categories;
+  if (categories.length === 1 && where) {
+    return categories[0];
   }
-
-  const categories = await prisma.category.findMany();
 
   return categories;
 }

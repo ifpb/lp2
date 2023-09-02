@@ -1,0 +1,38 @@
+@startuml
+hide circle
+scale 1.5
+skinparam linetype ortho
+skinparam monochrome true
+left to right direction
+
+entity "Investment" as investiment {
+  *id : text
+  name : text
+  price: integer
+  *categoryId : text <<FK>>
+  *userId : text <<FK>>
+  *brokerId : text <<FK>>
+}
+
+entity "Category" as category {
+  *id : text
+  name : text
+  color : text
+}
+
+entity "User" as user {
+  *id : text
+  name : text
+  email : text
+  password : text
+}
+
+entity "Broker" as broker {
+  *id : text
+  name : text
+}
+
+investiment }|--|| category
+investiment }|--|| user
+investiment }|--|| broker
+@enduml

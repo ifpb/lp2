@@ -9,7 +9,7 @@ entity "Investment" as investiment {
   *id : text
   name : text
   price: integer
-  *categoryId : integer <<FK>>
+  *categoryId : text <<FK>>
 }
 
 entity "Category" as category {
