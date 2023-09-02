@@ -1,0 +1,14 @@
+{
+  "investments": [
+    {
+      "name": "Tesouro Selic 2029",
+      "value": 10000,
+      "id": 1
+    },
+    {
+      "name": "Tesouro IPCA 2029",
+      "value": 10000,
+      "id": 2
+    }
+  ]
+}

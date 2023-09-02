@@ -1,0 +1,63 @@
+---
+import { existsFile } from '../helpers/files';
+import CodePreview from './CodePreview.astro';
+import CodeTree from './CodeTree.astro';
+import HtmlPreview from './HtmlPreview.astro';
+
+export interface Props {
+  src: string;
+  onlyBody?: boolean;
+  codeTree?: boolean;
+  isShowHtml?: boolean;
+  isShowCss?: boolean;
+  isShowIframe?: boolean;
+  height?: number;
+  htmlFile: string;
+  cssHighlightLines: string;
+  htmlHighlightLines: string;
+  linkName?: string;
+}
+
+const {
+  src,
+  height,
+  onlyBody = true,
+  isShowIframe = true,
+  isShowHtml = true,
+  isShowCss = true,
+  codeTree = false,
+  htmlFile,
+  cssHighlightLines,
+  htmlHighlightLines,
+  linkName,
+} = Astro.props;
+
+const htmlPath = `${src}/${htmlFile ?? 'index.html'}`;
+
+const cssPath = `${src}/css/style.css`;
+---
+
+<HtmlPreview
+  src={htmlPath}
+  height={height}
+  isShowIframe={isShowIframe}
+  linkName={linkName}
+/>
+
+{codeTree && <CodeTree src={src} />}
+
+{
+  isShowHtml && (
+    <CodePreview
+      src={htmlPath}
+      onlyBody={onlyBody}
+      highlightLines={htmlHighlightLines}
+    />
+  )
+}
+
+{
+  existsFile(cssPath) && isShowCss && (
+    <CodePreview src={cssPath} highlightLines={cssHighlightLines} />
+  )
+}

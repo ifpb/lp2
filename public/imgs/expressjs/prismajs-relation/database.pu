@@ -1,0 +1,22 @@
+@startuml
+hide circle
+scale 1.5
+skinparam linetype ortho
+skinparam monochrome true
+left to right direction
+
+entity "Investment" as investiment {
+  *id : text
+  name : text
+  price: integer
+  *categoryId : integer <<FK>>
+}
+
+entity "Category" as category {
+  *id : text
+  name : text
+  color : text
+}
+
+investiment }|--|| category
+@enduml

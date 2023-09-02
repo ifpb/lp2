@@ -1,0 +1,178 @@
+---
+title: Introdução ao Express.js
+---
+
+import CodePreview from '../../../../components/CodePreview.astro';
+import CodeTree from '../../../../components/CodeTree.astro';
+
+# {frontmatter.title}
+
+## Definição
+
+[Site Express](http://expressjs.com/):
+
+> Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.
+
+## Características
+
+- Rápido
+- Minimalista
+- Flexível
+- Não opinativo
+- Usado para montar APIs
+- Alguns frameworks são baseados no Express
+
+## Exemplo de Express.js
+
+<CodeTree src="/codes/expressjs/hello-simple" />
+
+Fluxo da aplicação hello-simple:
+
+![](/imgs/expressjs/hello-simple/flow.png)
+
+Código da aplicação hello-simple:
+
+<CodePreview src="/codes/expressjs/hello-simple/src/index.js" />
+
+Para a criação do arquivo `package.json` use este comando no terminal:
+
+```sh
+$ npm init -y
+```
+
+
+Adição do pacote [express.js](https://www.npmjs.com/package/express) como dependência do projeto e dos scripts de execução do projeto:
+
+```sh
+$ npm install express
+```
+
+<CodePreview src="/codes/expressjs/hello-simple/package.json" highlightLines="8,9,15" />
+
+Para executar o projeto use algum destes comandos:
+
+```sh
+$ node src/index.js
+```
+
+```sh
+$ npm start
+```
+
+Já a execução no modo watch:
+
+```sh
+$ npm run dev
+```
+
+Depende da versão do node.js, o modo watch precisa de um pacoto como o [nodemon](https://www.npmjs.com/package/nodemon) para funcionar:
+
+```js
+ "scripts": {
+    ...
+    "dev": "nodemon src/index.js"
+  },
+```
+
+```sh
+$ npm install nodemon -D
+$ npx nodemon src/index.js
+$ npm run dev
+```
+
+Já para testar as requisições use o arquivo `requests.http` do plugin [Rest Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) do VSCode:
+
+<CodePreview src="/codes/expressjs/hello-simple/requests.http" />
+
+![](/imgs/expressjs/hello-simple/response.png)
+
+> Cuidado no git para não versionar a pasta `node_modules/`, use o arquivo `.gitignore` para desconsiderar a pasta.
+
+<CodePreview src="/codes/expressjs/hello-simple/.gitignore" />
+
+## Rotas da Aplicação
+
+Rotas:
+
+- `/hello/en` => `Hello World!`
+- `/hello/pt` => `Olá Mundo!`
+
+![](/imgs/expressjs/hello-lang/flow.png)
+
+Estrutura do código:
+
+<CodeTree src="/codes/expressjs/hello-lang" />
+
+<CodePreview src="/codes/expressjs/hello-lang/src/index.js" />
+
+<CodePreview src="/codes/expressjs/hello-lang/requests.http" />
+
+## Parâmetros de Requisição
+
+### Tipos de Parâmetros
+
+![](/imgs/expressjs/params/flow.png)
+
+Parâmetros:
+
+- Query Param
+- Route Param
+- Body Param
+
+### Query Param
+
+![](/imgs/expressjs/bmi-query-param/flow.png)
+
+Estrutura do código:
+
+<CodeTree src="/codes/expressjs/bmi-query-param" />
+
+<CodePreview src="/codes/expressjs/bmi-query-param/src/bmi.js" />
+
+<CodePreview src="/codes/expressjs/bmi-query-param/src/index.js" highlightLines="7,8" />
+
+<CodePreview src="/codes/expressjs/bmi-query-param/requests.http" />
+
+### Route Param
+
+![](/imgs/expressjs/bmi-route-param/flow.png)
+
+Estrutura do código:
+
+<CodeTree src="/codes/expressjs/bmi-route-param" />
+
+<CodePreview src="/codes/expressjs/bmi-route-param/src/index.js" highlightLines="7,8" />
+
+<CodePreview src="/codes/expressjs/bmi-route-param/requests.http" />
+
+### Body Param
+
+![](/imgs/expressjs/bmi-body-param/flow.png)
+
+Estrutura do código:
+
+<CodeTree src="/codes/expressjs/bmi-body-param" />
+
+<CodePreview src="/codes/expressjs/bmi-body-param/src/index.js" highlightLines="6,9" />
+
+<CodePreview src="/codes/expressjs/bmi-body-param/requests.http" />
+
+### Resumo das Rotas
+
+| Tipo        | Node.js      | HTTP | Rota                                 |
+| ----------- | ------------ | ---- | ------------------------------------ |
+| Query Param | `req.query`  | GET  | `/bmi?weight=x&height=y`             |
+| Route Param | `req.params` | GET  | `/bmi/weight/:weight/height/:height` |
+| Body Param  | `req.body`   | POST | `/bmi`                               |
+
+| Rota                                 | Dados                              |
+| ------------------------------------ | ---------------------------------- |
+| `/bmi?weight=x&height=y`             | `?weight=100&height=1.5`           |
+| `/bmi/weight/:weight/height/:height` | `/bmi/weight/100/height/1.5`       |
+| `/bmi`                               | `{ "weight": 100, "height": 1.5 }` |
+
+## Referências
+
+- [Express](https://expressjs.com/)
+  - [Guide](https://expressjs.com/en/guide/routing.html)
+  - [API](https://expressjs.com/en/4x/api.html)

@@ -1,0 +1,41 @@
+---
+import NavBar from '../components/NavBar.astro';
+import Sidebar from '../components/Sidebar.astro';
+
+import '../styles/global.css';
+
+export interface Props {
+  pageTitle: string;
+}
+
+const { pageTitle } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/lp2/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+  </head>
+  <body class="bg-gray-100 dark:bg-slate-800 dark:text-white scroll-smooth">
+    <NavBar />
+    <div
+      class="relative z-0 flex max-sm:flex-col justify-between items-stretch min-h-screen"
+    >
+      <Sidebar />
+
+      <article class="mx-auto py-8 lg:pl-40 xl:pl-64 max-sm:px-4">
+        <slot />
+      </article>
+    </div>
+  </body>
+
+  <style is:global>
+    html,
+    body {
+      @apply scroll-smooth;
+    }
+  </style>
+</html>

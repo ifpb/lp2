@@ -1,0 +1,48 @@
+@startuml
+title MVC
+hide footbox
+skinparam monochrome true
+skinparam defaultTextAlignment center
+
+rectangle Browser [
+  <b>Browser
+]
+rectangle View [
+  <b>View
+  public/index.html
+]
+rectangle Router [
+  <b>Router & Controller
+  src/routes.js
+]
+rectangle Loader [
+  <b>Loader
+  src/index.js
+]
+rectangle Seed [
+  <b>Seed
+  src/database/seeders.js
+]
+rectangle Model [
+  <b>Model
+  src/models/Investment.js
+]
+database Database [
+  <b>Database
+  Array
+]
+
+View -down[hidden]- Browser
+View -down-> Browser: 1. investments
+Browser -right-> Router: 2. /investments
+Router <-right-> Model: 3. Investment.read
+Model <-down-> Database: 4. JSON
+Router <-right-> Model: 5. JSON
+Router -left-> Browser : 6. JSON
+Browser -up-> View: 7. JSON
+Loader .down.> Router
+Loader .down[hidden].> Router
+Loader .right.> Seed: Seed.up
+Seed .down.> Model: Investment.create
+
+@enduml

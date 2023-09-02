@@ -1,0 +1,282 @@
+---
+title: JavaScript e Frontend Web
+---
+
+import HtmlPreview from '../../../../components/HtmlPreview.astro';
+import CodePreview from '../../../../components/CodePreview.astro';
+import CodeTree from '../../../../components/CodeTree.astro';
+
+# {frontmatter.title}
+
+## Integrando JS e HTML
+
+<CodePreview src="/codes/w3c/hello-js/index.html" />
+
+<CodePreview src="/codes/w3c/hello-js/js/index.js" />
+
+## Conteúdo Dinâmico
+
+![](/imgs/w3c/invest-app-read/preview.png)
+
+<CodeTree src="/codes/w3c/invest-app-read" />
+
+<CodePreview src="/codes/w3c/invest-app-read/index.html" />
+
+<CodePreview src="/codes/w3c/invest-app-read/data/investments.json" />
+
+<CodePreview src="/codes/w3c/invest-app-read/js/main.js" />
+
+## Formulário e Eventos
+
+![](/imgs/w3c/invest-app/preview.png)
+
+### Back-end
+
+REST API
+
+| Método | Caminho          | Resposta                       |
+| ------ | ---------------- | ------------------------------ |
+| POST   | `/investments`   | Cria um novo investmento       |
+| GET    | `/investments`   | Retorna todos os investments   |
+| GET    | `/investments/1` | Retorna o investmento de ID 1  |
+| PUT    | `/investments/1` | Atualiza o investmento de ID 1 |
+| DELETE | `/investments/1` | Exclui o investmento de ID 1   |
+
+<CodePreview src="/codes/w3c/invest-app/back/db.json" />
+
+[json-server](https://github.com/typicode/json-server):
+
+```http
+$ npm init -y
+$ npm install json-server
+```
+
+<CodePreview src="/codes/w3c/invest-app/back/package.json" />
+
+```http
+$ npm start
+```
+
+GET [http://localhost:3000/investments](http://localhost:3000/investments):
+
+```json
+[
+  {
+    "name": "Server",
+    "address": "10.0.0.10",
+    "mask": "255.255.255.0",
+    "id": 1
+  },
+  {
+    "name": "PC 1",
+    "address": "192.168.0.1",
+    "mask": "255.255.255.0",
+    "id": 2
+  }
+]
+```
+
+[VS Code - Rest Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client):
+
+<CodePreview src="/codes/w3c/invest-app/back/requests.http" />
+
+#### Create
+
+![](/imgs/expressjs/api/create-investment.png)
+
+request.http:
+
+```http
+@host = http://localhost:3000
+@createdInvestmentId = {{createdInvestment.response.body.$.id}}
+
+### Create Investment
+
+# @name createdInvestment
+POST {{host}}/investments
+Content-Type: application/json
+
+{
+  "name": "Tesouro IPCA 2029",
+  "value": 100
+}
+```
+
+#### Read
+
+![](/imgs/expressjs/api/read-investments-simple.png)
+
+request.http:
+
+```http
+@host = http://localhost:3000
+
+### Read Investments
+
+GET {{host}}/investments
+```
+
+
+#### Update
+
+![](/imgs/expressjs/api/update-investment-simple.png)
+
+request.http:
+
+```http
+@host = http://localhost:3000
+@createdInvestmentId = {{createdInvestment.response.body.$.id}}
+
+### Update Investment
+
+PUT {{host}}/investments/{{createdInvestmentId}}
+Content-Type: application/json
+
+{
+  "name": "Tesouro IPCA 2029",
+  "value": 200
+}
+```
+
+#### Delete
+![](/imgs/expressjs/api/delete-investment-simple.png)
+
+request.http:
+
+```http
+@host = http://localhost:3000
+@createdInvestmentId = {{createdInvestment.response.body.$.id}}
+
+### Delete Investment
+
+DELETE {{host}}/investments/{{createdInvestmentId}}
+```
+
+### Front-end
+
+<CodeTree src="/codes/w3c/invest-app/front" />
+
+<CodePreview src="/codes/w3c/invest-app/front/index.html" />
+
+<CodePreview src="/codes/w3c/invest-app/front/css/style.css" />
+
+<CodePreview src="/codes/w3c/invest-app/front/js/main.js" highlightLines="10,46,59,67,74,103,113,131,141" />
+
+<CodePreview src="/codes/w3c/invest-app/front/js/lib/format.js" />
+
+### Fetch API
+
+Funções da API: `create`, `read`, `update` e `destroy`
+
+<CodePreview src="/codes/w3c/invest-app/front/js/services/api.js" highlightLines="3,20,28,45,56" />
+
+#### Create
+
+![](/imgs/expressjs/api/create-investment.png)
+
+API:
+
+```js title="/codes/w3c/invest-app/front/js/services/api.js" showLineNumbers="true"
+async function create(resource, data) {
+  const url = `${domain}${resource}`;
+
+  const config = {
+    method: 'POST',
+    mode: 'cors',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  };
+
+  const res = await fetch(url, config);
+
+  return await res.json();
+}
+```
+
+```js showLineNumbers="true"
+const investment = {
+  name: "Tesouro IPCA 2029",
+  value: 100
+}
+
+API.create('/investments', investment);
+```
+
+#### Read
+
+![](/imgs/expressjs/api/read-investments-simple.png)
+
+API:
+
+```js title="/codes/w3c/invest-app/front/js/services/api.js" showLineNumbers="true"
+async function read(resource) {
+  const url = `${domain}${resource}`;
+
+  const res = await fetch(url);
+
+  return await res.json();
+}
+```
+
+```js showLineNumbers="true"
+API.read('/investments');
+```
+
+#### Update
+
+![](/imgs/expressjs/api/update-investment-simple.png)
+
+API:
+
+```js title="/codes/w3c/invest-app/front/js/services/api.js" showLineNumbers="true"
+async function update(resource, data) {
+  const url = `${domain}${resource}`;
+
+  const config = {
+    method: 'PUT',
+    mode: 'cors',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  };
+
+  const res = await fetch(url, config);
+
+  return await res.json();
+}
+```
+
+```js showLineNumbers="true"
+const investment = {
+  name: "Tesouro IPCA 2029",
+  value: 100
+}
+
+API.update('/investments/3', investment);
+```
+
+#### Delete
+
+![](/imgs/expressjs/api/delete-investment-simple.png)
+
+API:
+
+```js title="/codes/w3c/invest-app/front/js/services/api.js" showLineNumbers="true"
+async function remove(resource) {
+  const url = `${domain}${resource}`;
+
+  const config = {
+    method: 'DELETE',
+    mode: 'cors',
+  };
+
+  await fetch(url, config);
+}
+```
+
+```js showLineNumbers="true"
+API.remove('/investments/3');
+```

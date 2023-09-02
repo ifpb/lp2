@@ -1,0 +1,15 @@
+@startuml
+title Update
+hide footbox
+skinparam monochrome true
+
+Client -> Server: PUT /foods/4197d9c8
+note right: PUT /foods/4197d9c8 HTTP/1.1\nHost: 127.0.0.1:3000\nContent-Type: application/json\n\n{\n  "name": "Tesouro IPCA 2029",\n  "value": 200\n}
+Server -> Client: HTTP/1.1 200 Ok
+note left: HTTP/1.1 200 Ok\n\n{\n  "id": 4197d9c8,\n  "name": "Tesouro IPCA 2029",\n  "value": 200\n}
+
+Client -> Server: PUT /foods/a
+note right: PUT /foods/a HTTP/1.1\nHost: 127.0.0.1:3000\nContent-Type: application/json\n\n{\n  "name": "Tesouro IPCA 2029",\n  "value": 200\n}
+Server -> Client: HTTP/1.1 400 Bad Request
+note left: HTTP/1.1 400 Bad Request\n\n{\n  "error": "Investiment not found."\n}
+@enduml

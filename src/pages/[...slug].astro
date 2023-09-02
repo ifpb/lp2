@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+
+import MarkDownLayout from '../layouts/MarkDownLayout.astro';
+
+export async function getStaticPaths() {
+  const classroomEntries = await getCollection('classnotes');
+
+  return classroomEntries.map((entry) => ({
+    params: {
+      slug: entry.slug,
+    },
+    props: {
+      entry,
+    },
+  }));
+}
+
+const { entry } = Astro.props;
+
+const { Content, headings } = await entry?.render();
+
+const file = `/src/content/classnotes/${entry.id}`;
+
+const slug = entry?.slug;
+---
+
+<MarkDownLayout
+  frontmatter={entry?.data}
+  headings={headings}
+  file={file}
+  slug={slug}
+>
+  <Content />
+</MarkDownLayout>

@@ -1,0 +1,15 @@
+@startuml
+title Delete
+hide footbox
+skinparam monochrome true
+
+Client -> Server: DELETE /investments/4197d9c8
+note right: DELETE /investments/4197d9c8 HTTP/1.1\nHost: 127.0.0.1:3000
+Server -> Client: HTTP/1.1 204 No Content
+note left: HTTP/1.1 204 No Content
+
+Client -> Server: DELETE /investments/a
+note right: DELETE /investments/a HTTP/1.1\nHost: 127.0.0.1:3000
+Server -> Client: HTTP/1.1 400 Bad Request
+note left: HTTP/1.1 400 Bad Request\n\n{\n  "error": "Investment not found."\n}
+@enduml

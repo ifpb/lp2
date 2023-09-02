@@ -1,0 +1,46 @@
+---
+title: Banco de Dados
+---
+
+import CodePreview from '../../../../components/CodePreview.astro';
+import CodeTree from '../../../../components/CodeTree.astro';
+
+# {frontmatter.title}
+
+![](/imgs/expressjs/db-simple/mvc.png)
+
+<CodeTree src="/codes/expressjs/invest-app-db-simple" />
+
+## Migration
+
+<CodePreview src="/codes/expressjs/invest-app-db-simple/src/database/database.js" />
+
+[sqlite-async](https://www.npmjs.com/package/sqlite-async):
+
+```bash
+$ npm install sqlite-async
+```
+
+<CodePreview src="/codes/expressjs/invest-app-db-simple/src/database/migration.js" />
+
+Tabela `investments`:
+
+![](/imgs/expressjs/db-simple/database.png)
+
+<CodePreview src="/codes/expressjs/invest-app-db-simple/src/database/load.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-db-simple/package.json" />
+
+```bash
+$ npm run db:load
+```
+
+Para visualizar o db.sqlite use o plugin [vscode-sqlite](https://marketplace.visualstudio.com/items?itemName=alexcvzz.vscode-sqlite) ou [sqlite-viewer](https://marketplace.visualstudio.com/items?itemName=qwtel.sqlite-viewer).
+
+## Model
+
+<CodePreview src="/codes/expressjs/invest-app-db-simple/src/models/Investment.js" />
+
+## Router
+
+<CodePreview src="/codes/expressjs/invest-app-db-simple/src/routes.js" />

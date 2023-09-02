@@ -1,9 +1,0 @@
-### Get BMI
-
-POST http://127.0.0.1:3000/bmi
-Content-Type: application/json
-
-{
-  "weight": 100,
-  "height": 1.5
-}

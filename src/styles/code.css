@@ -1,0 +1,84 @@
+/* rehype-pretty-code */
+html.dark
+  :is(
+    [data-rehype-pretty-code-title][data-theme='dark'],
+    pre[data-theme='dark'],
+    .html-preview
+  ) {
+  @apply !bg-[#0d1117];
+}
+
+html:not(.dark)
+  :is(
+    [data-rehype-pretty-code-title][data-theme='light'],
+    pre[data-theme='light'],
+    .html-preview
+  ) {
+  @apply !bg-white;
+}
+
+html:not(.dark)
+  :is(
+    [data-rehype-pretty-code-title][data-theme='dark'],
+    pre[data-theme='dark']
+  ),
+html.dark
+  :is(
+    [data-rehype-pretty-code-title][data-theme='light'],
+    pre[data-theme='light']
+  ) {
+  @apply hidden;
+}
+
+div[data-rehype-pretty-code-fragment],
+.code-preview {
+  @apply mb-8;
+}
+
+div[data-rehype-pretty-code-fragment] [data-rehype-pretty-code-title] {
+  @apply px-6 py-2 rounded-t border-b;
+}
+
+div[data-rehype-pretty-code-fragment] [data-rehype-pretty-code-title] + pre {
+  @apply !rounded-none !rounded-b;
+}
+
+div[data-rehype-pretty-code-fragment] pre {
+  @apply my-0 border-none overflow-x-auto px-6 py-4 [&:has([data-line-numbers])]:p-0;
+}
+
+div[data-rehype-pretty-code-fragment] pre:has([data-line-numbers]) {
+  @apply px-0 py-4;
+}
+
+div[data-rehype-pretty-code-fragment] code[data-line-numbers] {
+  @apply [counter-reset:line];
+}
+
+div[data-rehype-pretty-code-fragment] code {
+  @apply flex flex-col;
+}
+
+code[data-line-numbers] .line::before {
+  @apply text-gray-300 dark:text-gray-600 text-right mr-4 w-5 inline-block [counter-increment:line] content-[counters(line,'.')];
+}
+
+div[data-rehype-pretty-code-fragment] .highlighted {
+  @apply bg-gray-200 dark:bg-gray-800;
+}
+
+div[data-rehype-pretty-code-fragment] .highlighted::before {
+  @apply text-gray-900 dark:text-gray-200 bg-gray-200 dark:bg-gray-800 border-l-gray-900 dark:border-l-white border-l-4;
+}
+
+div[data-rehype-pretty-code-fragment]
+  code[data-line-numbers-max-digits='2']
+  > .line::before {
+  @apply w-5;
+}
+
+div[data-rehype-pretty-code-fragment]
+  code[data-line-numbers-max-digits='3']
+  > .line::before {
+  @apply w-6;
+}

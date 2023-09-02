@@ -1,0 +1,35 @@
+---
+title: Cadastro de Usuário
+---
+
+import CodePreview from '../../../../components/CodePreview.astro';
+import CodeTree from '../../../../components/CodeTree.astro';
+
+# {frontmatter.title}
+
+<CodeTree src="/codes/expressjs/invest-app-prismajs-user" />
+
+## Migration
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-user/prisma/schema.prisma" />
+
+```bash
+$ npx prisma migrate reset
+$ npx prisma migrate dev --name create_user
+```
+
+Tabelas:
+
+![](/imgs/expressjs/prismajs-user/database.png)
+
+## Model
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-user/src/models/User.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-user/src/models/Investment.js" />
+
+## Router
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/src/routes.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/requests.http" />

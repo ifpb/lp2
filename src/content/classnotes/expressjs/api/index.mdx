@@ -1,0 +1,208 @@
+---
+title: Construção de API
+---
+
+import CodePreview from '../../../../components/CodePreview.astro';
+import CodeTree from '../../../../components/CodeTree.astro';
+
+# {frontmatter.title}
+
+## Back-end Web
+
+### Rotas do Invest API
+
+| Método | Caminho                    | Parâmetro   | Status       | Resposta                                            |
+| ------ | -------------------------- | ----------- | ------------ | --------------------------------------------------- |
+| POST   | `/investments`             | Body        | `201`        | Cria um novo investimento                           |
+| GET    | `/investments`             | -           | `200`        | Retorna todas os investimentos                      |
+| GET    | `/investments?name=Salada` | Query       | `200`        | Retorna todas os investimentos com o nome `Tesouro` |
+| GET    | `/investments/X`           | Route       | `200`, `400` | Retorna o investimento de ID X                      |
+| PUT    | `/investments/X`           | Body, Route | `200`, `400` | Atualiza o investimento de ID X                     |
+| DELETE | `/investments/X`           | Route       | `204`, `400` | Exclui o investimento de ID X                       |
+
+### HTTP Status Codes
+
+- [Classes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+  - Respostas de informação (100-199)
+  - Respostas de sucesso (200-299)
+  - Redirecionamentos (300-399)
+  - Erros do cliente (400-499)
+  - Erros do servidor (500-599)
+- Códigos do Invest API
+
+| Código | Nome                  | Significado                                                                |
+| ------ | --------------------- | -------------------------------------------------------------------------- |
+| `200`  | Ok                    | Solicitação gerada com sucesso                                             |
+| `201`  | Created               | Solicitação gerada com sucesso e um novo recurso foi criado como resultado |
+| `204`  | No Content            | Solicitação gerada com sucesso e não há conteúdo para ser enviado          |
+| `304`  | Not Modified          | O conteúdo da requisição já existe em cache e não foi modificado           |
+| `400`  | Bad Request           | Solicitação não compreendida por motivos de erro                           |
+| `404`  | Not Found             | O servidor não pode encontrar o recurso solicitado                         |
+| `500`  | Internal Server Error | O servidor encontrou uma situação com a qual não sabe lidar.               |
+
+### API de Investimentos
+
+<CodeTree src="/codes/expressjs/invest-app-api/back" />
+
+<CodePreview src="/codes/expressjs/invest-app-api/back/src/data/investments.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-api/back/src/index.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-api/back/src/routes.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-api/back/requests.http" />
+
+<CodePreview src="/codes/expressjs/invest-app-api/back/package.json" />
+
+### Create
+
+![](/imgs/expressjs/api/create-investment.png)
+
+```js title="/codes/expressjs/invest-api/src/routes.js"
+router.post('/investments', (req, res) => {
+  const investment = req.body;
+
+  const id = uuidv4();
+
+  const newInvestment = { ...investment, id };
+
+  if (investment) {
+    investments.push(newInvestment);
+
+    res.json(newInvestment);
+  } else {
+    throw new HTTPError('Unable to create investment', 400);
+  }
+});
+```
+
+```http title="/codes/expressjs/invest-api/requests.http"
+@host = http://localhost:3000
+
+### Create Investment
+
+# @name createdInvestment
+POST {{host}}/investments
+Content-Type: application/json
+
+{
+  "name": "Tesouro IPCA 2029",
+  "value": 100
+}
+```
+
+### Read
+
+![](/imgs/expressjs/api/read-investments.png)
+
+```js title="/codes/expressjs/invest-api/src/routes.js"
+router.get('/investments', (req, res) => {
+  const { name } = req.query;
+
+  if (name) {
+    const filteredInvestments = investments.filter((investment) =>
+      investment.name.includes(name)
+    );
+
+    return res.json(filteredInvestments);
+  }
+
+  res.json(investments);
+});
+```
+
+```http title="/codes/expressjs/invest-api/requests.http"
+### Read Investments
+
+GET {{host}}/investments
+
+### Read Investments by Name
+
+GET {{host}}/investments?name=Tesouro
+```
+
+### Update
+
+![](/imgs/expressjs/api/update-investment.png)
+
+```js title="/codes/expressjs/invest-api/src/routes.js"
+router.put('/investments/:id', (req, res) => {
+  const investment = req.body;
+
+  const id = req.params.id;
+
+  if (investment && id) {
+    const newInvestment = { ...investment, id };
+
+    const index = investments.findIndex((investment) => investment.id === id);
+
+    if (investments[index]) {
+      throw new HTTPError('Investment not found', 400);
+    }
+
+    investments[index] = newInvestment;
+
+    res.json(newInvestment);
+  } else {
+    throw new HTTPError('Unable to update investment', 400);
+  }
+});
+```
+
+```http title="/codes/expressjs/invest-api/requests.http"
+@host = http://localhost:3000
+@createdInvestmentId = {{createdInvestment.response.body.$.id}}
+
+### Update Investment
+
+PUT {{host}}/investments/{{createdInvestmentId}}
+Content-Type: application/json
+
+{
+  "name": "Tesouro IPCA 2029",
+  "value": 200
+}
+```
+
+### Delete
+
+![](/imgs/expressjs/api/delete-investment.png)
+
+```js title="/codes/expressjs/invest-api/src/routes.js"
+router.delete('/investments/:id', (req, res) => {
+  const id = req.params.id;
+
+  if (id) {
+    const index = investments.findIndex((investment) => investment.id === id);
+
+    investments.splice(index, 1);
+  } else {
+    throw new HTTPError('Investment not found', 400);
+  }
+
+  res.send(204);
+});
+```
+
+```http title="/codes/expressjs/invest-api/requests.http"
+@host = http://localhost:3000
+@createdInvestmentId = {{createdInvestment.response.body.$.id}}
+
+### Delete Investment
+
+DELETE {{host}}/investments/{{createdInvestmentId}}
+```
+
+## Front-end Web
+
+<CodeTree src="/codes/expressjs/invest-app-api/front" />
+
+<CodePreview src="/codes/expressjs/invest-app-api/front/index.html" />
+
+<CodePreview src="/codes/expressjs/invest-app-api/front/css/style.css" />
+
+<CodePreview src="/codes/expressjs/invest-app-api/front/js/main.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-api/front/js/services/api.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-api/front/js/lib/format.js" />

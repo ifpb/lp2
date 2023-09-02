@@ -1,0 +1,26 @@
+@startuml
+title Read
+hide footbox
+skinparam monochrome true
+
+Client -> Server: GET /investments
+note right: GET /investments HTTP/1.1\nHost: 127.0.0.1:3000
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\n\n[\n  {\n    "id": 4197d9c8,\n    "name": "Tesouro IPCA 2029",\n    "value": 100\n  }\n]
+
+Client -> Server: GET /investments/4197d9c8
+note right: GET /investments/4197d9c8 HTTP/1.1\nHost: 127.0.0.1:3000
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\n\n{\n  "id": 4197d9c8,\n  "name": "Tesouro IPCA 2029",\n  "value": 100\n}
+
+Client -> Server: GET /investments/a
+note right: GET /investments/a HTTP/1.1\nHost: 127.0.0.1:3000
+Server -> Client: HTTP/1.1 400 Bad Request
+note left: HTTP/1.1 400 Bad Request\n\n{\n  "error": "Investment not found."\n}
+
+
+Client -> Server: GET /investments?name=Tesouro
+note right: GET /investments?name=Tesouro HTTP/1.1\nHost: 127.0.0.1:3000
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\n\n[\n  {\n    "id": 4197d9c8,\n    "name": "Tesouro IPCA 2029",\n    "value": 100\n  }\n]
+@enduml

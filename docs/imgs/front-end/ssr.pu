@@ -1,8 +1,0 @@
-@startuml
-hide footbox
-skinparam monochrome true
-
-Client -> Server: GET /foods/index
-Server -> Client: HTTP/1.1 200 OK
-note left: HTTP/1.1 200 OK\n\nHTML...
-@enduml

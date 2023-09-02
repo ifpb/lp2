@@ -1,0 +1,53 @@
+---
+title: Relação entre Entidades
+---
+
+import CodePreview from '../../../../components/CodePreview.astro';
+import CodeTree from '../../../../components/CodeTree.astro';
+
+# {frontmatter.title}
+
+<CodeTree src="/codes/expressjs/invest-app-prismajs-relation" />
+
+## Migration
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/prisma/schema.prisma" />
+
+```bash
+$ npx prisma migrate reset
+$ npx prisma migrate dev --name create_category
+```
+
+Tabelas:
+
+![](/imgs/expressjs/prismajs-relation/database.png)
+
+## Seed
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/prisma/seed.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/prisma/seeders.json" />
+
+```bash
+$ npx prisma db seed
+$ npx prisma studio
+```
+
+## Model
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/src/models/Category.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/src/models/Investment.js" />
+
+## Router
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/src/routes.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/requests.http" />
+
+## View
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/public/index.html" />
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/public/js/main.js" />
+

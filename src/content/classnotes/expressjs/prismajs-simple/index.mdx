@@ -1,0 +1,51 @@
+---
+title: Prisma.js
+---
+
+import CodePreview from '../../../../components/CodePreview.astro';
+import CodeTree from '../../../../components/CodeTree.astro';
+
+# {frontmatter.title}
+
+```bash
+$ npm install prisma
+$ npx prisma init --datasource-provider sqlite
+```
+
+<CodeTree src="/codes/expressjs/invest-app-prismajs-simple" />
+
+## Migration
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/prisma/schema.prisma" />
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/.env" />
+
+```bash
+$ npx prisma migrate dev --name init
+$ npx prisma studio
+```
+
+## Seed
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/prisma/seed.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/prisma/seeders.json" />
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/package.json" />
+
+```bash
+$ npx prisma db seed
+$ npx prisma studio
+```
+
+## Model
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/src/database/database.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/src/models/Investment.js" />
+
+## View
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/public/index.html" />
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/public/js/main.js" />
