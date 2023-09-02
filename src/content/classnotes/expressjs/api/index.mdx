@@ -56,7 +56,7 @@ import CodeTree from '../../../../components/CodeTree.astro';
 
 ### Create
 
-![](/imgs/expressjs/api/create-investment.png)
+![](/lp2/imgs/expressjs/api/create-investment.png)
 
 ```js title="/codes/expressjs/invest-api/src/routes.js"
 router.post('/investments', (req, res) => {
@@ -93,7 +93,7 @@ Content-Type: application/json
 
 ### Read
 
-![](/imgs/expressjs/api/read-investments.png)
+![](/lp2/imgs/expressjs/api/read-investments.png)
 
 ```js title="/codes/expressjs/invest-api/src/routes.js"
 router.get('/investments', (req, res) => {
@@ -123,7 +123,7 @@ GET {{host}}/investments?name=Tesouro
 
 ### Update
 
-![](/imgs/expressjs/api/update-investment.png)
+![](/lp2/imgs/expressjs/api/update-investment.png)
 
 ```js title="/codes/expressjs/invest-api/src/routes.js"
 router.put('/investments/:id', (req, res) => {
@@ -166,7 +166,7 @@ Content-Type: application/json
 
 ### Delete
 
-![](/imgs/expressjs/api/delete-investment.png)
+![](/lp2/imgs/expressjs/api/delete-investment.png)
 
 ```js title="/codes/expressjs/invest-api/src/routes.js"
 router.delete('/investments/:id', (req, res) => {
@@ -195,7 +195,7 @@ DELETE {{host}}/investments/{{createdInvestmentId}}
 
 ## Front-end Web
 
-![](/imgs/expressjs/api/preview.png)
+![](/lp2/imgs/expressjs/api/preview.png)
 
 <CodeTree src="/codes/expressjs/invest-app-api/front" />
 
