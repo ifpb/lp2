@@ -1,0 +1,9 @@
+.card-header .icon-trash:hover,
+.card-header .icon-pencil:hover {
+  cursor: pointer;
+}
+
+.card-header .icon-trash,
+.card-header .icon-pencil {
+  font-size: 1.2rem;
+}

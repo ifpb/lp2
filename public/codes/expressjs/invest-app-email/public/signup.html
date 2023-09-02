@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cadastro de Usuário</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="#">Invest App</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="/signin.html">Entrar</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/signup.html"
+                >Cadastrar</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container position-relative pb-5">
+      <h1 class="text-center py-5 fw-bold">Cadastro de Usuário</h1>
+
+      <div class="row justify-content-center">
+        <form
+          class="col-6 needs-validation"
+          onsubmit="handleSubmit(event)"
+          novalidate
+        >
+          <div class="mb-3">
+            <label for="name" class="form-label">Nome</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              name="name"
+              required
+            />
+            <div class="invalid-feedback">Informe o nome do usuário.</div>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              name="email"
+              required
+            />
+            <div class="invalid-feedback">Informe o email do usuário.</div>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Senha</label>
+            <!-- pattern="(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{8}" -->
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              minlength="8"
+              required
+            />
+            <div class="invalid-feedback">
+              Informe a senha com 8 caracteres.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="confirmationPassword" class="form-label"
+              >Confirmar Senha</label
+            >
+            <input
+              type="password"
+              class="form-control"
+              id="confirmationPassword"
+              name="confirmationPassword"
+              required
+            />
+            <div class="invalid-feedback">Informe a confirmação de senha.</div>
+          </div>
+          <div class="mb-3">
+            <input type="submit" class="btn btn-primary" value="Cadastrar" />
+          </div>
+        </form>
+      </div>
+
+      <div class="position-absolute top-0 end-0 p-3" style="z-index: 11">
+        <div
+          id="liveToast"
+          class="toast"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+          data-bs-delay="4000"
+        >
+          <div class="toast-header">
+            <strong class="me-auto"></strong>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="toast"
+              aria-label="Close"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/signup.js" type="module"></script>
+  </body>
+</html>

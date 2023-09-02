@@ -1,0 +1,38 @@
+---
+title: Manipulação de Email
+---
+
+import CodePreview from '../../../../components/CodePreview.astro';
+import CodeTree from '../../../../components/CodeTree.astro';
+
+# {frontmatter.title}
+
+[nodemailer](https://nodemailer.com/about/):
+
+```bash
+$ npm install nodemailer
+```
+
+<CodeTree src="/codes/expressjs/invest-app-email" />
+
+## Back-end
+
+<CodePreview src="/codes/expressjs/invest-app-email/.env" />
+
+> Transport: [Etherial](https://ethereal.email/), [AWS SES](https://nodemailer.com/transports/ses/), [Mailtrap](https://mailtrap.io/), [Mailgum](https://www.mailgun.com/), [Sendgrid](https://sendgrid.com/), [Gmail](https://gmail.com/)
+
+<CodePreview src="/codes/expressjs/invest-app-email/src/config/mail.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-email/src/services/SendMail.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-email/src/routes.js" />
+
+## Preview
+
+Email Enviado: [https://ethereal.email/](https://ethereal.email/message/YFeYRLypNQPVnimlYFeYSPKgtgZN.SfxAAAAAciukP6BiWVxTD0koWBy59A)
+
+![](/imgs/expressjs/email/ethereal.png)
+
+```txt
+Send email: https://ethereal.email/message/YFeYRLypNQPVnimlYFeYSPKgtgZN.SfxAAAAAciukP6BiWVxTD0koWBy59A
+```

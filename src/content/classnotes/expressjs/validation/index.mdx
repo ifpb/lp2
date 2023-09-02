@@ -3,7 +3,101 @@ title: Validação
 ---
 
 import CodePreview from '../../../../components/CodePreview.astro';
-import CodeTree from '../../../../components/CodeTree.astro';
 
 # {frontmatter.title}
+
+## Database
+
+Opções de validação:
+- NOT NULL
+  - `"name" TEXT NOT NULL`
+- UNIQUE
+  - `CREATE UNIQUE INDEX "User_email_key" ON "User"("email");`
+- DEFAULT
+  - `"createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,`
+- CHECK
+  - `"password" TEXT NOT NULL CHECK(LENGTH(password) >= 8)`
+
+```bash
+$ sqlite3 prisma/dev.db .dump
+```
+
+```sql
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+
+CREATE TABLE IF NOT EXISTS "Category" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "name" TEXT NOT NULL,
+    "color" TEXT NOT NULL
+);
+INSERT INTO Category VALUES('9be47002-2376-4975-acc9-d0c0b09fb446','Pós','#6366f1');
+INSERT INTO Category VALUES('5d6a114c-6bb1-4be8-9962-8c77fa411f99','Pré','#d946ef');
+INSERT INTO Category VALUES('f950a0ab-7caf-441c-9386-2082c78172e5','IPCA','#f43f5e');
+INSERT INTO Category VALUES('7da57d6b-aca5-4766-b323-c3bf32c4ec28','Renda Variável','#eab308');
+INSERT INTO Category VALUES('6fcdde52-1eb4-414e-8485-be2a6ce70176','Fundo de Investimento','#46efb1');
+INSERT INTO Category VALUES('1d80abe9-7a31-4b90-b10b-2ebdc7fdcff0','Outros','#111111');
+
+CREATE TABLE IF NOT EXISTS "User" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL
+);
+INSERT INTO User VALUES('b37dd024-8d74-4c99-859f-d94f19e51b6c','Luiz','luiz@email.com','$2b$10$Zn0pLtAUqnYPn3ggCvExoubRQ7XhVa7PcjF7v9AIvvPs5/yDi4EfG');
+
+CREATE TABLE IF NOT EXISTS "Broker" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "name" TEXT NOT NULL
+);
+INSERT INTO Broker VALUES('1e6f7c70-6dea-4f51-8f19-230262b666f1','Banco Inter');
+
+CREATE TABLE IF NOT EXISTS "Investment" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "name" TEXT NOT NULL,
+    "value" INTEGER NOT NULL,
+    "interest" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "categoryId" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "brokerId" TEXT NOT NULL,
+    CONSTRAINT "Investment_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "Investment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT "Investment_brokerId_fkey" FOREIGN KEY ("brokerId") REFERENCES "Broker" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+INSERT INTO Investment VALUES('cf2b1c62-a716-41b0-a4e7-afb5aa8a1af7','Tesouro Selic 2029',20000,'100% Selic',1693537200000,'9be47002-2376-4975-acc9-d0c0b09fb446','b37dd024-8d74-4c99-859f-d94f19e51b6c','1e6f7c70-6dea-4f51-8f19-230262b666f1');
+INSERT INTO Investment VALUES('52ab29d5-0392-4b25-85a3-78faa0ef31ca','CDB Inter',15000,'100% CDI',1693710000000,'9be47002-2376-4975-acc9-d0c0b09fb446','b37dd024-8d74-4c99-859f-d94f19e51b6c','1e6f7c70-6dea-4f51-8f19-230262b666f1');
+
+CREATE UNIQUE INDEX "Category_name_key" ON "Category"("name");
+CREATE UNIQUE INDEX "Category_color_key" ON "Category"("color");
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+CREATE UNIQUE INDEX "Broker_name_key" ON "Broker"("name");
+COMMIT;
+```
+
+## Back-end
+
+```bash
+$ npm install zod
+```
+
+<CodePreview src="/codes/expressjs/invest-app-validation/src/routes.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-validation/src/middleware/validate.js" />
+
+## Front-end
+
+
+![](/imgs/expressjs/validation/signup-invalid.png)
+
+<CodePreview src="/codes/expressjs/invest-app-validation/public/signup.html" />
+
+<CodePreview src="/codes/expressjs/invest-app-validation/public/js/signup.js" />
+
+![](/imgs/expressjs/validation/signup-invalid.png)
+
+<CodePreview src="/codes/expressjs/invest-app-validation/public/signup.html" />
+
+<CodePreview src="/codes/expressjs/invest-app-validation/public/js/signup.js" />
+
 
