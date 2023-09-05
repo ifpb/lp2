@@ -6,3 +6,164 @@ import CodePreview from '../../../../components/CodePreview.astro';
 import CodeTree from '../../../../components/CodeTree.astro';
 
 # {frontmatter.title}
+
+<CodeTree src="/codes/expressjs/invest-app-upload" />
+
+## Back-end
+
+<CodePreview src="/codes/expressjs/invest-app-upload/prisma/schema.prisma" />
+
+```bash
+$ npx prisma migrate dev --name user_image
+```
+
+<CodePreview src="/codes/expressjs/invest-app-upload/src/models/Image.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-upload/src/models/User.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-upload/.env.example" />
+
+```bash
+$ npm install multer
+```
+
+<CodePreview src="/codes/expressjs/invest-app-upload/src/config/multer.js" />
+
+```js title="/codes/expressjs/invest-app-upload/src/routes.js"
+import express from 'express';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import multer from 'multer';
+import { z } from 'zod';
+
+import { isAuthenticated } from './middleware/auth.js';
+import { validate } from './middleware/validate.js';
+
+import uploadConfig from './config/multer.js';
+
+import SendMail from './services/SendMail.js';
+
+import Category from './models/Category.js';
+import Investment from './models/Investment.js';
+import User from './models/User.js';
+import Image from './models/Image.js';
+
+// ...
+
+router.post(
+  '/users/image',
+  isAuthenticated,
+  multer(uploadConfig).single('image'),
+  async (req, res) => {
+    try {
+      const userId = req.userId;
+
+      if (req.file) {
+        const path = `/imgs/profile/${req.file.filename}`;
+
+        await Image.create({ userId, path });
+
+        res.sendStatus(201);
+      } else {
+        throw new Error();
+      }
+    } catch (error) {
+      throw new HTTPError('Unable to create image', 400);
+    }
+  }
+);
+
+router.put(
+  '/users/image',
+  isAuthenticated,
+  multer(uploadConfig).single('image'),
+  async (req, res) => {
+    try {
+      const userId = req.userId;
+
+      if (req.file) {
+        const path = `/imgs/profile/${req.file.filename}`;
+
+        const image = await Image.update({ userId, path });
+
+        res.json(image);
+      } else {
+        throw new Error();
+      }
+    } catch (error) {
+      throw new HTTPError('Unable to create image', 400);
+    }
+  }
+);
+
+// ...
+```
+
+<CodePreview src="/codes/expressjs/invest-app-upload/src/index.js" highlightLines="24" />
+
+```http title="/codes/expressjs/invest-app-upload/requests.http"
+@host = http://localhost:3000
+@token = {{signin.response.body.$.token}}
+@userId = {{userMe.response.body.$.id}}
+
+### Signin Ok
+
+# @name signin
+POST {{host}}/signin
+Content-Type: application/json
+
+{
+  "email": "luiz@email.com",
+  "password": "12345678"
+}
+
+### Read User (with token)
+
+# @name userMe
+GET {{host}}/users/me
+Authorization: bearer {{token}}
+
+### Create Image (User)
+
+POST {{host}}/users/image
+Authorization: bearer {{token}}
+Content-Type: multipart/form-data; boundary="boundary"
+
+--boundary
+Content-Disposition: form-data; name="userId"
+
+{{createdUserId}}
+--boundary
+Content-Disposition: form-data; name="image"; filename="avatar.png"
+Content-Type: image/png
+
+< ./public/imgs/profile/avatar.png
+--boundary--
+
+### Update Image (User)
+
+PUT {{host}}/users/image
+Authorization: bearer {{token}}
+Content-Type: multipart/form-data; boundary="boundary"
+
+--boundary
+Content-Disposition: form-data; name="userId"
+
+{{userId}}
+--boundary
+Content-Disposition: form-data; name="image"; filename="avatar.png"
+Content-Type: image/png
+
+< ./public/imgs/profile/avatar.png
+--boundary--
+```
+
+## Front-end
+
+![](/lp2/imgs/expressjs/upload-file/profile.png)
+
+<CodePreview src="/codes/expressjs/invest-app-upload/public/profile.html" />
+
+<CodePreview src="/codes/expressjs/invest-app-upload/public/js/profile.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-upload/public/js/services/api.js" />
