@@ -3,6 +3,8 @@ layout: ../layouts/MarkDownLayout.astro
 title: Linguagem de Programação II
 ---
 
+import { SUBJECT } from '../consts.js'
+
 # {frontmatter.title}
 
 A disciplina de [Linguagem e Técnicas de Programação II](/docs/plano-de-ensino.pdf) (LP2) do Curso Integrado em Informática do IFPB tem como objetivo apresentar ao aluno conceitos sobre desenvolvimento Web Back-end. Sua carga horária apresenta um total de 80 horas aula e será ministrada pelo professor Luiz Carlos Chaves. Para as aulas serão utilizadas exposições e atividades práticas, além de avaliações individuais e em grupo.
@@ -36,27 +38,67 @@ A disciplina apresenta o seguinte conteúdo, que será dividido conforme este [r
   - Validação de Dados
   - Upload de Arquivo
 
+Sobre o código fonte gerados durante as aulas, ele estará disponível no repositório da disciplina ({Object.keys(SUBJECT.GITHUB_URLS).map((github) => (<a href={SUBJECT.GITHUB_URLS[github]} target="_blank">Turma {github}</a>)).reduce((prev, curr) => [prev, ', ', curr])}).
+
 ## Horário e ambiente
 
 As aulas da disciplina serão alocados nesse horário e ambiente:
 
-| Turma   | Dia     | Horário     | Ambiente  |
-| ------- | ------- | ----------- | --------- |
-| Turma A | Segunda | 07:00-08:40 | Lab Redes |
-| Turma B | Segunda | 08:40-10:40 | Lab Redes |
+<table>
+  <thead>
+    <tr>
+      <th>Turm</th>
+      <th>Dia</th>
+      <th>Horário</th>
+      <th>Ambiente</th>
+    </tr>
+  </thead>
+  <tbody>
+    {SUBJECT.SCHEDULES.map(({ className, day, start, end, room }) => (
+      <tr>
+        <td>Turma {className}</td>
+        <td>{day}</td>
+        <td>{start}-{end}</td>
+        <td>{room}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
 
 ## Avaliações
 
-Em relação às avaliação da disciplina serão adotados estas notas durante os bimestres por meio de exercícios e projetos:
+As notas bimetrais serão computadas pelas notas das atividades durante os bimestres:
 
 - 1º Bimestre: (Nota 1 + Nota 2)/2
 - 2º Bimestre: (Nota 1 + Nota 2)/2
 - 3º Bimestre: (Nota 1 + Nota 2)/2
 - 4º Bimestre: (Nota 1 + Nota 2)/2
 
+Esta sala do Google Classroom ({Object.keys(SUBJECT.CLASSROOM_URLS).map((github) => (<a href={SUBJECT.GITHUB_URLS[github]} target="_blank">Turma {github}</a>)).reduce((prev, curr) => [prev, ', ', curr])}) será utilizada para enviar todas as avaliações, e a maioria das avaliações serão baseadas em projetos. Após a escolha do tema do projeto, todos os projetos devem declarar suas propostas no Padlet dos <a href={SUBJECT.PROJECTS_URL} target="_blank">projetos deste ano</a>, seguindo o formato de card a seguir:
+
+```text
+Título/Tema do Projeto
+
+Descrição: Resumidamente descreva a ideia central do seu projeto
+
+Equipe:
+- Nome do Aluno 1 (matricula, github, linkedin)
+- Nome do Aluno 2 (matricula, github, linkedin)
+- Nome do Aluno 3 (matricula, github, linkedin)
+
+Proposta:
+http://link-da-apresentação-da-proposta
+
+Protótipo:
+http://link-do-protótipo
+
+Repositório:
+http://github.com/link-do-repositorio
+```
+
 ## Comunicação
 
-Toda a comunicação será realizada usando o Google Chat.
+Toda a comunicação será realizada usando este <a href={SUBJECT.CHAT_URL} target="_blank">chat</a> do Google Chat.
 
 ## Ferramentas
 
