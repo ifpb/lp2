@@ -4,19 +4,25 @@ import { resolve } from 'node:path';
 import tree from 'tree-node-cli';
 import { getHTML } from './CodePreview.astro';
 import { prettyCodeOptions } from '../../plugins/rehype-pretty-code-config';
+import { GITHUB_EDIT_URL } from '../consts';
 
 export interface Props {
   src?: string;
   content?: string;
+  githubUrl?: boolean;
 }
 
-const { src, content } = Astro.props;
+const { src, content, githubUrl } = Astro.props;
+
+const githubLink = githubUrl
+  ? `[Código Fonte](${GITHUB_EDIT_URL + '/public' + src})`
+  : '';
 
 const codeTree = existsSync(resolve('./public' + src))
   ? tree(resolve('./public' + src), { exclude: [/node_modules/] })
   : 'Code not found';
 
-const markdown = `\`\`\`plaintext title="Arquivos"\n${
+const markdown = `${githubLink}\n\`\`\`plaintext title="Arquivos"\n${
   codeTree ?? content
 }\n\`\`\``;
 
