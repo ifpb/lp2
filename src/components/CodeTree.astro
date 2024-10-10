@@ -10,19 +10,26 @@ export interface Props {
   src?: string;
   content?: string;
   githubUrl?: boolean;
+  devContainerUrl?: boolean;
 }
 
-const { src, content, githubUrl } = Astro.props;
+const { src, content, githubUrl, devContainerUrl } = Astro.props;
+
+const folder = src.split('/').at(-1);
 
 const githubLink = githubUrl
-  ? `[Código Fonte](${GITHUB_EDIT_URL + '/public' + src})`
+  ? `<a href="${GITHUB_EDIT_URL + '/public' + src}" target="blank"><img class="inline" src="https://img.shields.io/badge/Open%20In%20GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="Open in GitHub"></a>`
+  : '';
+
+const devContainerLink = devContainerUrl
+  ? `<a href="https://codespaces.new/ifpb/lp2?devcontainer_path=.devcontainer/${folder}/devcontainer.json" target="blank"><img class="inline" src="https://img.shields.io/badge/Open%20In%20Codespaces-181717?style=for-the-badge&logo=github&logoColor=white" alt="Open in Codespaces"></a>`
   : '';
 
 const codeTree = existsSync(resolve('./public' + src))
   ? tree(resolve('./public' + src), { exclude: [/node_modules/] })
   : 'Code not found';
 
-const markdown = `${githubLink}\n\`\`\`plaintext title="Arquivos"\n${
+const markdown = `${githubLink} ${devContainerLink}\n\`\`\`plaintext title="Arquivos"\n${
   codeTree ?? content
 }\n\`\`\``;
 

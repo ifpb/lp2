@@ -1,0 +1,37 @@
+{
+  "name": "Invest App API",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "args": {
+      "VARIANT": "20-bullseye"
+    }
+  },
+
+  "workspaceFolder": "/workspaces/lp2/public/codes/expressjs/invest-app-api",
+
+  "portsAttributes": {
+    "3000": {
+      "label": "Application",
+      "onAutoForward": "openPreview"
+    }
+  },
+
+  "forwardPorts": [3000],
+
+  "postCreateCommand": "npm install",
+
+  "waitFor": "postCreateCommand",
+
+  "postAttachCommand": {
+    "Server": "npm start --host"
+  },
+
+  "customizations": {
+    "codespaces": {
+      "openFiles": ["src/index.js"]
+    },
+    "vscode": {
+      "extensions": ["esbenp.prettier-vscode", "humao.rest-client"]
+    }
+  }
+}

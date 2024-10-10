@@ -1,0 +1,23 @@
+{
+  "name": "LP2",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+
+  "postCreateCommand": "npm install",
+
+  "waitFor": "postCreateCommand",
+
+  "postAttachCommand": {
+    "Astro dev": "npm run dev"
+  },
+
+  "customizations": {
+    "codespaces": {
+      "openFiles": ["./src/pages/index.mdx"]
+    },
+    "vscode": {
+      "extensions": ["astro-build.astro-vscode", "esbenp.prettier-vscode"]
+    }
+  }
+}

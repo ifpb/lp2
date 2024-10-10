@@ -1,4 +1,4 @@
-const domain = 'http://localhost:3000';
+const domain = '';
 
 async function create(resource, data) {
   const url = `${domain}${resource}`;

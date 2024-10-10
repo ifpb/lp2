@@ -1,0 +1,59 @@
+{
+  "name": "Invest App Upload",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "args": {
+      "VARIANT": "20-bullseye"
+    }
+  },
+
+  "workspaceFolder": "/workspaces/lp2/public/codes/expressjs/invest-app-upload",
+
+  "portsAttributes": {
+    "3000": {
+      "label": "Application",
+      "onAutoForward": "openPreview"
+    }
+  },
+
+  "forwardPorts": [3000],
+
+  "postCreateCommand": "npm install && cp .env.example .env",
+
+  "waitFor": "postCreateCommand",
+
+  "postAttachCommand": {
+    "Server": "npm start --host"
+  },
+
+  // "remoteUser": "node",
+
+  "containerEnv": {
+    "DATABASE_URL": "file:./dev.db"
+  },
+
+  "customizations": {
+    "codespaces": {
+      "openFiles": ["src/index.js"]
+    },
+    "vscode": {
+      "settings": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        // "editor.codeActionsOnSave": {
+        //   "source.fixAll.eslint": true
+        // },
+        "[prisma]": {
+          "editor.defaultFormatter": "prisma.prisma"
+        },
+      },
+      "extensions": [
+        // "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "humao.rest-client",
+        "qwtel.sqlite-viewer",
+        "prisma.prisma"
+      ]
+    }
+  }
+}
