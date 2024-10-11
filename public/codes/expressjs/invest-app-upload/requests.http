@@ -1,4 +1,4 @@
-@host = http://localhost:3000
+@host = http://localhost:3000/api
 @createdUserId = {{createdUser.response.body.$.id}}
 @userId = {{userMe.response.body.$.id}}
 @createdInvestmentId = {{createdInvestment.response.body.$.id}}

@@ -1,4 +1,4 @@
-const domain = '';
+const domain = '/api';
 
 async function create(resource, data) {
   const url = `${domain}${resource}`;

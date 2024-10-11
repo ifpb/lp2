@@ -23,7 +23,7 @@ server.use(express.json());
 
 server.use(express.static('public'));
 
-server.use(router);
+server.use('/api', router);
 
 await Seed.up();
 

@@ -24,5 +24,12 @@
       "name": "Outros",
       "color": "#111111"
     }
+  ],
+  "users": [
+    {
+      "name": "Admin",
+      "email": "admin@email.com",
+      "password": "12345678"
+    }
   ]
 }

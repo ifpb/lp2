@@ -11,14 +11,14 @@ import CodeTree from '../../../../components/CodeTree.astro';
 
 ### Rotas do Invest API
 
-| Método | Caminho                    | Parâmetro   | Status       | Resposta                                            |
-| ------ | -------------------------- | ----------- | ------------ | --------------------------------------------------- |
-| POST   | `/investments`             | Body        | `201`        | Cria um novo investimento                           |
-| GET    | `/investments`             | -           | `200`        | Retorna todas os investimentos                      |
-| GET    | `/investments?name=Salada` | Query       | `200`        | Retorna todas os investimentos com o nome `Tesouro` |
-| GET    | `/investments/X`           | Route       | `200`, `400` | Retorna o investimento de ID X                      |
-| PUT    | `/investments/X`           | Body, Route | `200`, `400` | Atualiza o investimento de ID X                     |
-| DELETE | `/investments/X`           | Route       | `204`, `400` | Exclui o investimento de ID X                       |
+| Método | Caminho                        | Parâmetro   | Status       | Resposta                                            |
+| ------ | ------------------------------ | ----------- | ------------ | --------------------------------------------------- |
+| POST   | `/api/investments`             | Body        | `201`        | Cria um novo investimento                           |
+| GET    | `/api/investments`             | -           | `200`        | Retorna todas os investimentos                      |
+| GET    | `/api/investments?name=Salada` | Query       | `200`        | Retorna todas os investimentos com o nome `Tesouro` |
+| GET    | `/api/investments/X`           | Route       | `200`, `400` | Retorna o investimento de ID X                      |
+| PUT    | `/api/investments/X`           | Body, Route | `200`, `400` | Atualiza o investimento de ID X                     |
+| DELETE | `/api/investments/X`           | Route       | `204`, `400` | Exclui o investimento de ID X                       |
 
 ### HTTP Status Codes
 
@@ -44,15 +44,19 @@ import CodeTree from '../../../../components/CodeTree.astro';
 
 <CodeTree src="/codes/expressjs/invest-app-api-back-end" githubUrl={true} devContainerUrl={true} />
 
-<CodePreview src="/codes/expressjs/invest-app-api-back-end/src/data/investments.js" />
-
-<CodePreview src="/codes/expressjs/invest-app-api-back-end/src/index.js" />
-
-<CodePreview src="/codes/expressjs/invest-app-api-back-end/src/routes.js" />
-
-<CodePreview src="/codes/expressjs/invest-app-api-back-end/requests.http" />
+```bash
+$ npm install express uuid morgan cors express-async-errors
+```
 
 <CodePreview src="/codes/expressjs/invest-app-api-back-end/package.json" />
+
+<CodePreview src="/codes/expressjs/invest-app-api-back-end/src/data/investments.js" />
+
+<CodePreview src="/codes/expressjs/invest-app-api-back-end/src/index.js" highlightLines="5,23" />
+
+<CodePreview src="/codes/expressjs/invest-app-api-back-end/src/routes.js" highlightLines="14,30,44,60,82,97,102" />
+
+<CodePreview src="/codes/expressjs/invest-app-api-back-end/requests.http" />
 
 ### Create
 
@@ -197,14 +201,18 @@ DELETE {{host}}/investments/{{createdInvestmentId}}
 
 ![](/lp2/imgs/expressjs/api/preview.png)
 
+![](/lp2/imgs/expressjs/api/form.png)
+
 <CodeTree src="/codes/expressjs/invest-app-api" githubUrl={true} devContainerUrl={true} />
+
+<CodePreview src="/codes/expressjs/invest-app-api/src/index.js" highlightLines="23" />
+
+<CodePreview src="/codes/expressjs/invest-app-api/public/js/services/api.js" highlightLines="3,20,28,45" />
 
 <CodePreview src="/codes/expressjs/invest-app-api/public/index.html" />
 
 <CodePreview src="/codes/expressjs/invest-app-api/public/css/style.css" />
 
-<CodePreview src="/codes/expressjs/invest-app-api/public/js/main.js" />
-
-<CodePreview src="/codes/expressjs/invest-app-api/public/js/services/api.js" />
+<CodePreview src="/codes/expressjs/invest-app-api/public/js/index.js" />
 
 <CodePreview src="/codes/expressjs/invest-app-api/public/js/lib/format.js" />

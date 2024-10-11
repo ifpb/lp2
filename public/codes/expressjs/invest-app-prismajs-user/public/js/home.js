@@ -1,15 +1,15 @@
 import API from './services/api.js';
-import { formatCurrency } from './lib/format.js';
+import { formatCurrency, formatDate } from './lib/format.js';
 
 let removedHostId;
+
+const form = document.querySelector('form');
 
 const bsOffcanvas = new bootstrap.Offcanvas('.offcanvas');
 
 const confirmModal = new bootstrap.Modal('.modal');
 
 function InvestmentCard(investment) {
-  const category = investment.category;
-
   return `<div class="col" id="investment-${investment.id}">
     <div class="card">
       <div class="card-header">
@@ -41,11 +41,30 @@ function InvestmentCard(investment) {
           </span>
         </div>
         <div>
+          <span class="fw-bold">Taxa:</span>
+          <span class="investment-interest">
+            ${investment.interest}
+          </span>
+        </div>
+        <div>
+          <span class="fw-bold">Data:</span>
+          <span class="investment-created-at">
+            ${formatDate(investment.createdAt)}
+          </span>
+        </div>
+        <div>
+          <span class="fw-bold">Corretora:</span>
+          <span class="investment-broker">
+            ${investment.broker.name}
+          </span>
+        </div>
+        <div>
           <span class="fw-bold">Categoria:</span>
-          <span class="badge investment-category" style="background-color: ${
-            category.color
-          }">
-            ${category.name}
+          <span
+            class="badge investment-category"
+            style="background-color: ${investment.category.color}"
+          >
+            ${investment.category.name}
           </span>
         </div>
       </div>
@@ -74,11 +93,28 @@ async function loadInvestmentCards() {
   }
 }
 
-function updateInvestmentCard({ id, name, value, category }) {
+function updateInvestmentCard({
+  id,
+  name,
+  value,
+  createdAt,
+  category,
+  broker,
+  interest,
+}) {
   document.querySelector(`#investment-${id} .investment-name`).innerText = name;
 
   document.querySelector(`#investment-${id} .investment-value`).innerText =
     formatCurrency(value / 100);
+
+  document.querySelector(`#investment-${id} .investment-interest`).innerText =
+    interest;
+
+  document.querySelector(`#investment-${id} .investment-broker`).innerText =
+    broker.name;
+
+  document.querySelector(`#investment-${id} .investment-created-at`).innerText =
+    createdAt;
 
   document.querySelector(
     `#investment-${id} .investment-category`
@@ -89,8 +125,6 @@ function updateInvestmentCard({ id, name, value, category }) {
 }
 
 function loadHandleFormSubmit(type, id) {
-  const form = document.querySelector('form');
-
   form.onsubmit = async (event) => {
     event.preventDefault();
 
@@ -133,11 +167,22 @@ function loadHandleUpdateInvestment(id) {
   iconPencil.onclick = async () => {
     const investment = await API.read(`/investments/${id}`);
 
-    const { name, value } = investment;
+    const { name, value, interest, createdAt, categoryId, broker } = investment;
 
     document.querySelector('form #name').value = name;
 
     document.querySelector('form #value').value = value / 100;
+
+    document.querySelector('form #interest').value = interest;
+
+    document.querySelector('form #categoryId').value = categoryId;
+
+    document.querySelector('form #createdAt').value = formatDate(
+      createdAt,
+      'ymd'
+    );
+
+    document.querySelector('form #broker').value = broker.name;
 
     bsOffcanvas.show();
 

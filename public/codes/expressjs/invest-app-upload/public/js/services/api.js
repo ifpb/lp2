@@ -1,6 +1,6 @@
 import Auth from '../lib/auth.js';
 
-const domain = '';
+const domain = '/api';
 
 async function create(resource, data, auth = true, formData = false) {
   const url = `${domain}${resource}`;

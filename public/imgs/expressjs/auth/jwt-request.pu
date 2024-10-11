@@ -8,16 +8,16 @@ note right: GET /signin.html
 Server -> Client: HTTP 200
 note left: HTTP 200 OK\n\n<!DOCTYPE>\n<html>\n...\n</html>
 
-
-Client -> Server: POST /signin
-note right: POST /signin HTTP\nContent-type: application/json\n\n{\n  "user": "admin@email.com",\n  "password": "invalid"\n}
+Client -> Server: POST /api/signin
+note right: POST /api/signin HTTP\nContent-type: application/json\n\n{\n  "user": "admin@email.com",\n  "password": "invalid"\n}
 Server -> Client: HTTP 200
 note left: HTTP 401\n\n{\n  "error": "User not found"\n}
 
-Client -> Server: POST /signin
-note right: POST /signin HTTP\nContent-type: application/json\n\n{\n  "user": "admin@email.com",\n  "password": "admin"\n}
+Client -> Server: POST /api/signin
+note right: POST /api/signin HTTP\nContent-type: application/json\n\n{\n  "user": "admin@email.com",\n  "password": "admin"\n}
 Server -> Client: HTTP 200
 note left: HTTP 200 OK\n\n{\n  "auth": true,\n  "token": "abc...123"\n}
+
 Client -> Server: GET /home.html
 note right: GET /home.html\nAuthorization: Bearer abc...123
 Server -> Client: HTTP 200

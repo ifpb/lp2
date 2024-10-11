@@ -1,11 +1,39 @@
 import prisma from '../database/database.js';
 
-async function create({ name, value, categoryId }) {
-  if (name && value && categoryId) {
+async function create({
+  name,
+  value,
+  interest,
+  createdAt,
+  broker,
+  categoryId,
+}) {
+  if (name && value && interest && createdAt && broker && categoryId) {
     const createdInvestment = await prisma.investment.create({
-      data: { name, value, categoryId },
+      data: {
+        name,
+        value,
+        interest,
+        createdAt,
+        category: {
+          connect: {
+            id: categoryId,
+          },
+        },
+        broker: {
+          connectOrCreate: {
+            where: {
+              name: broker,
+            },
+            create: {
+              name: broker,
+            },
+          },
+        },
+      },
       include: {
         category: true,
+        broker: true,
       },
     });
 
@@ -26,6 +54,7 @@ async function read(where) {
     where,
     include: {
       category: true,
+      broker: true,
     },
   });
 
@@ -44,6 +73,7 @@ async function readById(id) {
       },
       include: {
         category: true,
+        broker: true,
       },
     });
 
@@ -53,15 +83,44 @@ async function readById(id) {
   }
 }
 
-async function update({ id, name, value, categoryId }) {
-  if (name && value && id) {
+async function update({
+  id,
+  name,
+  value,
+  interest,
+  createdAt,
+  broker,
+  categoryId,
+}) {
+  if (name && value && id && categoryId && broker && interest && createdAt) {
     const updatedInvestment = await prisma.investment.update({
       where: {
         id,
       },
-      data: { name, value, categoryId },
+      data: {
+        name,
+        value,
+        interest,
+        createdAt,
+        category: {
+          connect: {
+            id: categoryId,
+          },
+        },
+        broker: {
+          connectOrCreate: {
+            where: {
+              name: broker,
+            },
+            create: {
+              name: broker,
+            },
+          },
+        },
+      },
       include: {
         category: true,
+        broker: true,
       },
     });
 

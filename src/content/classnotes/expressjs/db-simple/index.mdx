@@ -13,23 +13,24 @@ import CodeTree from '../../../../components/CodeTree.astro';
 
 ## Migration
 
-<CodePreview src="/codes/expressjs/invest-app-db-simple/src/database/database.js" />
-
 [sqlite-async](https://www.npmjs.com/package/sqlite-async):
 
 ```bash
+$ npm remove uuid
 $ npm install sqlite-async
 ```
 
-<CodePreview src="/codes/expressjs/invest-app-db-simple/src/database/migration.js" />
+<CodePreview src="/codes/expressjs/invest-app-db-simple/src/database/database.js" />
 
 Tabela `investments`:
 
 ![](/lp2/imgs/expressjs/db-simple/database.png)
 
+<CodePreview src="/codes/expressjs/invest-app-db-simple/src/database/migration.js" />
+
 <CodePreview src="/codes/expressjs/invest-app-db-simple/src/database/load.js" />
 
-<CodePreview src="/codes/expressjs/invest-app-db-simple/package.json" />
+<CodePreview src="/codes/expressjs/invest-app-db-simple/package.json" highlightLines="7-9" />
 
 ```bash
 $ npm run db:load
@@ -39,8 +40,8 @@ Para visualizar o db.sqlite use o plugin [vscode-sqlite](https://marketplace.vis
 
 ## Model
 
-<CodePreview src="/codes/expressjs/invest-app-db-simple/src/models/Investment.js" />
+<CodePreview src="/codes/expressjs/invest-app-db-simple/src/models/Investment.js" highlightLines="3,8-11,22,27-32,41-44,52,57-62,77,82-87,102,107-110" />
 
 ## Router
 
-<CodePreview src="/codes/expressjs/invest-app-db-simple/src/routes.js" />
+<CodePreview src="/codes/expressjs/invest-app-db-simple/src/routes.js" highlightLines="13,17,25,32,43,47,55,61,69,72" />

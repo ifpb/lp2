@@ -8,7 +8,9 @@ left to right direction
 entity "Investment" as investiment {
   *id : text
   name : text
-  price: integer
+  value: integer
+  interest: text
+  createAt: datetime
   *categoryId : text <<FK>>
   *userId : text <<FK>>
   *brokerId : text <<FK>>

@@ -9,11 +9,9 @@ async function main() {
 
   const seed = JSON.parse(readFileSync(file));
 
-  for (const category of seed.categories) {
-    await prisma.category.create({
-      data: category,
-    });
-  }
+  await prisma.category.createMany({
+    data: seed.categories,
+  });
 }
 main()
   .then(async () => {

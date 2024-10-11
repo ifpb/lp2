@@ -11,7 +11,7 @@ import CodeTree from '../../../../components/CodeTree.astro';
 
 ## Migration
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-user/prisma/schema.prisma" />
+<CodePreview src="/codes/expressjs/invest-app-prismajs-user/prisma/schema.prisma" highlightLines="21-22,34,39" />
 
 ```bash
 $ npx prisma migrate reset
@@ -24,11 +24,13 @@ Tabelas:
 
 ## Model
 
+Blowfish (bcrypt):
+
 ```bash
 $ npm install bcrypt
 ```
 
-Encrypt:
+[Encrypt](https://bcrypt-generator.com/):
 
 ```text
 12345678 + 10
@@ -40,19 +42,19 @@ Encrypt:
 => $2a$10$CZHQV57ViPynbUbeffLU7.cTV8Rr9PjlJXkoe/Xu1FIUXA/I0we5C
 ```
 
-Decrypt:
+[Decrypt](https://bcrypt-generator.com/):
 
 ```text
 12345678 + $2a$10$13Aak6RFaLSM2BWra67RA.KElfrt41YQsTjy9nul0bxBhXI2vjiPe
 => true
 ```
 
+```text
+12345678 + $2a$10$CZHQV57ViPynbUbeffLU7.cTV8Rr9PjlJXkoe/Xu1FIUXA/I0we5C
+=> true
+```
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-user/src/models/User.js" />
-
-<CodePreview src="/codes/expressjs/invest-app-prismajs-user/src/models/Investment.js" />
-
-## Router
+dotenv:
 
 ```bash
 $ npm install dotenv
@@ -60,7 +62,19 @@ $ npm install dotenv
 
 <CodePreview src="/codes/expressjs/invest-app-prismajs-user/src/index.js" highlightLines="2" />
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-user/src/routes.js"  highlightLines="108-122" />
+<CodePreview src="/codes/expressjs/invest-app-prismajs-user/.env.example" highlightLines="10" />
+
+```bash
+$ cp .env.example .env
+```
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-user/src/models/User.js" highlightLines="4,6,8" />
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-user/src/models/Investment.js" highlightLines="13-51,66-79,93-109,128-169,179-183" />
+
+## Router
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-user/src/routes.js"  highlightLines="15,19-27,68,74-82,124-138" />
 
 <CodePreview src="/codes/expressjs/invest-app-prismajs-user/requests.http" highlightLines="5-15" />
 

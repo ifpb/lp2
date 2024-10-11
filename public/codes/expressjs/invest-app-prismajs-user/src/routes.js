@@ -12,13 +12,19 @@ class HTTPError extends Error {
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.redirect('/signup.html');
-});
-
 router.post('/investments', async (req, res) => {
   try {
     const investment = req.body;
+
+    if (investment.createdAt) {
+      investment.createdAt = new Date(
+        investment.createdAt + 'T00:00:00-03:00'
+      ).toISOString();
+    }
+
+    if (!investment.userId) {
+      investment.userId = (await User.read({ email: 'admin@email.com' })).id;
+    }
 
     const createdInvestment = await Investment.create(investment);
 
@@ -61,9 +67,19 @@ router.get('/investments/:id', async (req, res) => {
 
 router.put('/investments/:id', async (req, res) => {
   try {
+    const id = req.params.id;
+
     const investment = req.body;
 
-    const id = req.params.id;
+    if (investment.createdAt) {
+      investment.createdAt = new Date(
+        investment.createdAt + 'T00:00:00-03:00'
+      ).toISOString();
+    }
+
+    if (!investment.userId) {
+      investment.userId = (await User.read({ email: 'admin@email.com' })).id;
+    }
 
     const updatedInvestment = await Investment.update({ ...investment, id });
 

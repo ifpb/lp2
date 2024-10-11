@@ -38,9 +38,15 @@
       </div>
     </nav>
 
-    <div class="container">
+    <div class="container pb-5">
       <h1 class="text-center my-5">Investimentos</h1>
-      <div id="investment-grid" class="row row-cols-1 row-cols-md-3 g-4"></div>
+      <div class="investments">
+        <p class="text-center">Nenhum investimento cadastrado.</p>
+        <div
+          id="investment-grid"
+          class="row row-cols-1 row-cols-md-3 g-4"
+        ></div>
+      </div>
     </div>
 
     <div>
@@ -99,12 +105,41 @@
             />
           </div>
           <div class="mb-3">
-            <label for="value" class="form-label">Categoria</label>
+            <label for="interest" class="form-label">Taxa</label>
+            <input
+              type="text"
+              class="form-control"
+              id="interest"
+              name="interest"
+              placeholder="100% Selic"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="categoryId" class="form-label">Categoria</label>
             <select
               class="form-control"
               id="categoryId"
               name="categoryId"
             ></select>
+          </div>
+          <div class="mb-3">
+            <label for="broker" class="form-label">Corretora</label>
+            <input
+              type="text"
+              class="form-control"
+              id="broker"
+              name="broker"
+              placeholder="Corretora"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="createdAt" class="form-label">Data</label>
+            <input
+              type="date"
+              class="form-control"
+              id="createdAt"
+              name="createdAt"
+            />
           </div>
           <div class="mb-3">
             <input
@@ -152,6 +187,6 @@
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
       crossorigin="anonymous"
     ></script>
-    <script src="./js/main.js" type="module"></script>
+    <script src="./js/index.js" type="module"></script>
   </body>
 </html>

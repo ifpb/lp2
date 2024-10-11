@@ -11,11 +11,11 @@ import CodeTree from '../../../../components/CodeTree.astro';
 
 ## Migration
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/prisma/schema.prisma" />
+<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/prisma/schema.prisma" highlightLines="19-22,25,29,32,35" />
 
 ```bash
 $ npx prisma migrate reset
-$ npx prisma migrate dev --name create_category
+$ npx prisma migrate dev --name create_category_broker
 ```
 
 Tabelas:
@@ -29,6 +29,7 @@ Tabelas:
 <CodePreview src="/codes/expressjs/invest-app-prismajs-relation/prisma/seeders.json" />
 
 ```bash
+$ npx prisma migrate reset
 $ npx prisma db seed
 $ npx prisma studio
 ```
@@ -37,19 +38,21 @@ $ npx prisma studio
 
 <CodePreview src="/codes/expressjs/invest-app-prismajs-relation/src/models/Category.js" />
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/src/models/Investment.js" />
+<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/src/models/Investment.js" highlightLines="8-9,12-38,53-59,70-78,96-125" />
 
 ## Router
 
 <CodePreview src="/codes/expressjs/invest-app-prismajs-relation/src/routes.js" />
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/requests.http" />
+<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/requests.http" highlightLines="18-33" />
 
 ## View
 
 ![](/lp2/imgs/expressjs/prismajs-relation/preview.png)
 
+![](/lp2/imgs/expressjs/prismajs-relation/form.png)
+
 <CodePreview src="/codes/expressjs/invest-app-prismajs-relation/public/index.html" />
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/public/js/main.js" />
+<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/public/js/index.js" />
 

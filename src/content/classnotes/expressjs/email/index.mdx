@@ -7,81 +7,25 @@ import CodeTree from '../../../../components/CodeTree.astro';
 
 # {frontmatter.title}
 
+<CodeTree src="/codes/expressjs/invest-app-email" githubUrl={true} devContainerUrl={true} />
+
+## Back-end
+
 [nodemailer](https://nodemailer.com/about/):
 
 ```bash
 $ npm install nodemailer
 ```
 
-<CodeTree src="/codes/expressjs/invest-app-email" githubUrl={true} devContainerUrl={true} />
-
-## Back-end
-
-<CodePreview src="/codes/expressjs/invest-app-email/.env.example" />
+<CodePreview src="/codes/expressjs/invest-app-email/.env.example" highlightLines="1,17-22" />
 
 > Transport: [Etherial](https://ethereal.email/), [AWS SES](https://nodemailer.com/transports/ses/), [Mailtrap](https://mailtrap.io/), [TempMail](https://temp-mail.org/en/), [Mailgum](https://www.mailgun.com/), [Sendgrid](https://sendgrid.com/), [Gmail](https://gmail.com/)
 
 <CodePreview src="/codes/expressjs/invest-app-email/src/config/mail.js" />
 
-<CodePreview src="/codes/expressjs/invest-app-email/src/services/SendMail.js" />
+<CodePreview src="/codes/expressjs/invest-app-email/src/services/SendMail.js" highlightLines="8,10-16,19" />
 
-```js title="/codes/expressjs/invest-app-upload/src/routes.js"
-import express from 'express';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
-import { z } from 'zod';
-
-import { isAuthenticated } from './middleware/auth.js';
-import { validate } from './middleware/validate.js';
-
-import SendMail from './services/SendMail.js';
-
-import Category from './models/Category.js';
-import Investment from './models/Investment.js';
-import User from './models/User.js';
-
-// ...
-
-router.post(
-  '/users',
-  validate(
-    z.object({
-      body: z.object({
-        name: z.string(),
-        email: z.string().email(),
-        password: z.string().min(8),
-      }),
-    })
-  ),
-  async (req, res) => {
-    try {
-      const user = req.body;
-
-      delete user.confirmationPassword;
-
-      const newUser = await User.create(user);
-
-      delete newUser.password;
-
-      await SendMail.createNewUser(user.email);
-
-      res.status(201).json(newUser);
-    } catch (error) {
-      if (
-        error.message.includes(
-          'Unique constraint failed on the fields: (`email`)'
-        )
-      ) {
-        throw new HTTPError('Email already exists', 400);
-      }
-
-      throw new HTTPError('Unable to create user', 400);
-    }
-  }
-);
-
-// ...
-```
+<CodePreview src="/codes/expressjs/invest-app-email/src/routes.js" highlightLines="220,241" />
 
 ## Preview
 

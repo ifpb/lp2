@@ -14,13 +14,23 @@ model Investment {
   id         String   @id @default(uuid())
   name       String
   value      Int
+  interest   String
+  createdAt  DateTime @default(now())
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId String
+  broker     Broker   @relation(fields: [brokerId], references: [id])
+  brokerId   String
 }
 
 model Category {
   id          String       @id @default(uuid())
   name        String       @unique
   color       String       @unique
+  investments Investment[]
+}
+
+model Broker {
+  id          String       @id @default(uuid())
+  name        String       @unique
   investments Investment[]
 }

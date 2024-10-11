@@ -17,6 +17,9 @@
       "openFiles": ["./src/pages/index.mdx"]
     },
     "vscode": {
+      "settings": {
+        "git.autoRepositoryDetection": false
+      },
       "extensions": ["astro-build.astro-vscode", "esbenp.prettier-vscode"]
     }
   }

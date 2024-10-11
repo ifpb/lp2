@@ -7,18 +7,19 @@ import CodeTree from '../../../../components/CodeTree.astro';
 
 # {frontmatter.title}
 
-```bash
-$ npm install prisma
-$ npx prisma init --datasource-provider sqlite
-```
-
 <CodeTree src="/codes/expressjs/invest-app-prismajs-simple" githubUrl={true} devContainerUrl={true} />
 
 ## Migration
 
+```bash
+$ npm remove sqlite-async
+$ npm install prisma
+$ npx prisma init --datasource-provider sqlite
+```
+
 Para visualizar o `schema.prisma` use o plugin [prisma](https://marketplace.visualstudio.com/items?itemName=prisma.prisma).
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/prisma/schema.prisma" />
+<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/prisma/schema.prisma" highlightLines="13-17" />
 
 Tabela `investment`:
 
@@ -27,17 +28,21 @@ Tabela `investment`:
 <CodePreview src="/codes/expressjs/invest-app-prismajs-simple/.env.example" />
 
 ```bash
+$ cp .env.example .env
+```
+
+```bash
 $ npx prisma migrate dev --name init
 $ npx prisma studio
 ```
 
 ## Seed
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/prisma/seed.js" />
-
 <CodePreview src="/codes/expressjs/invest-app-prismajs-simple/prisma/seeders.json" />
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/package.json" />
+<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/prisma/seed.js" highlightLines="12-14" />
+
+<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/package.json" highlightLines="8-10" />
 
 ```bash
 $ npx prisma db seed
@@ -48,7 +53,7 @@ $ npx prisma studio
 
 <CodePreview src="/codes/expressjs/invest-app-prismajs-simple/src/database/database.js" />
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/src/models/Investment.js" />
+<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/src/models/Investment.js" highlightLines="3,5-7,15,22,31,33-37,45,47-52,60,62-66" />
 
 ## View
 
@@ -56,4 +61,4 @@ $ npx prisma studio
 
 <CodePreview src="/codes/expressjs/invest-app-prismajs-simple/public/index.html" />
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/public/js/main.js" />
+<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/public/js/index.js" />

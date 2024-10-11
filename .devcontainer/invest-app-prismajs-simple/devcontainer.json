@@ -1,5 +1,5 @@
 {
-  "name": "Invest App Prisma User",
+  "name": "Invest App Prisma",
   "build": {
     "dockerfile": "../Dockerfile",
     "args": {
@@ -7,7 +7,7 @@
     }
   },
 
-  "workspaceFolder": "/workspaces/lp2/public/codes/expressjs/invest-app-prismajs-user",
+  "workspaceFolder": "/workspaces/lp2/public/codes/expressjs/invest-app-prismajs-simple",
 
   "portsAttributes": {
     "3000": {
@@ -38,6 +38,7 @@
     },
     "vscode": {
       "settings": {
+        "git.autoRepositoryDetection": false,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.formatOnSave": true,
         // "editor.codeActionsOnSave": {
@@ -45,7 +46,7 @@
         // },
         "[prisma]": {
           "editor.defaultFormatter": "prisma.prisma"
-        },
+        }
       },
       "extensions": [
         // "dbaeumer.vscode-eslint",

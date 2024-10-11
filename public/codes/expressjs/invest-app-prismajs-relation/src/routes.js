@@ -15,6 +15,12 @@ router.post('/investments', async (req, res) => {
   try {
     const investment = req.body;
 
+    if (investment.createdAt) {
+      investment.createdAt = new Date(
+        investment.createdAt + 'T00:00:00-03:00'
+      ).toISOString();
+    }
+
     const createdInvestment = await Investment.create(investment);
 
     return res.json(createdInvestment);
@@ -55,9 +61,15 @@ router.get('/investments/:id', async (req, res) => {
 
 router.put('/investments/:id', async (req, res) => {
   try {
+    const id = req.params.id;
+
     const investment = req.body;
 
-    const id = req.params.id;
+    if (investment.createdAt) {
+      investment.createdAt = new Date(
+        investment.createdAt + 'T00:00:00-03:00'
+      ).toISOString();
+    }
 
     const updatedInvestment = await Investment.update({ ...investment, id });
 

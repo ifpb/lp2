@@ -9,52 +9,43 @@ import CodeTree from '../../../../components/CodeTree.astro';
 
 <CodeTree src="/codes/expressjs/invest-app-auth" githubUrl={true} devContainerUrl={true} />
 
-## Migration
-
-<CodePreview src="/codes/expressjs/invest-app-auth/prisma/schema.prisma" />
-
-```bash
-$ npx prisma migrate reset
-$ npx prisma migrate dev --name create_user
-```
-
-Tabelas:
-
-![](/lp2/imgs/expressjs/auth/database.png)
-
-## Model
-
-<CodePreview src="/codes/expressjs/invest-app-auth/src/models/Investment.js" />
-
-<CodePreview src="/codes/expressjs/invest-app-auth/src/models/User.js" />
-
-<CodePreview src="/codes/expressjs/invest-app-auth/src/models/Category.js" />
-
-## Router
+## JSON Web Token (JWT)
 
 Fluxo de Requisição:
 
 ![](/lp2/imgs/expressjs/auth/jwt-request.png)
 
-[JSON Web Token (JWT)](https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTYzMzkxNDc3MiwiZXhwIjoxNjMzOTE1MDcyfQ.wGs4R42bIwKhTiFWVZrs-QGs_0bEWSc69rjylXj7nPE):
+[jwt.io](https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTYzMzkxNDc3MiwiZXhwIjoxNjMzOTE1MDcyfQ.wGs4R42bIwKhTiFWVZrs-QGs_0bEWSc69rjylXj7nPE):
 
 ![](/lp2/imgs/expressjs/auth/jwt-token.png)
+
+## Middleware
+
+```text
+Express -> Middleware -> Router
+```
 
 ```bash
 $ npm install jsonwebtoken
 ```
 
-<CodePreview src="/codes/expressjs/invest-app-auth/src/routes.js" />
+<CodePreview src="/codes/expressjs/invest-app-auth/src/middleware/auth.js" highlightLines="9" />
 
-<CodePreview src="/codes/expressjs/invest-app-auth/requests.http" />
+## Router
 
-<CodePreview src="/codes/expressjs/invest-app-auth/.env.example" />
+<CodePreview src="/codes/expressjs/invest-app-auth/.env.example" highlightLines="10" />
 
-## Middleware
+```bash
+$ cp .env.example .env
+```
 
-<CodePreview src="/codes/expressjs/invest-app-auth/src/middleware/auth.js" />
+<CodePreview src="/codes/expressjs/invest-app-auth/src/routes.js" highlightLines="2-3,5,20,44,64,78,105,119,137,153-165,167-189" />
+
+<CodePreview src="/codes/expressjs/invest-app-auth/requests.http" highlightLines="28-37,43-46,51,57,63,71,86,91,96,103,118" />
 
 ## View
+
+Login:
 
 ![](/lp2/imgs/expressjs/auth/signin.png)
 
@@ -62,9 +53,11 @@ $ npm install jsonwebtoken
 
 <CodePreview src="/codes/expressjs/invest-app-auth/public/js/signup.js" />
 
-<CodePreview src="/codes/expressjs/invest-app-auth/public/js/services/api.js" />
+<CodePreview src="/codes/expressjs/invest-app-auth/public/js/services/api.js" highlightLines="5,30,49,71" />
 
-<CodePreview src="/codes/expressjs/invest-app-auth/public/js/lib/auth.js" />
+<CodePreview src="/codes/expressjs/invest-app-auth/public/js/lib/auth.js" highlightLines="1,9,13,19" />
+
+Home:
 
 ![](/lp2/imgs/expressjs/auth/home-profile.png)
 
@@ -72,4 +65,4 @@ $ npm install jsonwebtoken
 
 <CodePreview src="/codes/expressjs/invest-app-auth/public/home.html" />
 
-<CodePreview src="/codes/expressjs/invest-app-auth/public/js/home.js" />
+<CodePreview src="/codes/expressjs/invest-app-auth/public/js/home.js" highlightLines="240,242" />

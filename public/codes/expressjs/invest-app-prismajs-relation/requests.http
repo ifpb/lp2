@@ -1,4 +1,4 @@
-@host = http://localhost:3000
+@host = http://localhost:3000/api
 @createdInvestmentId = {{createdInvestment.response.body.$.id}}
 
 ### Read Categories
@@ -26,6 +26,9 @@ Content-Type: application/json
 {
   "name": "Tesouro Selic 2029",
   "value": 10000,
+  "interest": "100% Selic",
+  "createdAt": "2023-09-01",
+  "broker": "Banco Inter",
   "categoryId": "{{categoryIpcaId}}"
 }
 
@@ -47,6 +50,9 @@ Content-Type: application/json
 {
   "name": "Tesouro Selic 2029",
   "value": 20000,
+  "interest": "100% Selic",
+  "createdAt": "2023-09-01",
+  "broker": "Banco Inter",
   "categoryId": "{{categoryPosId}}"
 }
 

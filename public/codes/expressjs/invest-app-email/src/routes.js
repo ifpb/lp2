@@ -21,10 +21,6 @@ class HTTPError extends Error {
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.redirect('/signin.html');
-});
-
 router.post(
   '/investments',
   isAuthenticated,

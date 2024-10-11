@@ -8,8 +8,11 @@ left to right direction
 entity "Investment" as investiment {
   *id : text
   name : text
-  price: integer
+  value: integer
+  interest: text
+  createAt: datetime
   *categoryId : text <<FK>>
+  *brokerId : text <<FK>>
 }
 
 entity "Category" as category {
@@ -18,5 +21,11 @@ entity "Category" as category {
   color : text
 }
 
+entity "Broker" as broker {
+  *id : text
+  name : text
+}
+
 investiment }|--|| category
+investiment }|--|| broker
 @enduml

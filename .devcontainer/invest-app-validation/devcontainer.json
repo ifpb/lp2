@@ -28,9 +28,9 @@
 
   // "remoteUser": "node",
 
-  "containerEnv": {
-    "DATABASE_URL": "file:./dev.db"
-  },
+  // "containerEnv": {
+  //   "DATABASE_URL": "file:./dev.db"
+  // },
 
   "customizations": {
     "codespaces": {
@@ -38,6 +38,7 @@
     },
     "vscode": {
       "settings": {
+        "git.autoRepositoryDetection": false,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.formatOnSave": true,
         // "editor.codeActionsOnSave": {

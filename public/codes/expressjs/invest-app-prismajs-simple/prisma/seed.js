@@ -9,11 +9,9 @@ async function main() {
 
   const seed = JSON.parse(readFileSync(file));
 
-  for (const investment of seed.investments) {
-    await prisma.investment.create({
-      data: investment,
-    });
-  }
+  await prisma.investment.createMany({
+    data: seed.investments,
+  });
 }
 main()
   .then(async () => {

@@ -6,6 +6,6 @@ skinparam monochrome true
 entity "Investment" as investiment {
   *id : text
   name : text
-  price: integer
+  value: integer
 }
 @enduml

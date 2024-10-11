@@ -11,7 +11,7 @@ import CodeTree from '../../../../components/CodeTree.astro';
 
 ## Back-end
 
-<CodePreview src="/codes/expressjs/invest-app-upload/prisma/schema.prisma" />
+<CodePreview src="/codes/expressjs/invest-app-upload/prisma/schema.prisma" highlightLines="40" />
 
 ```bash
 $ npx prisma migrate dev --name user_image
@@ -19,9 +19,9 @@ $ npx prisma migrate dev --name user_image
 
 <CodePreview src="/codes/expressjs/invest-app-upload/src/models/Image.js" />
 
-<CodePreview src="/codes/expressjs/invest-app-upload/src/models/User.js" />
+<CodePreview src="/codes/expressjs/invest-app-upload/src/models/User.js" highlightLines="23-30,45-51" />
 
-<CodePreview src="/codes/expressjs/invest-app-upload/.env.example" />
+<CodePreview src="/codes/expressjs/invest-app-upload/.env.example" highlightLines="25" />
 
 ```bash
 $ npm install multer
