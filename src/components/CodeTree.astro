@@ -18,11 +18,11 @@ const { src, content, githubUrl, devContainerUrl } = Astro.props;
 const folder = src.split('/').at(-1);
 
 const githubLink = githubUrl
-  ? `<a href="${GITHUB_EDIT_URL + '/public' + src}" target="blank"><img class="inline" src="https://img.shields.io/badge/Open%20In%20GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="Open in GitHub"></a>`
+  ? `<a href="${GITHUB_EDIT_URL + '/public' + src}" target="blank"><img class="inline m-0" src="https://img.shields.io/badge/Open%20In%20GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="Open in GitHub"></a>`
   : '';
 
 const devContainerLink = devContainerUrl
-  ? `<a href="https://codespaces.new/ifpb/lp2?devcontainer_path=.devcontainer/${folder}/devcontainer.json" target="blank"><img class="inline" src="https://img.shields.io/badge/Open%20In%20Codespaces-181717?style=for-the-badge&logo=github&logoColor=white" alt="Open in Codespaces"></a>`
+  ? `<a href="https://codespaces.new/ifpb/lp2?devcontainer_path=.devcontainer/${folder}/devcontainer.json" target="blank"><img class="inline m-0" src="https://img.shields.io/badge/Open%20In%20Codespaces-181717?style=for-the-badge&logo=github&logoColor=white" alt="Open in Codespaces"></a>`
   : '';
 
 const codeTree = existsSync(resolve('./public' + src))
