@@ -15,18 +15,111 @@ Fluxo de Requisição:
 
 ![](/lp2/imgs/expressjs/auth/jwt-request.png)
 
-[jwt.io](https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTYzMzkxNDc3MiwiZXhwIjoxNjMzOTE1MDcyfQ.wGs4R42bIwKhTiFWVZrs-QGs_0bEWSc69rjylXj7nPE):
+[jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken):
 
-![](/lp2/imgs/expressjs/auth/jwt-token.png)
+```bash
+$ npm install jsonwebtoken
+```
+
+Encode: jwt.sign(payload , privateKey, options)
+
+[jwt.io debugger](https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0NjY0M30.C1dDgnIRfWpJnqir_hyuVp_fnt7vpR6mKgHMdZoG4Rk):
+
+```js
+jwt.sign(
+  { userId: 1 },
+  'secret'
+);
+//=> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0NjY0M30.C1dDgnIRfWpJnqir_hyuVp_fnt7vpR6mKgHMdZoG4Rk
+
+//=> Header:    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+//=> Payload:   eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0NjY0M30
+//=> Signature: C1dDgnIRfWpJnqir_hyuVp_fnt7vpR6mKgHMdZoG4Rk
+
+// base64 decoded
+//=> Header:     {"alg":"HS256","typ":"JWT"}
+//=> Payload:    {"userId":1,"iat":1728746643}
+```
+
+[jwt.io debugger](https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0Njc4NiwiZXhwIjoxNzI4NzUwMzg2fQ.V1eHtVYWaI5Rji8wd4onYIGqdTGlm6NAmUeIiw6G7Gw):
+
+```js
+jwt.sign(
+  { userId: 1 },
+  'secret',
+  { expiresIn: 3600 } // 1h
+);
+//=> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0Njc4NiwiZXhwIjoxNzI4NzUwMzg2fQ.V1eHtVYWaI5Rji8wd4onYIGqdTGlm6NAmUeIiw6G7Gw
+
+//=> Header:    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+//=> Payload:   eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0Njc4NiwiZXhwIjoxNzI4NzUwMzg2fQ
+//=> Signature: V1eHtVYWaI5Rji8wd4onYIGqdTGlm6NAmUeIiw6G7Gw
+
+// base64 decoded
+//=> Header:     {"alg":"HS256","typ":"JWT"}
+//=> Payload:    {"userId":1,"iat":1728746786,"exp":1728750386}
+```
+
+[jwt.io debugger](https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0ODQ5NywiZXhwIjoxNzI4NzUyMDk3fQ.0m_bFbC337WRu0bqlabUJ1hN-hNwOXVJUHKBbSdmz7s):
+
+```js
+jwt.sign(
+  { userId: 1 },
+  'abc',
+  { expiresIn: 3600 } // 1h
+);
+//=> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0ODQ5NywiZXhwIjoxNzI4NzUyMDk3fQ.0m_bFbC337WRu0bqlabUJ1hN-hNwOXVJUHKBbSdmz7s
+
+//=> Header:    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+//=> Payload:   eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0ODQ5NywiZXhwIjoxNzI4NzUyMDk3fQ
+//=> Signature: 0m_bFbC337WRu0bqlabUJ1hN-hNwOXVJUHKBbSdmz7s
+
+// base64 decoded
+//=> Header:     {"alg":"HS256","typ":"JWT"}
+//=> Payload:    {"userId":1,"iat":1728748497,"exp":1728752097}
+```
+
+Observações:
+
+- `iat` (`Issued At` ou `Gerado em`) é o timestamp de quando o token foi gerado;
+- A `signature` é gerado pela assinatura do `header.payload` + `privateKey` ([HMAC-SHA256 Hash Generator](https://www.devglan.com/online-tools/hmac-sha256-online));
+
+Decode: jwt.verify(token, privateKey)
+
+[jwt.io - signature verified](https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0NjY0M30.C1dDgnIRfWpJnqir_hyuVp_fnt7vpR6mKgHMdZoG4Rk):
+
+```js
+jwt.verify(
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0NjY0M30.C1dDgnIRfWpJnqir_hyuVp_fnt7vpR6mKgHMdZoG4Rk',
+  'secret'
+);
+//=> { userId: 1, iat: 1728746643 }
+```
+
+[jwt.io - invalid signature](https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0NjY0M30.C1dDgnIRfWpJnqir_hyuVp_fnt7vpR6mKgHMdZoG4Rk):
+
+```js
+jwt.verify(
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0NjY0M30.C1dDgnIRfWpJnqir_hyuVp_fnt7vpR6mKgHMdZoG4Rk',
+  'wrong'
+);
+//=> Uncaught JsonWebTokenError: invalid signature
+```
+
+[jwt.io - signature verified](https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0Njc4NiwiZXhwIjoxNzI4NzUwMzg2fQ.V1eHtVYWaI5Rji8wd4onYIGqdTGlm6NAmUeIiw6G7Gw):
+
+```js
+jwt.verify(
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0Njc4NiwiZXhwIjoxNzI4NzUwMzg2fQ.V1eHtVYWaI5Rji8wd4onYIGqdTGlm6NAmUeIiw6G7Gw',
+  'secret'
+);
+//=> { userId: 1, iat: 1728746786, exp: 1728750386 }
+```
 
 ## Middleware
 
 ```text
 Express -> Middleware -> Router
-```
-
-```bash
-$ npm install jsonwebtoken
 ```
 
 <CodePreview src="/codes/expressjs/invest-app-auth/src/middleware/auth.js" highlightLines="9" />

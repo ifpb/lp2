@@ -24,7 +24,7 @@ Tabelas:
 
 ## Model
 
-Blowfish (bcrypt):
+Blowfish ([bcrypt](https://www.npmjs.com/package/bcrypt)):
 
 ```bash
 $ npm install bcrypt
@@ -32,26 +32,36 @@ $ npm install bcrypt
 
 [Encrypt](https://bcrypt-generator.com/):
 
-```text
-12345678 + 10
-=> $2a$10$13Aak6RFaLSM2BWra67RA.KElfrt41YQsTjy9nul0bxBhXI2vjiPe
+bcrypt.hash(plainPassword, saltRounds)
+
+```js
+bcrypt.hash('12345678', 10)
+//=> $2a$10$13Aak6RFaLSM2BWra67RA.KElfrt41YQsTjy9nul0bxBhXI2vjiPe
 ```
 
-```text
-12345678 + 10
-=> $2a$10$CZHQV57ViPynbUbeffLU7.cTV8Rr9PjlJXkoe/Xu1FIUXA/I0we5C
+```js
+bcrypt.hash('12345678', 10)
+//=> $2a$10$CZHQV57ViPynbUbeffLU7.cTV8Rr9PjlJXkoe/Xu1FIUXA/I0we5C
 ```
 
 [Decrypt](https://bcrypt-generator.com/):
 
-```text
-12345678 + $2a$10$13Aak6RFaLSM2BWra67RA.KElfrt41YQsTjy9nul0bxBhXI2vjiPe
-=> true
+bcrypt.compare(plainPassword, hash)
+
+```js
+bcrypt.compare(
+  '12345678',
+  '$2a$10$13Aak6RFaLSM2BWra67RA.KElfrt41YQsTjy9nul0bxBhXI2vjiPe'
+)
+//=> true
 ```
 
-```text
-12345678 + $2a$10$CZHQV57ViPynbUbeffLU7.cTV8Rr9PjlJXkoe/Xu1FIUXA/I0we5C
-=> true
+```js
+bcrypt.compare(
+  '12345678',
+  '$2a$10$CZHQV57ViPynbUbeffLU7.cTV8Rr9PjlJXkoe/Xu1FIUXA/I0we5C'
+)
+//=> true
 ```
 
 dotenv:
