@@ -47,7 +47,7 @@ jwt.sign(
 jwt.sign(
   { userId: 1 },
   'secret',
-  { expiresIn: 3600 } // 1h
+  { expiresIn: 3600000 } // 1h
 );
 //=> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0Njc4NiwiZXhwIjoxNzI4NzUwMzg2fQ.V1eHtVYWaI5Rji8wd4onYIGqdTGlm6NAmUeIiw6G7Gw
 
@@ -66,7 +66,7 @@ jwt.sign(
 jwt.sign(
   { userId: 1 },
   'abc',
-  { expiresIn: 3600 } // 1h
+  { expiresIn: 3600000 } // { expiresIn: '1h' }
 );
 //=> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0ODQ5NywiZXhwIjoxNzI4NzUyMDk3fQ.0m_bFbC337WRu0bqlabUJ1hN-hNwOXVJUHKBbSdmz7s
 
@@ -83,6 +83,7 @@ Observações:
 
 - `iat` (`Issued At` ou `Gerado em`) é o timestamp de quando o token foi gerado;
 - A `signature` é gerado pela assinatura do `header.payload` + `privateKey` ([HMAC-SHA256 Hash Generator](https://www.devglan.com/online-tools/hmac-sha256-online));
+- expiresIn: expressed in seconds or a string describing a time span [vercel/ms](https://github.com/vercel/ms).
 
 Decode: jwt.verify(token, privateKey)
 
@@ -115,6 +116,8 @@ jwt.verify(
 );
 //=> { userId: 1, iat: 1728746786, exp: 1728750386 }
 ```
+
+> Sabendo que o `privateKey` é `secret`, gere um novo token para o usuário de `id` igual a `2` com `1h` de expiração.
 
 ## Middleware
 
