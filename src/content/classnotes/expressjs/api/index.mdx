@@ -11,24 +11,26 @@ import CodeTree from '../../../../components/CodeTree.astro';
 
 ### Rotas do Invest API
 
-| Método | Caminho                        | Parâmetro   | Status       | Resposta                                            |
-| ------ | ------------------------------ | ----------- | ------------ | --------------------------------------------------- |
-| POST   | `/api/investments`             | Body        | `201`        | Cria um novo investimento                           |
-| GET    | `/api/investments`             | -           | `200`        | Retorna todas os investimentos                      |
-| GET    | `/api/investments?name=Salada` | Query       | `200`        | Retorna todas os investimentos com o nome `Tesouro` |
-| GET    | `/api/investments/X`           | Route       | `200`, `400` | Retorna o investimento de ID X                      |
-| PUT    | `/api/investments/X`           | Body, Route | `200`, `400` | Atualiza o investimento de ID X                     |
-| DELETE | `/api/investments/X`           | Route       | `204`, `400` | Exclui o investimento de ID X                       |
+| Método | Caminho                        | Parâmetro   | Status              | Resposta                                            |
+| ------ | ------------------------------ | ----------- | ------------------- | --------------------------------------------------- |
+| POST   | `/api/investments`             | Body        | `201`, `400`        | Cria um novo investimento                           |
+| GET    | `/api/investments`             | -           | `200`               | Retorna todas os investimentos                      |
+| GET    | `/api/investments?name=Salada` | Query       | `200`               | Retorna todas os investimentos com o nome `Tesouro` |
+| GET    | `/api/investments/X`           | Route       | `200`, `404`        | Retorna o investimento de ID X                      |
+| PUT    | `/api/investments/X`           | Body, Route | `200`, `400`, `404` | Atualiza o investimento de ID X                     |
+| DELETE | `/api/investments/X`           | Route       | `204`, `404`        | Exclui o investimento de ID X                       |
 
 ### HTTP Status Codes
 
-- [Classes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+[Classes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+
   - Respostas de informação (100-199)
   - Respostas de sucesso (200-299)
   - Redirecionamentos (300-399)
   - Erros do cliente (400-499)
   - Erros do servidor (500-599)
-- Códigos do Invest API
+
+Códigos do Invest API
 
 | Código | Nome                  | Significado                                                                |
 | ------ | --------------------- | -------------------------------------------------------------------------- |
@@ -37,6 +39,7 @@ import CodeTree from '../../../../components/CodeTree.astro';
 | `204`  | No Content            | Solicitação gerada com sucesso e não há conteúdo para ser enviado          |
 | `304`  | Not Modified          | O conteúdo da requisição já existe em cache e não foi modificado           |
 | `400`  | Bad Request           | Solicitação não compreendida por motivos de erro                           |
+| `401`  | Unauthorized          | A solicitação requer autenticação do usuário                               |
 | `404`  | Not Found             | O servidor não pode encontrar o recurso solicitado                         |
 | `500`  | Internal Server Error | O servidor encontrou uma situação com a qual não sabe lidar.               |
 
@@ -45,38 +48,40 @@ import CodeTree from '../../../../components/CodeTree.astro';
 <CodeTree src="/codes/expressjs/invest-app-api-back-end" githubUrl={true} devContainerUrl={true} />
 
 ```bash
-$ npm install express uuid morgan cors express-async-errors
+$ npm install express morgan cors express-async-errors uuid
 ```
+
+<CodePreview src="/codes/expressjs/invest-app-api-back-end/.gitignore" />
 
 <CodePreview src="/codes/expressjs/invest-app-api-back-end/package.json" />
 
 <CodePreview src="/codes/expressjs/invest-app-api-back-end/src/data/investments.js" />
 
-<CodePreview src="/codes/expressjs/invest-app-api-back-end/src/index.js" highlightLines="5,23" />
+<CodePreview src="/codes/expressjs/invest-app-api-back-end/src/routes.js" highlightLines="14,30,44,56,78,93,98" />
 
-<CodePreview src="/codes/expressjs/invest-app-api-back-end/src/routes.js" highlightLines="14,30,44,60,82,97,102" />
+<CodePreview src="/codes/expressjs/invest-app-api-back-end/src/index.js" highlightLines="5,23" />
 
 <CodePreview src="/codes/expressjs/invest-app-api-back-end/requests.http" />
 
 ### Create
 
-![](/lp2/imgs/expressjs/api/create-investment.png)
+![](/lp2/imgs/expressjs/api/create-investment-simple.png)
 
 ```js title="/codes/expressjs/invest-api/src/routes.js"
 router.post('/investments', (req, res) => {
-  const investment = req.body;
+  const { name, value } = req.body;
+
+  if (!name || !value) {
+    throw new HttpError('Error when passing parameters');
+  }
 
   const id = uuidv4();
 
-  const newInvestment = { ...investment, id };
+  const newInvestment = { name, value, id };
 
-  if (investment) {
-    investments.push(newInvestment);
+  investments.push(newInvestment);
 
-    res.json(newInvestment);
-  } else {
-    throw new HTTPError('Unable to create investment', 400);
-  }
+  return res.status(201).json(newInvestment);
 });
 ```
 
@@ -90,14 +95,14 @@ POST {{host}}/investments
 Content-Type: application/json
 
 {
-  "name": "Tesouro IPCA 2029",
-  "value": 100
+  "name": "Tesouro Selic 2029",
+  "value": 10000
 }
 ```
 
 ### Read
 
-![](/lp2/imgs/expressjs/api/read-investments.png)
+![](/lp2/imgs/expressjs/api/read-investments-simple.png)
 
 ```js title="/codes/expressjs/invest-api/src/routes.js"
 router.get('/investments', (req, res) => {
@@ -111,7 +116,7 @@ router.get('/investments', (req, res) => {
     return res.json(filteredInvestments);
   }
 
-  res.json(investments);
+  return res.json(investments);
 });
 ```
 
@@ -119,37 +124,33 @@ router.get('/investments', (req, res) => {
 ### Read Investments
 
 GET {{host}}/investments
-
-### Read Investments by Name
-
-GET {{host}}/investments?name=Tesouro
 ```
 
 ### Update
 
-![](/lp2/imgs/expressjs/api/update-investment.png)
+![](/lp2/imgs/expressjs/api/update-investment-simple.png)
 
 ```js title="/codes/expressjs/invest-api/src/routes.js"
 router.put('/investments/:id', (req, res) => {
-  const investment = req.body;
+  const { name, value } = req.body;
 
-  const id = req.params.id;
+  const { id } = req.params;
 
-  if (investment && id) {
-    const newInvestment = { ...investment, id };
-
-    const index = investments.findIndex((investment) => investment.id === id);
-
-    if (investments[index]) {
-      throw new HTTPError('Investment not found', 400);
-    }
-
-    investments[index] = newInvestment;
-
-    res.json(newInvestment);
-  } else {
-    throw new HTTPError('Unable to update investment', 400);
+  if (!name || !value) {
+    throw new HttpError('Error when passing parameters');
   }
+
+  const newInvestment = { name, value, id };
+
+  const index = investments.findIndex((investment) => investment.id === id);
+
+  if (!investments[index]) {
+    throw new HttpError('Investment not found', 404);
+  }
+
+  investments[index] = newInvestment;
+
+  return res.json(newInvestment);
 });
 ```
 
@@ -163,28 +164,28 @@ PUT {{host}}/investments/{{createdInvestmentId}}
 Content-Type: application/json
 
 {
-  "name": "Tesouro IPCA 2029",
-  "value": 200
+  "name": "Tesouro Selic 2029",
+  "value": 25000
 }
 ```
 
 ### Delete
 
-![](/lp2/imgs/expressjs/api/delete-investment.png)
+![](/lp2/imgs/expressjs/api/delete-investment-simple.png)
 
 ```js title="/codes/expressjs/invest-api/src/routes.js"
 router.delete('/investments/:id', (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
-  if (id) {
-    const index = investments.findIndex((investment) => investment.id === id);
+  const index = investments.findIndex((investment) => investment.id === id);
 
-    investments.splice(index, 1);
-  } else {
-    throw new HTTPError('Investment not found', 400);
+  if (!investments[index]) {
+    throw new HttpError('Investment not found', 404);
   }
 
-  res.send(204);
+  investments.splice(index, 1);
+
+  return res.sendStatus(204);
 });
 ```
 

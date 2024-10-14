@@ -8,17 +8,38 @@ POST {{host}}/investments
 Content-Type: application/json
 
 {
-  "name": "Tesouro IPCA 2029",
-  "value": 100
+  "name": "Tesouro Selic 2029",
+  "value": 20000
 }
+
+### Create Investment without value
+
+POST {{host}}/investments
+Content-Type: application/json
+
+{
+  "name": "Tesouro Selic 2029"
+}
+
+### Create Investment without investment values
+
+POST {{host}}/investments
 
 ### Read Investments
 
 GET {{host}}/investments
 
+### Read Investments by id
+
+GET {{host}}/investments/{{createdInvestmentId}}
+
+### Read Investments with invalid id
+
+GET {{host}}/investments/a
+
 ### Read Investments by Name
 
-GET {{host}}/investments?name=Tesouro
+GET {{host}}/investments?name=Selic
 
 ### Update Investment
 
@@ -26,10 +47,33 @@ PUT {{host}}/investments/{{createdInvestmentId}}
 Content-Type: application/json
 
 {
-  "name": "Tesouro IPCA 2029",
-  "value": 200
+  "name": "Tesouro Selic 2029",
+  "value": 25000
+}
+
+### Update Investment without value
+
+PUT {{host}}/investments/{{createdInvestmentId}}
+Content-Type: application/json
+
+{
+  "name": "Tesouro Selic 2029"
+}
+
+### Update Investment with invalid id
+
+PUT {{host}}/investments/a
+Content-Type: application/json
+
+{
+  "name": "Tesouro Selic 2029",
+  "value": 25000
 }
 
 ### Delete Investment
 
 DELETE {{host}}/investments/{{createdInvestmentId}}
+
+### Delete Investment with invalid id
+
+DELETE {{host}}/investments/a

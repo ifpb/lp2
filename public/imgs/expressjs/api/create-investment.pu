@@ -4,7 +4,17 @@ hide footbox
 skinparam monochrome true
 
 Client -> Server: POST /api/investments
-note right: POST /api/investments HTTP/1.1\nHost: 127.0.0.1:3000\nContent-Type: application/json\n\n{\n  "name": "Tesouro IPCA 2029",\n  "value": 100\n}
+note right: POST /api/investments HTTP/1.1\nHost: 127.0.0.1:3000\nContent-Type: application/json\n\n{\n  "name": "Tesouro Selic 2029",\n  "value": 10000\n}
 Server -> Client: HTTP/1.1 201 Created
-note left: HTTP/1.1 201 Created\n\n{\n  "id": 4197d9c8,\n  "name": "Tesouro IPCA 2029",\n  "value": 100\n}
+note left: HTTP/1.1 201 Created\n\n{\n  "id": 4197d9c8,\n  "name": "Tesouro Selic 2029",\n  "value": 10000\n}
+
+Client -> Server: POST /api/investments
+note right: POST /api/investments HTTP/1.1\nHost: 127.0.0.1:3000\nContent-Type: application/json\n\n{\n  "name": "Tesouro Selic 2029"\n}
+Server -> Client: HTTP/1.1 400 Bad Request
+note left: HTTP/1.1 400 Bad Request\n\n{\n  "message": "Error when passing parameters",\n}
+
+Client -> Server: POST /api/investments
+note right: POST /api/investments HTTP/1.1\nHost: 127.0.0.1:3000
+Server -> Client: HTTP/1.1 400 Bad Request
+note left: HTTP/1.1 400 Bad Request\n\n{\n  "message": "Error when passing parameters",\n}
 @enduml

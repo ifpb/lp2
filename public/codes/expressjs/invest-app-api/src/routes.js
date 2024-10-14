@@ -2,8 +2,8 @@ import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import { investments } from './data/investments.js';
 
-class HTTPError extends Error {
-  constructor(message, code) {
+class HttpError extends Error {
+  constructor(message, code = 400) {
     super(message);
     this.code = code;
   }
@@ -12,19 +12,19 @@ class HTTPError extends Error {
 const router = express.Router();
 
 router.post('/investments', (req, res) => {
-  const investment = req.body;
+  const { name, value } = req.body;
+
+  if (!name || !value) {
+    throw new HttpError('Error when passing parameters');
+  }
 
   const id = uuidv4();
 
-  const newInvestment = { ...investment, id };
+  const newInvestment = { name, value, id };
 
-  if (investment) {
-    investments.push(newInvestment);
+  investments.push(newInvestment);
 
-    res.json(newInvestment);
-  } else {
-    throw new HTTPError('Unable to create investment', 400);
-  }
+  return res.status(201).json(newInvestment);
 });
 
 router.get('/investments', (req, res) => {
@@ -38,59 +38,55 @@ router.get('/investments', (req, res) => {
     return res.json(filteredInvestments);
   }
 
-  res.json(investments);
+  return res.json(investments);
 });
 
 router.get('/investments/:id', (req, res) => {
   const id = req.params.id;
 
-  if (id) {
-    const index = investments.findIndex((investment) => investment.id === id);
+  const index = investments.findIndex((investment) => investment.id === id);
 
-    if (!investments[index]) {
-      throw new HTTPError('Investment not found', 400);
-    }
-
-    return res.json(investments[index]);
-  } else {
-    throw new HTTPError('Unable to find investment', 400);
+  if (!investments[index]) {
+    throw new HttpError('Investment not found', 404);
   }
+
+  return res.json(investments[index]);
 });
 
 router.put('/investments/:id', (req, res) => {
-  const investment = req.body;
+  const { name, value } = req.body;
 
-  const id = req.params.id;
+  const { id } = req.params;
 
-  if (investment && id) {
-    const newInvestment = { ...investment, id };
-
-    const index = investments.findIndex((investment) => investment.id === id);
-
-    if (!investments[index]) {
-      throw new HTTPError('Investment not found', 400);
-    }
-
-    investments[index] = newInvestment;
-
-    res.json(newInvestment);
-  } else {
-    throw new HTTPError('Unable to update investment', 400);
+  if (!name || !value) {
+    throw new HttpError('Error when passing parameters');
   }
+
+  const newInvestment = { name, value, id };
+
+  const index = investments.findIndex((investment) => investment.id === id);
+
+  if (!investments[index]) {
+    throw new HttpError('Investment not found', 404);
+  }
+
+  investments[index] = newInvestment;
+
+  return res.json(newInvestment);
 });
 
 router.delete('/investments/:id', (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
-  if (id) {
-    const index = investments.findIndex((investment) => investment.id === id);
+  const index = investments.findIndex((investment) => investment.id === id);
 
-    investments.splice(index, 1);
-  } else {
-    throw new HTTPError('Investment not found', 400);
+  if (!investments[index]) {
+    throw new HttpError('Investment not found', 404);
   }
 
-  res.send(204);
+  investments.splice(index, 1);
+
+  return res.sendStatus(204);
 });
 
 // 404 handler
@@ -101,11 +97,12 @@ router.use((req, res, next) => {
 // Error handler
 router.use((err, req, res, next) => {
   // console.error(err.stack);
-  if (err instanceof HTTPError) {
-    res.status(err.code).json({ message: err.message });
-  } else {
-    res.status(500).json({ message: 'Something broke!' });
+
+  if (err instanceof HttpError) {
+    return res.status(err.code).json({ message: err.message });
   }
+
+  return res.status(500).json({ message: 'Something broke!' });
 });
 
 export default router;

@@ -6,5 +6,5 @@ skinparam monochrome true
 Client -> Server: GET /api/investments
 note right: GET /api/investments HTTP/1.1\nHost: 127.0.0.1:3000
 Server -> Client: HTTP/1.1 200 OK
-note left: HTTP/1.1 200 OK\n\n[\n  {\n    "id": 4197d9c8,\n    "name": "Tesouro IPCA 2029",\n    "value": 100\n  }\n]
+note left: HTTP/1.1 200 OK\n\n[\n  {\n    "id": 4197d9c8,\n    "name": "Tesouro Selic 2029",\n    "value": 10000\n  }\n]
 @enduml

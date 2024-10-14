@@ -10,6 +10,6 @@ note left: HTTP/1.1 204 No Content
 
 Client -> Server: DELETE /api/investments/a
 note right: DELETE /api/investments/a HTTP/1.1\nHost: 127.0.0.1:3000
-Server -> Client: HTTP/1.1 400 Bad Request
-note left: HTTP/1.1 400 Bad Request\n\n{\n  "error": "Investment not found."\n}
+Server -> Client: HTTP/1.1 404 Not Found
+note left: HTTP/1.1 404 Not Found\n\n{\n  "message": "Investment not found."\n}
 @enduml

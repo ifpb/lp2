@@ -6,21 +6,20 @@ skinparam monochrome true
 Client -> Server: GET /api/investments
 note right: GET /api/investments HTTP/1.1\nHost: 127.0.0.1:3000
 Server -> Client: HTTP/1.1 200 OK
-note left: HTTP/1.1 200 OK\n\n[\n  {\n    "id": 4197d9c8,\n    "name": "Tesouro IPCA 2029",\n    "value": 100\n  }\n]
+note left: HTTP/1.1 200 OK\n\n[\n  {\n    "id": 4197d9c8,\n    "name": "Tesouro Selic 2029",\n    "value": 10000\n  }\n]
 
 Client -> Server: GET /api/investments/4197d9c8
 note right: GET /api/investments/4197d9c8 HTTP/1.1\nHost: 127.0.0.1:3000
 Server -> Client: HTTP/1.1 200 OK
-note left: HTTP/1.1 200 OK\n\n{\n  "id": 4197d9c8,\n  "name": "Tesouro IPCA 2029",\n  "value": 100\n}
+note left: HTTP/1.1 200 OK\n\n{\n  "id": 4197d9c8,\n  "name": "Tesouro Selic 2029",\n  "value": 10000\n}
 
 Client -> Server: GET /api/investments/a
 note right: GET /api/investments/a HTTP/1.1\nHost: 127.0.0.1:3000
-Server -> Client: HTTP/1.1 400 Bad Request
-note left: HTTP/1.1 400 Bad Request\n\n{\n  "error": "Investment not found."\n}
+Server -> Client: HTTP/1.1 404 Not Found
+note left: HTTP/1.1 404 Not Found\n\n{\n  "message": "Investment not found."\n}
 
-
-Client -> Server: GET /api/investments?name=Tesouro
-note right: GET /api/investments?name=Tesouro HTTP/1.1\nHost: 127.0.0.1:3000
+Client -> Server: GET /api/investments?name=Selic
+note right: GET /api/investments?name=Selic HTTP/1.1\nHost: 127.0.0.1:3000
 Server -> Client: HTTP/1.1 200 OK
-note left: HTTP/1.1 200 OK\n\n[\n  {\n    "id": 4197d9c8,\n    "name": "Tesouro IPCA 2029",\n    "value": 100\n  }\n]
+note left: HTTP/1.1 200 OK\n\n[\n  {\n    "id": 4197d9c8,\n    "name": "Tesouro Selic 2029",\n    "value": 10000\n  }\n]
 @enduml
