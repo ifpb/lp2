@@ -67,7 +67,7 @@ $ npm install express morgan cors express-async-errors uuid
 
 ![](/lp2/imgs/expressjs/api/create-investment-simple.png)
 
-```js title="/codes/expressjs/invest-api/src/routes.js"
+```js showLineNumbers title="/codes/expressjs/invest-api/src/routes.js"
 router.post('/investments', (req, res) => {
   const { name, value } = req.body;
 
@@ -85,7 +85,7 @@ router.post('/investments', (req, res) => {
 });
 ```
 
-```http title="/codes/expressjs/invest-api/requests.http"
+```http showLineNumbers title="/codes/expressjs/invest-api/requests.http"
 @host = http://localhost:3000
 
 ### Create Investment
@@ -104,7 +104,7 @@ Content-Type: application/json
 
 ![](/lp2/imgs/expressjs/api/read-investments-simple.png)
 
-```js title="/codes/expressjs/invest-api/src/routes.js"
+```js showLineNumbers title="/codes/expressjs/invest-api/src/routes.js"
 router.get('/investments', (req, res) => {
   const { name } = req.query;
 
@@ -120,7 +120,7 @@ router.get('/investments', (req, res) => {
 });
 ```
 
-```http title="/codes/expressjs/invest-api/requests.http"
+```http showLineNumbers title="/codes/expressjs/invest-api/requests.http"
 ### Read Investments
 
 GET {{host}}/investments
@@ -130,7 +130,7 @@ GET {{host}}/investments
 
 ![](/lp2/imgs/expressjs/api/update-investment-simple.png)
 
-```js title="/codes/expressjs/invest-api/src/routes.js"
+```js showLineNumbers title="/codes/expressjs/invest-api/src/routes.js"
 router.put('/investments/:id', (req, res) => {
   const { name, value } = req.body;
 
@@ -154,7 +154,7 @@ router.put('/investments/:id', (req, res) => {
 });
 ```
 
-```http title="/codes/expressjs/invest-api/requests.http"
+```http showLineNumbers title="/codes/expressjs/invest-api/requests.http"
 @host = http://localhost:3000
 @createdInvestmentId = {{createdInvestment.response.body.$.id}}
 
@@ -173,7 +173,7 @@ Content-Type: application/json
 
 ![](/lp2/imgs/expressjs/api/delete-investment-simple.png)
 
-```js title="/codes/expressjs/invest-api/src/routes.js"
+```js showLineNumbers title="/codes/expressjs/invest-api/src/routes.js"
 router.delete('/investments/:id', (req, res) => {
   const { id } = req.params;
 
@@ -189,7 +189,7 @@ router.delete('/investments/:id', (req, res) => {
 });
 ```
 
-```http title="/codes/expressjs/invest-api/requests.http"
+```http showLineNumbers title="/codes/expressjs/invest-api/requests.http"
 @host = http://localhost:3000
 @createdInvestmentId = {{createdInvestment.response.body.$.id}}
 

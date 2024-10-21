@@ -25,7 +25,7 @@ Encode: jwt.sign(payload , privateKey, options)
 
 [jwt.io debugger](https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0NjY0M30.C1dDgnIRfWpJnqir_hyuVp_fnt7vpR6mKgHMdZoG4Rk):
 
-```js
+```js showLineNumbers title="Encode JWT"
 jwt.sign(
   { userId: 1 },
   'secret'
@@ -43,7 +43,7 @@ jwt.sign(
 
 [jwt.io debugger](https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0Njc4NiwiZXhwIjoxNzI4NzUwMzg2fQ.V1eHtVYWaI5Rji8wd4onYIGqdTGlm6NAmUeIiw6G7Gw):
 
-```js
+```js showLineNumbers title="Encode JWT"
 jwt.sign(
   { userId: 1 },
   'secret',
@@ -62,11 +62,11 @@ jwt.sign(
 
 [jwt.io debugger](https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0ODQ5NywiZXhwIjoxNzI4NzUyMDk3fQ.0m_bFbC337WRu0bqlabUJ1hN-hNwOXVJUHKBbSdmz7s):
 
-```js
+```js showLineNumbers title="Encode JWT"
 jwt.sign(
   { userId: 1 },
   'abc',
-  { expiresIn: 3600000 } // { expiresIn: '1h' }
+  { expiresIn: '1h' }
 );
 //=> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0ODQ5NywiZXhwIjoxNzI4NzUyMDk3fQ.0m_bFbC337WRu0bqlabUJ1hN-hNwOXVJUHKBbSdmz7s
 
@@ -89,7 +89,7 @@ Decode: jwt.verify(token, privateKey)
 
 [jwt.io - signature verified](https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0NjY0M30.C1dDgnIRfWpJnqir_hyuVp_fnt7vpR6mKgHMdZoG4Rk):
 
-```js
+```js showLineNumbers title="Decode JWT"
 jwt.verify(
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0NjY0M30.C1dDgnIRfWpJnqir_hyuVp_fnt7vpR6mKgHMdZoG4Rk',
   'secret'
@@ -99,7 +99,7 @@ jwt.verify(
 
 [jwt.io - invalid signature](https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0NjY0M30.C1dDgnIRfWpJnqir_hyuVp_fnt7vpR6mKgHMdZoG4Rk):
 
-```js
+```js showLineNumbers title="Decode JWT"
 jwt.verify(
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0NjY0M30.C1dDgnIRfWpJnqir_hyuVp_fnt7vpR6mKgHMdZoG4Rk',
   'wrong'
@@ -109,7 +109,7 @@ jwt.verify(
 
 [jwt.io - signature verified](https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0Njc4NiwiZXhwIjoxNzI4NzUwMzg2fQ.V1eHtVYWaI5Rji8wd4onYIGqdTGlm6NAmUeIiw6G7Gw):
 
-```js
+```js showLineNumbers title="Decode JWT"
 jwt.verify(
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyODc0Njc4NiwiZXhwIjoxNzI4NzUwMzg2fQ.V1eHtVYWaI5Rji8wd4onYIGqdTGlm6NAmUeIiw6G7Gw',
   'secret'

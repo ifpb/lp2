@@ -29,7 +29,7 @@ $ npm install multer
 
 <CodePreview src="/codes/expressjs/invest-app-upload/src/config/multer.js" />
 
-```js title="/codes/expressjs/invest-app-upload/src/routes.js"
+```js showLineNumbers title="/codes/expressjs/invest-app-upload/src/routes.js"
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
@@ -101,7 +101,7 @@ router.put(
 
 <CodePreview src="/codes/expressjs/invest-app-upload/src/index.js" highlightLines="24" />
 
-```http title="/codes/expressjs/invest-app-upload/requests.http"
+```http showLineNumbers title="/codes/expressjs/invest-app-upload/requests.http"
 @host = http://localhost:3000
 @token = {{signin.response.body.$.token}}
 @userId = {{userMe.response.body.$.id}}
