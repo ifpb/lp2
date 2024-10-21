@@ -44,7 +44,7 @@ export const CONTENT_SLUGS = [
   'expressjs/validation',
   'expressjs/email',
   'expressjs/upload-file',
-  'expressjs/test',
+  // 'expressjs/test',
 ];
 
 export const MENU = [
