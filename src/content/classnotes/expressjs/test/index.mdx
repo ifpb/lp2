@@ -1,8 +1,36 @@
 ---
-title: Teste
+title: Teste de Software
 ---
 
 import CodePreview from '../../../../components/CodePreview.astro';
 import CodeTree from '../../../../components/CodeTree.astro';
 
 # {frontmatter.title}
+
+<CodeTree src="/codes/expressjs/invest-app-test" githubUrl={true} devContainerUrl={true} />
+
+## Back-end
+
+```bash
+$ npm install supertest -D
+```
+
+<CodePreview src="/codes/expressjs/invest-app-test/src/routes.test.js" />
+
+```bash
+$ node --test **/*.test.js
+$ npm run test
+```
+
+## Front-end
+
+```bash
+$ npm init playwright
+```
+
+<CodePreview src="/codes/expressjs/invest-app-test/tests/invest-app.spec.js" />
+
+```bash
+$ npx playwright test --ui
+$ npm run e2e
+```
