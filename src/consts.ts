@@ -1,24 +1,24 @@
 // subject data
 export const SUBJECT = {
   CLASSROOM_URLS: {
-    A: 'https://classroom.google.com/c/NjYzNjMwNzkyOTky',
+    A: 'https://classroom.google.com/c/NzYzNzk2ODM4NTg2',
   },
-  CHAT_URL: 'https://mail.google.com/mail/u/0/#chat/space/AAAAke2P7Sw',
-  PROJECTS_URL: 'https://padlet.com/lucachaves/projetolp22024',
+  CHAT_URL: 'https://mail.google.com/mail/u/0/#chat/space/AAQAMWNpDQU',
+  PROJECTS_URL: 'https://padlet.com/lucachaves/projetolp22025',
   GITHUB_URLS: {
-    A: 'https://github.com/lucachaves/lp2-2024',
+    A: 'https://github.com/luizchaves/lp2-2025',
   },
   SCHEDULES: [
     {
       className: 'A',
-      room: 'Lab 58',
+      room: 'Lab 57',
       day: 'Segunda',
       start: '08:40',
       end: '10:40',
     },
     {
       className: 'B',
-      room: 'Lab 58',
+      room: 'Lab 57',
       day: 'Segunda',
       start: '10:40',
       end: '12:20',
